@@ -18,6 +18,7 @@ import Chat from './Chat';
 
 
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
+import ListarOfertas from '../Grupo/Solicitud/ListarOfertas';
 
 class Dashboard extends Component {
 
@@ -37,7 +38,7 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-
+               {/*  <ListarOfertas/> */}
                 <CrearSolicitud/>
             {/* {<div className="">
                     {this.props.loading && <Loader />}
