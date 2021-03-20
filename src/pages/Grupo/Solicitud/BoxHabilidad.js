@@ -2,7 +2,7 @@ import React, { useEffect,useState} from 'react'
 import TextField from '@material-ui/core/TextField';
 import {ConsultarHabilidadesPorCategoriaService} from '../services'
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import InputAdornment from '@material-ui/core/InputAdornment';
 export const Habilidades = ({idCategoria, callback}) => {
     const [habilidades, setHabilidades] = useState([]);
     useEffect(() => {
@@ -32,7 +32,7 @@ export const Habilidades = ({idCategoria, callback}) => {
             id="inputOptionHabilidades"
             {...params}
             label="Habilidad"
-            variant="standard"
+            variant="outlined"
             required
           />
         )}

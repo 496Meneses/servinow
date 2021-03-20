@@ -1,4 +1,3 @@
-// @flow
 import {
     INIT_MENU,
     INIT_MENU_SUCCESS,

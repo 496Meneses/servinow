@@ -17,13 +17,28 @@ import { BoxCategoria } from './BoxCategoria';
 import { Habilidades } from './BoxHabilidad';
 // ICONOS
 
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CustomInput,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText,
+} from 'reactstrap';
+
+
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+import HomeIcon from '@material-ui/icons/Home';
 
-
+import PaymentIcon from '@material-ui/icons/Payment';
 
 const useStyles = makeStyles({
   root: {
-
     background: 'white',
     border: 1,
     borderRadius: 3,
@@ -31,17 +46,17 @@ const useStyles = makeStyles({
     paddingLeft: '50px',
   },
   title: {
-    marginTop: '10px',
-    marginBottom: '20px'
+    margin: "20px auto"
   },
-  form: {
-    display: 'flex',
+  Row: {
     justifyContent: 'center',
-    flexDirection: 'column'
+  },
+  Form: {
+    
   },
   form_section: {
-    margin: '10px',
-    maxWidth: '500px'
+    margin: "20px auto",
+    width: '70%'
   },
   container: {
     marginTop: '30px',
@@ -51,7 +66,10 @@ const useStyles = makeStyles({
     display: 'block',
     width: '400px'
   },
-  imgContainer: {}
+  textField: {
+    width: 200,
+  },
+
 });
 
 
@@ -68,6 +86,7 @@ export const CrearSolicitud = () => {
   const [fechaInicio, setFechaInicio] = useState("")
   const [fechaFin, setFechaFin] = useState("")
   const [Imagen, setImagen] = useState("")
+
   useEffect(() => {
     setTitulo("")
     setDescripcion("")
@@ -152,7 +171,7 @@ export const CrearSolicitud = () => {
 
 
   return (
-    <div className={classes.root}>
+    <Card>
       <Typography color="textPrimary" variant="h6" className={classes.title}>
         Crear Solicitud
         </Typography>
@@ -184,179 +203,206 @@ export const CrearSolicitud = () => {
         onSubmit={() => { }}
       >
         {({ errors, handleBlur, touched, handleChange, values }) => (
+          <CardBody>
+            <Row className={classes.Row}>
+              <Col lg={6}>
 
-          <form onSubmit={handleCreate} className={classes.form}>
-            <Box className={classes.form_section}>
+                <Form onSubmit={handleCreate} className={classes.Form}>
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Titulo"
+                      name="titulo"
+                      variant="outlined"
+                      error={Boolean(touched.titulo && errors.titulo)}
+                      helperText={touched.titulo && errors.titulo}
+                      onBlur={handleBlur}
+                      required
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
 
-              <TextField
-                fullWidth
-                label="Titulo"
-                name="titulo"
-                variant="standard"
-                error={Boolean(touched.titulo && errors.titulo)}
-                helperText={touched.titulo && errors.titulo}
-                onBlur={handleBlur}
-                required
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
-                  }
-                }
-
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <TitleOutlinedIcon />
-                    </InputAdornment>
-                  )
-                }}
-              >
-              </TextField>
-            </Box>
-            <Box className={classes.form_section}>
-              <TextField
-                label="Descripcion"
-                name="descripcion"
-                fullWidth
-                multiline
-                rows={6}
-                error={Boolean(touched.descripcion && errors.descripcion)}
-                helperText={touched.descripcion && errors.descripcion}
-                onBlur={handleBlur}
-                required
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
-                  }
-                }
-                variant="standard"
-              />
-
-            </Box>
-            <Box className={classes.form_section}>
-
-              <TextField
-                fullWidth
-                label="Barrio"
-                name="barrio"
-                variant="standard"
-                error={Boolean(touched.barrio && errors.barrio)}
-                helperText={touched.barrio && errors.barrio}
-                onBlur={handleBlur}
-                required
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
-                  }
-                }
-              >
-              </TextField>
-
-            </Box>
-            <Box className={classes.form_section}>
-
-              <BoxCategoria callback={setCategoria}></BoxCategoria>
-
-            </Box>
-            <Box className={classes.form_section}>
-              <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
-            </Box>
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <TitleOutlinedIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
 
 
-            <Box className={classes.form_section}>
-              <TextField
-                fullWidth
-                label="Propina"
-                name="propina"
-                variant="standard"
-                error={Boolean(touched.propina && errors.propina)}
-                helperText={touched.propina && errors.propina}
-                onBlur={handleBlur}
-                required
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
-                  }
-                }
-              >
-              </TextField>
+                    <TextField
+                      label="Descripcion"
+                      name="descripcion"
+                      fullWidth
+                      multiline
+                      rows={6}
+                      error={Boolean(touched.descripcion && errors.descripcion)}
+                      helperText={touched.descripcion && errors.descripcion}
+                      onBlur={handleBlur}
+                      required
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                      variant="outlined"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <TextFieldsIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                      
 
-            </Box>
+                    />
 
-            <Box className={classes.form_section}>
-              <TextField
-                fullWidth
-                label="Fecha inicio"
-                name="fechaInicio"
-                type="datetime-local"
-                defaultValue="2020-01-24T10:30"
-                required
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
-                  }
-                }
-              >
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
 
-              </TextField>
-            </Box>
+                    <TextField
+                      fullWidth
+                      label="Barrio"
+                      name="barrio"
+                      variant="outlined"
+                      error={Boolean(touched.barrio && errors.barrio)}
+                      helperText={touched.barrio && errors.barrio}
+                      onBlur={handleBlur}
+                      required
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <HomeIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                    
 
-            <Box className={classes.form_section}>
-              <TextField
-                fullWidth
-                label="Fecha inicio"
-                name="fechaFin"
-                type="datetime-local"
-                defaultValue="2020-01-24T10:30"
-                required
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
-                  }
-                }
-              >
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
 
-              </TextField>
-            </Box>
+                    <BoxCategoria callback={setCategoria}></BoxCategoria>
+
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+                    <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
+                  </FormGroup>
 
 
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Propina"
+                      name="propina"
+                      variant="outlined"
+                      error={Boolean(touched.propina && errors.propina)}
+                      helperText={touched.propina && errors.propina}
+                      onBlur={handleBlur}
+                      required
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PaymentIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </FormGroup>
 
-            <Box my={2} className={classes.form_section}>
-              <div className="custom-file">
-                <input
-                  type="file"
-                  className="custom-file-input"
-                  id="img-file"
-                  onChange={async (e) => setImagen(e.target.files)}
-                  required
-                />
-                <label className="custom-file-label">
-                  Elije una imagen
-                  </label>
-                {/* TODO IMG */}
-              </div>
-            </Box>
-            <Box my={2} className={classes.form_section}>
-              <Button
-                color="primary"
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                Crear
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Fecha inicio"
+                      name="fechaInicio"
+                      type="datetime-local"
+                      defaultValue="2020-01-24T10:30"
+                      required
+                      variant="outlined"
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                    >
+
+                    </TextField>
+                  </FormGroup>
+
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Fecha fin"
+                      name="fechaFin"
+                      type="datetime-local"
+                      defaultValue="2020-01-24T10:30"
+                      required
+                      variant="outlined"
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                    />
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+                    <div className="custom-file">
+                      <input
+                        type="file"
+                        className="custom-file-input"
+                        id="img-file"
+                        onChange={async (e) => setImagen(e.target.files)}
+                        required
+                      />
+                      <label className="custom-file-label">
+                        Elije una imagen
+                        </label>
+                      {/* TODO IMG */}
+                    </div>
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+                    <Button
+                      color="primary"
+                      fullWidth
+                      size="large"
+                      type="submit"
+                      variant="text"
+                    >
+                      Crear
                     </Button>
-            </Box>
-          </form>
+                  </FormGroup>
+                </Form>
+              </Col>
+              <Col lg={6}>
+              </Col>
+            </Row>
+          </CardBody>
+
         )}
       </Formik>
-    </div>
+    </Card>
   )
 }
 

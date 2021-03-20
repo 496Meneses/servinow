@@ -9,7 +9,7 @@ const Orders = () => {
                     <i className='uil uil-export ml-1'></i> Export
                 </Button>
 
-                <h5 className="card-title mt-0 mb-0 header-title">Recent Orders</h5>
+                <h5 className="card-title mt-0 mb-0 header-title">TODO LISTAR OFERTAS</h5>
 
                 <Table hover responsive className="mt-4">
                     <thead>

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {ConsultarCategoriaService} from '../services'
-
-
 export const BoxCategoria = ({ callback }) => {
   const [categoria, setCategorias] = useState([]);
   useEffect(() => {
@@ -36,10 +34,11 @@ export const BoxCategoria = ({ callback }) => {
           id="inputOption"
           {...params}
           label='Categoria'
-          variant="standard"
+          variant="outlined"
           required
         />
       )}
+
       onInputChange={(e, input) => getIdCategoria(input)}
       onChange={(e, input) => getIdCategoria(input)}
     />
