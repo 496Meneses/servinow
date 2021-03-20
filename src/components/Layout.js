@@ -29,14 +29,14 @@ const withLayout = (WrappedComponent) => {
 
             let layoutCls = VerticalLayout;
 
-            switch (this.props.layout.layoutType) {
-                case layoutConstants.LAYOUT_HORIZONTAL:
-                    layoutCls = HorizontalLayout;
-                    break;
-                default:
-                    layoutCls = VerticalLayout;
-                    break;
-            }
+            // switch (this.props.layout.layoutType) {
+            //     case layoutConstants.LAYOUT_HORIZONTAL:
+            //         layoutCls = HorizontalLayout;
+            //         break;
+            //     default:
+            //         layoutCls = VerticalLayout;
+            //         break;
+            // }
             return layoutCls;
         };
 

@@ -44,6 +44,7 @@ const useStyles = makeStyles({
     borderRadius: 3,
     paddingTop: '30px',
     paddingLeft: '50px',
+    marginTop: "300px"
   },
   title: {
     margin: "20px auto"
@@ -56,7 +57,7 @@ const useStyles = makeStyles({
   },
   form_section: {
     margin: "20px auto",
-    width: '70%'
+    width: '50%'
   },
   container: {
     marginTop: '30px',
@@ -81,7 +82,6 @@ export const CrearSolicitud = () => {
   const [barrio, setBarrio] = useState("")
   const [categoria, setCategoria] = useState()
   const [habilidad, setHabilidad] = useState()
-  const [img, setImg] = useState("")
   const [propina, setpropina] = useState("")
   const [fechaInicio, setFechaInicio] = useState("")
   const [fechaFin, setFechaFin] = useState("")
@@ -93,7 +93,6 @@ export const CrearSolicitud = () => {
     setBarrio("")
     setCategoria("")
     setHabilidad(1)
-    setImg("")
     setpropina("")
     setFechaInicio("")
     setFechaFin("")
@@ -119,7 +118,7 @@ export const CrearSolicitud = () => {
         setHabilidad(e.target.value)
         break;
       case "imagen":
-        setImg(e.target.value)
+        setImagen(e.target.value)
         break;
       case "propina":
         setpropina(e.target.value)
@@ -205,7 +204,7 @@ export const CrearSolicitud = () => {
         {({ errors, handleBlur, touched, handleChange, values }) => (
           <CardBody>
             <Row className={classes.Row}>
-              <Col lg={6}>
+              <Col lg={12}>
 
                 <Form onSubmit={handleCreate} className={classes.Form}>
                   <FormGroup className={classes.form_section}>

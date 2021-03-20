@@ -23,7 +23,7 @@ class Dashboard extends Component {
             <React.Fragment>
 
                 
-                <CrearSolicitud/>
+            <CrearSolicitud/>
             {/* {<div className="">
                     {this.props.loading && <Loader />}
 
