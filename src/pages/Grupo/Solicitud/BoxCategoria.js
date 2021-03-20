@@ -16,12 +16,11 @@ export const BoxCategoria = ({ callback }) => {
       .catch(() => console.log("NO GET"));
   }, []);
 
-  const getIdCategoria = id => {
-    let find = categoria.find(categoria => categoria.id_categoria === id);
+  const getIdCategoria = async name => {
+    let find = categoria.find(categoria => categoria.nombre === name);
     if (find === undefined) {
-
     } else {
-      callback(find.id);
+      callback(find.id_categoria);
     }
   };
 
@@ -37,7 +36,7 @@ export const BoxCategoria = ({ callback }) => {
           id="inputOption"
           {...params}
           label='Categoria'
-          variant='outlined'
+          variant="standard"
           required
         />
       )}

@@ -3,7 +3,7 @@ const URLAPI = 'http://52.7.252.110:8082/';
 
 export const CrearSolicitudService = (solicitud) => {
 
-    const url = `${URLAPI}crearOferta`;
+    const url = `${URLAPI}ofertaService/crearOferta`;
     return axios.post(url, solicitud, {
         headers:{
             'Content-Type': 'application/json',
@@ -17,9 +17,9 @@ export const ConsultarCategoriaService = () => {
 
 }
 
-export const dadsasd = () => {
+export const ConsultarHabilidadesPorCategoriaService = (idCategoria) => {
 
-    const url = `${URLAPI}dadas`;
-    return axios.post(url)
+    const url = `${URLAPI}habilidadService/getHabilidades?id_categoria=${idCategoria}`;
+    return axios.get(url)
 
 }
