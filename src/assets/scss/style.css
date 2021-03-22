@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.cards{
+    margin: 15px auto;
+    padding: 10px 12px;
+    display: block;
+    /* border: 1px solid #5369f8; */
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+    color: rgba(26, 26, 26, 0.877);
+    width: 95%;
+    max-width: 50rem;
+}
+
+.grid-container {
+    display: grid;
+    padding: 0;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "perfil desc";
+}
+
+.desc a{
+    text-align: center;
+    width: 25%;
+    height: auto;
+    min-width: 50px;
+    padding: 8px 25px;
+    margin-left: 20px;
+    background: #5369f8;
+    box-shadow: 0px 4px 38px rgba(0, 0, 0, 0.25);
+    box-sizing: content-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-radius: 10px;
+    text-decoration: none;
+    color: rgb(230, 230, 230);
+}
+
+#btn-rechazar{
+    /* background: #F42C04; */
+    background: #F2445B;
+}
+#btn-rechazar:hover{
+    border: 1px solid #F2445B;
+    box-shadow: none;
+    background: none;
+    color: #F2445B;
+}
+#btn-aceptar:hover{
+    border: 1px solid #5369f8;
+    box-shadow: none;
+    background: none;
+    color: #5369f8;
+}
+
+.perfil {
+    /* background-color: blueviolet; */
+    grid-area: perfil; 
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: inline-block;
+}
+
+.perfil img{
+    display: block;
+    position: relative;
+    margin: 12% auto 10px auto;
+    border-radius: 50%;
+    border: 2px solid #777777de;
+}
+
+.perfil a{
+    text-decoration: none;
+    color: #5369f8;
+    font-weight: 700;
+}
+
+.perfil a:hover{
+    text-decoration: underline 5px;
+    color: #5369f8;
+}
+
+.desc {
+    /* background-color: crimson; */
+    grid-area: desc;
+    text-align: justify;
+    align-items: center;
+}
+
+.desc #nombre{
+    color: #07090A;
+    font-size: small;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+.desc #habilidades{
+    /* background-color: #f7f5f5; */
+    color: #777777de;
+    margin-top: 0;
+    padding: 5px 20px;
+    text-align: justify;
+}
+
+.buttons {
+    display: block;
+    float: right;
+    margin: auto;
+    padding: 10px 0;
+    align-items: center;
+}
+
+

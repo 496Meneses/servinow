@@ -2,8 +2,10 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import * as FeatherIcon from 'react-feather';
-
 import { isUserAuthenticated, getLoggedInUser } from '../helpers/authUtils';
+
+//librerias David
+import {Switch} from 'react-router-dom';
 
 // auth
 const Login = React.lazy(() => import('../pages/auth/Login'));
@@ -99,6 +101,22 @@ const dashboardRoutes = {
     roles: ['Admin'],
     route: PrivateRoute
 };
+
+
+/* // david
+const dashboardRoutes = {
+    path: '/oferts',
+    name: 'Ofert',
+    icon: FeatherIcon.Home,
+    header: 'Navigation',
+    badge: {
+        variant: 'success',
+        text: '1',
+    },
+    component: List,
+    roles: ['Admin'],
+    route: PrivateRoute
+}; */
 
 // apps
 
