@@ -11,12 +11,12 @@ function List({ pokedata }) {
         <Grid container justify="center">
         {pokedata.map((pokemon, index) => {
             
-          let url = "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/"
+          //let url = "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/"
           //let url = "http://52.7.252.110:8082/ofertaService/getOfertasALasQueCalifico/"
           //https://github.com/PokeAPI/pokeapi.git
           let pokeIndex = pokemon.url.split('/')[pokemon.url.split('/').length - 2]
           
-          return <OfertCard key={index} to={`/poke-info/${pokeIndex}/${pokemon.name}`} name={pokemon.name} image={`${url}${pokeIndex}.png?raw=true`}/>
+          return <OfertCard key={index} to={`/poke-info/${pokeIndex}/${pokemon.titulo}`} name={pokemon.titulo} image={pokemon.imagen}/>
         })}
       </Grid>
     </Fragment>
