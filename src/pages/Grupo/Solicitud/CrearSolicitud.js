@@ -170,7 +170,7 @@ export const CrearSolicitud = () => {
 
 
   return (
-    <Card>
+    <Card key = {1234}>
       <Typography color="textPrimary" variant="h6" className={classes.title}>
         Crear Solicitud
         </Typography>

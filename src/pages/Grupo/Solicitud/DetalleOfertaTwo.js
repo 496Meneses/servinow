@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DetalleOfertaTwo() {
   const classes = useStyles();
   const [solicitante, setSolicitante] = useState([])
-  const [imagen, setImagen] = useState("")
+  const [imagen, setImagen] = useState("1")
   const [objHabilidad, setHabilidad] = useState([])
   const [oferta, setOferta] = useState([])
   const obtenerDetalleOferta = async () => {

@@ -31,6 +31,8 @@ class Dashboard extends Component {
             <React.Fragment>
             {/* <ListarPostulantesSolicitud /> */}
             <OfertListContainer/>
+            {/* <DetalleOfertaTwo/> */}
+            {/* <CrearSolicitud/> */}
             {/* {<div className="">
                     {this.props.loading && <Loader />}
                     <Row className="page-title align-items-center">

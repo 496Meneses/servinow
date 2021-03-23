@@ -66,7 +66,7 @@ const useStyles = makeStyles({
 });
 
 
-export const CrearSolicitud = () => {
+export const ListarPostulantesSolicitud = () => {
 
   const classes = useStyles();
   const [postulados, setPostulados] = useState(JsonData)
@@ -113,12 +113,9 @@ export const CrearSolicitud = () => {
     setPageNumber(selected)
   }
 
-  useEffect(() => {
-  }, [])
-
 
   return (
-    <Card>
+    <Card key={postulados.id_oferta}>
       <Typography color="textPrimary" variant="h6" className={classes.title}>
         Prestadores postulados a tu oferta Pasear Perro
       </Typography>
@@ -140,4 +137,4 @@ export const CrearSolicitud = () => {
   )
 }
 
-export default CrearSolicitud
+export default ListarPostulantesSolicitud

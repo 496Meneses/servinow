@@ -4,17 +4,17 @@ import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 
-function OfertCard({ name, classes, image, to='' }) {
+function OfertCard({ oferta,classes,to = "" }) {
 	return(
 		<Card className={classes.item}>
 			<Link to={to}>
-				<Typography component="p" variant="h6">{name}</Typography>
+				<Typography component="p" variant="h6">{oferta.titulo}</Typography>
 			</Link>
-			<CardMedia className={classes.media} image={image}/>
+			<CardMedia className={classes.media} image={oferta.imagen}/>
 			<CardContent>
 				{/* <Typography component="p" variant="h6">Cortar pasto</Typography> */}
-                <Typography component="p" variant="h5">Propina $ 20.000</Typography>
-                <Typography component="p" variant="h5">Lugar: Villa Mercedes</Typography>
+                <Typography component="p" variant="h5">{oferta.descripcion}</Typography>
+                <Typography component="p" variant="h5">{oferta.estado}</Typography>
 			</CardContent>
 				<div>
                     <a href="">Postularme</a>
