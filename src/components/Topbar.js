@@ -7,7 +7,6 @@ import { Menu, X, Search, Settings, User, HelpCircle, Lock, LogOut } from 'react
 import { showRightSidebar } from '../redux/actions';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
-import LanguageDropdown from './LanguageDropdown';
 
 import logo from '../assets/images/logo.png';
 import profilePic from '../assets/images/users/avatar-7.jpg';
@@ -91,11 +90,11 @@ class Topbar extends Component {
             { /* logo */}
             <Link to="/" className="navbar-brand mr-0 mr-md-2 logo">
               <span className="logo-lg">
-                <img src={logo} alt="" height="24" />
-                <span className="d-inline h5 ml-2 text-logo">Shreyu</span>
+                <img src={logo} alt="" height="75" />
+                <span className="d-inline h5 ml-2 text-logo">SERVINOW</span>
               </span>
               <span className="logo-sm">
-                <img src={logo} alt="" height="24" />
+                <img src={logo} alt="" height="64" />
               </span>
             </Link>
 
@@ -108,29 +107,9 @@ class Topbar extends Component {
                 </button>
               </li>
             </ul>
-
-
+            
             <ul className="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
-              <li className="d-none d-sm-block">
-                <div className="app-search">
-                  <form>
-                    <div className="input-group">
-                      <input type="text" className="form-control" placeholder="Search..." />
-                      <Search />
-                    </div>
-                  </form>
-                </div>
-              </li>
-
-              <LanguageDropdown tag="li" />
               <NotificationDropdown notifications={Notifications} />
-
-              <li className="notification-list">
-                <button className="btn btn-link nav-link right-bar-toggle" onClick={this.handleRightSideBar}>
-                  <Settings />
-                </button>
-              </li>
-
               <ProfileDropdown profilePic={profilePic} menuItems={ProfileMenus} username={'Shreyu N'} description="Administrator" />
             </ul>
 

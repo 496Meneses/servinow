@@ -1,4 +1,3 @@
-// @flow
 import { all, call, put, fork, takeEvery } from 'redux-saga/effects';
 
 import { INIT_MENU, CHANGE_ACTIVE_MENU_FROM_LOCATION } from './constants';

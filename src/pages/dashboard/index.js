@@ -1,27 +1,14 @@
 import React, { Component } from 'react';
 import { Row, Col, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
-import Flatpickr from 'react-flatpickr'
-import { ChevronDown, Mail, Printer, File, Users, Image, ShoppingBag } from 'react-feather';
-
 import { getLoggedInUser } from '../../helpers/authUtils';
-import Loader from '../../components/Loader';
-import OverviewWidget from '../../components/OverviewWidget';
-
-import Statistics from './Statistics';
-import RevenueChart from './RevenueChart';
-import TargetChart from './TargetChart';
-import SalesChart from './SalesChart';
-import Orders from './Orders';
-import Performers from './Performers';
-import Tasks from './Tasks';
-import Chat from './Chat';
-
 
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud';
 import ListarOfertas from '../Grupo/Solicitud/ListarOfertas';
 import ListarSolicitudes from '../Grupo/Solicitud/ListarSolicitudes';
 import OfertListContainer from '../Grupo/Solicitud/david/containers/OfertListContainer';
 
+import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
+import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
 
 
 class Dashboard extends Component {
