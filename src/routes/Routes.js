@@ -7,8 +7,6 @@ import { isUserAuthenticated } from '../helpers/authUtils';
 import * as layoutConstants from '../constants/layout';
 import { allFlattenRoutes as routes } from './index';
 
-// Lazy loading and code splitting -
-// Derieved idea from https://blog.logrocket.com/lazy-loading-components-in-react-16-6-6cea535c0b52
 const loading = () => <div></div>;
 
 // All layouts/containers
@@ -41,26 +39,14 @@ const HorizontalLayout = Loadable({
 
 class Routes extends Component {
 
-    // returns the layout
     getLayout = () => {
         if (!isUserAuthenticated()) return AuthLayout;
-
         let layoutCls = VerticalLayout;
-
-        switch (this.props.layout.layoutType) {
-            case layoutConstants.LAYOUT_HORIZONTAL:
-                layoutCls = HorizontalLayout;
-                break;
-            default:
-                layoutCls = VerticalLayout;
-                break;
-        }
         return layoutCls;
     }
 
     render() {
         const Layout = this.getLayout();
-        // rendering the router with layout
         return <BrowserRouter>
             <Layout {...this.props}>
                 <Switch>

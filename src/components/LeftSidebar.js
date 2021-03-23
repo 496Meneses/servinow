@@ -23,8 +23,8 @@ const UserProfile = () => {
             <img src={profilePic} className="avatar-xs rounded-circle mr-2" alt="Shreyu" />
 
             <div className="media-body">
-                <h6 className="pro-user-name mt-0 mb-0">Shreyu N</h6>
-                <span className="pro-user-desc">Administrator</span>
+                <h6 className="pro-user-name mt-0 mb-0">Pepito Perez</h6>
+                <span className="pro-user-desc">Usuario</span>
             </div>
 
             <UncontrolledDropdown className="align-self-center profile-dropdown-menu">
