@@ -8,8 +8,8 @@ import ListarSolicitudes from '../Grupo/Solicitud/ListarSolicitudes';
 import OfertListContainer from '../Grupo/Solicitud/david/containers/OfertListContainer';
 
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
+import ListarPostulantesSolicitud from '../Grupo/Solicitud/ListarPostulantesSolicitud'
 import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
-
 
 class Dashboard extends Component {
 
@@ -29,10 +29,8 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-                {/* <OfertCart/> */}
-                 <OfertListContainer/>  
-                 {/* <ListarSolicitudes/> */}
-               {/* <CrearSolicitud/> */}
+            <ListarPostulantesSolicitud />
+
             {/* {<div className="">
                     {this.props.loading && <Loader />}
                     <Row className="page-title align-items-center">

@@ -23,3 +23,9 @@ export const ConsultarHabilidadesPorCategoriaService = (idCategoria) => {
     return axios.get(url)
 
 }
+
+export const ConsultarPostuladosPorOfertaService = (idOferta) => {
+    const url = `${URLAPI}ofertaService/getDetalleOferta?id_oferta=${idOferta}`;
+    return axios.get(url)
+
+}
