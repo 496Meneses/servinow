@@ -29,3 +29,9 @@ export const ConsultarPostuladosPorOfertaService = (idOferta) => {
     return axios.get(url)
 
 }
+
+export const GetOfertasDisponibles = (idPrestador) => {
+    const url = `${URLAPI}ofertaService/getOfertasALasQueCalifico?id_prestador=${idPrestador}`;
+    return axios.get(url)
+
+}

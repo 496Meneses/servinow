@@ -1,8 +1,10 @@
-import React,{ Component } from 'react';
+import React,{ Component, useEffect } from 'react';
 import axios from 'axios';
 import List from '../components/OfertList';
 import AppNav from '../components/AppNav';
 import Pagination from '../components/OfertPagination';
+
+
 
 class OfertListContainer extends Component {
 
@@ -31,13 +33,15 @@ class OfertListContainer extends Component {
     }
   }
 
-  fetchData = (offset = 0) => {
-    const url ='https://pokeapi.co/api/v2/pokemon';
-    //const url='http://52.7.252.110:8082/ofertaService/getOfertasALasQueCalifico';
+ 
+    fetchData = (offset = 0) => {
+    //const url ='https://pokeapi.co/api/v2/pokemon';
+    const url='http://52.7.252.110:8082/ofertaService/getOfertasALasQueCalifico?id_prestador=1';
     let params = {
       offset: offset,
       limit: 21
     }
+
     axios.get(url, { params })
     .then(res => {
       const { results } = res.data;
@@ -50,7 +54,13 @@ class OfertListContainer extends Component {
     .catch(error =>{
       console.log(error);
     })
-  }
+  } 
+
+ /*  useEffect(() => {
+    GetOfertasDisponibles(1);
+    
+          
+  }, []) */
 
   increment= () => {
     const { currentOffset, pageCounter } = this.state;
