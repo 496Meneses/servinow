@@ -20,9 +20,7 @@ class Dashboard extends Component {
     render() {
 
         return (
-            <React.Fragment>
-
-                
+            <React.Fragment>                
             <CrearSolicitud/>
             {/* {<div className="">
                     {this.props.loading && <Loader />}
