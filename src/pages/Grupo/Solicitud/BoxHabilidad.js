@@ -25,7 +25,7 @@ export const Habilidades = ({idCategoria, callback}) => {
       <Autocomplete
         id="searchHabilidades"
         options={habilidades}
-        getOptionLabel={option => option.nombre}
+        getOptionLabel={option => option.name}
         style={{ marginBottom: 10, marginTop: 10 }}
         renderInput={params => (
           <TextField
