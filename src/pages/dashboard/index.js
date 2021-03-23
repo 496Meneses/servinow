@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { Row, Col, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import { getLoggedInUser } from '../../helpers/authUtils';
+
+import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud';
+import ListarOfertas from '../Grupo/Solicitud/ListarOfertas';
+import ListarSolicitudes from '../Grupo/Solicitud/ListarSolicitudes';
+import OfertListContainer from '../Grupo/Solicitud/david/containers/OfertListContainer';
+
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
 import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
 
@@ -23,17 +29,19 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-            <DetalleOfertaTwo/>          
+                {/* <OfertCart/> */}
+                 <OfertListContainer/>  
+                 {/* <ListarSolicitudes/> */}
+               {/* <CrearSolicitud/> */}
             {/* {<div className="">
                     {this.props.loading && <Loader />}
-
                     <Row className="page-title align-items-center">
                         <Col sm={4} xl={6}>
                             <h4 className="mb-1 mt-0">Dashboard</h4>
                         </Col>
                         <Col sm={8} xl={6}>
                             <form className="form-inline float-sm-right mt-3 mt-sm-0">
-                                <div className="form-group mb-sm-0 mr-2">
+                                <di v className="form-group mb-sm-0 mr-2">
                                     <Flatpickr value={this.state.filterDate}
                                         onChange={date => { this.setState({ filterDate: date }) }} options={{ mode: "range" }}
                                         className="form-control" />
@@ -62,9 +70,7 @@ class Dashboard extends Component {
                             </form>
                         </Col>
                     </Row>
-
                     <Statistics></Statistics>
-
                     <Row>
                         <Col xl={3}>
                             <OverviewWidget items={[
@@ -73,7 +79,6 @@ class Dashboard extends Component {
                                 { title: '$21.5', description: 'Revenue Per Visitor', icon: ShoppingBag }
                             ]}></OverviewWidget>
                         </Col>
-
                         <Col xl={6}>
                             <RevenueChart />
                         </Col>
@@ -89,7 +94,6 @@ class Dashboard extends Component {
                             <Orders />
                         </Col>
                     </Row>
-
                     <Row>
                         <Col xl={4}>
                             <Performers />
@@ -102,7 +106,6 @@ class Dashboard extends Component {
                         </Col>
                     </Row>
                 </div>}
-
                  */}
             </React.Fragment>
         )
