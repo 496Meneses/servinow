@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Row, Col, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import { getLoggedInUser } from '../../helpers/authUtils';
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
+import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
+
 
 class Dashboard extends Component {
 
@@ -20,8 +22,8 @@ class Dashboard extends Component {
     render() {
 
         return (
-            <React.Fragment>                
-            <CrearSolicitud/>
+            <React.Fragment>
+            <DetalleOfertaTwo/>          
             {/* {<div className="">
                     {this.props.loading && <Loader />}
 
