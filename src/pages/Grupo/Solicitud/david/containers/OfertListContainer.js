@@ -2,23 +2,34 @@ import React,{ useEffect,useState } from 'react';
 import {GetOfertasDisponibles} from '../../../services'
 import List from '../components/OfertList';
 import Pagination from '../components/OfertPagination';
+import axios from 'axios';
 
 export const OfertListContainer = () => {
 
   
   const [listaOferta, setListaOferta] = useState([])
-  const [currentOffset, setCurrentOffset] = useState()
-  const [pageCounter, setPageCounter] = useState()
+  //const [currentOffset, setCurrentOffset] = useState()
+  //const [pageCounter, setPageCounter] = useState()
+  const [post, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
 
   useEffect(() => {
-    GetOfertasDisponibles(1).then((respuesta)=>{
-      setListaOferta(respuesta.data)
-      console.log(respuesta)
-    })
+      const fethPosts = async () => {
+        setLoading(true);
+        GetOfertasDisponibles(1).then((respuesta)=>{
+        setListaOferta(respuesta.data)
+        console.log(respuesta)
+        setPosts(respuesta.data);
+        setLoading(false);
+      })
+      }
+      fethPosts();
 
   }, [])
 
-  const increment= () => {
+ /*  const increment= () => {
     setCurrentOffset(currentOffset+10)
     setPageCounter(pageCounter+1)
   }
@@ -26,7 +37,12 @@ export const OfertListContainer = () => {
   const decrement= () => {
     setCurrentOffset(currentOffset+10)
     setPageCounter(pageCounter+1)
-  }
+  } */
+
+  //Get current posts
+  //const indexOfLastPost = currentPage * postsPerPage;
+  //const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  //const currentPosts = List.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <div>

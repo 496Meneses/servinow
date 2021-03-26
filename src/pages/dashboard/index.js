@@ -32,7 +32,7 @@ class Dashboard extends Component {
             {/* <ListarPostulantesSolicitud /> */}
             <OfertListContainer/>
             {/* <DetalleOfertaTwo/> */}
-            {/* <CrearSolicitud/> */}
+             {/* <CrearSolicitud/> */}
             {/* {<div className="">
                     {this.props.loading && <Loader />}
                     <Row className="page-title align-items-center">
