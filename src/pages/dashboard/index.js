@@ -34,6 +34,7 @@ class Dashboard extends Component {
             {/* <ListarPostulantesSolicitud /> */}
             <DetalleOfertaTwo/>
             <ToastContainer/>
+            
            {/*  <OfertListContainer/> */}
           
             {/* <CrearSolicitud/> */}

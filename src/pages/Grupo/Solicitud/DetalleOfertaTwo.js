@@ -7,6 +7,7 @@ import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { toast } from "react-toastify";
+import DialogComponent from "./DialogComponent";
 import {
   Typography,
   Chip,
@@ -88,9 +89,9 @@ export default function DetalleOfertaTwo() {
         //Validar si ya se ha postulado 2 veces
         if (response.data.error == null) {
           console.log("Si se pudo postular")
-          toast("Se ha postulado exitosamente!",{
+          toast("Se ha postulado exitosamente!", {
             type: 'success',
-            draggable:true
+            draggable: true
           })
 
         } else {
@@ -139,9 +140,9 @@ export default function DetalleOfertaTwo() {
       .then((response) => {
         // Success 🎉
         console.log(response);
-        toast("Ya no te encuentras postulado 😥",{
+        toast("Ya no te encuentras postulado 😥", {
           type: 'success',
-          draggable:true
+          draggable: true
         })
         obtenerDetalleOferta()
       })
@@ -184,7 +185,7 @@ export default function DetalleOfertaTwo() {
       if (postulado.usuarioYHabilidades.prestador.id_usuario == idPrestador) {
         //Ya está postulado
         console.log("Si está en la lista de postulados")
-        
+
         setEstoyPostulado(true)
 
       }
@@ -218,7 +219,7 @@ export default function DetalleOfertaTwo() {
   }
 
   useEffect(() => {
-    obtenerDetalleOferta();
+    //obtenerDetalleOferta();
 
 
   }, [])
@@ -261,6 +262,7 @@ export default function DetalleOfertaTwo() {
                   <Button size="small" color="primary" onClick={() => postularmeOferta()}>
                     Postularme
                   </Button>
+
               }
             </CardActions>
           </Card>
@@ -335,18 +337,35 @@ export default function DetalleOfertaTwo() {
           {
             estoyPostulado ?
 
-              <Button variant="contained" color="secondary" onClick={() => retirarmeOferta()}>
-                Retirarme
-              </Button>
+            <DialogComponent
+            titulo={"ServiNow"}
+            descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
+            textoBoton={"Ya no quiero postularme"}
+            colorBoton={"secondary"}
+            metodoAEjecutar={retirarmeOferta}></DialogComponent>
               :
-              <Button variant="contained" color="primary" onClick={() => postularmeOferta()}>
-                Postularme
-          </Button>
+              <DialogComponent
+                titulo={"ServiNow"}
+                descripcion={"¿Quieres postularte a esta oferta?"}
+                textoBoton={"Postúlate!"}
+                colorBoton={"primary"}
+                metodoAEjecutar={postularmeOferta}></DialogComponent>
           }
-
+         {/*  <Typography variant="h1" align="center" color="primary">
+            Space
+          </Typography> */}
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
         </Grid>
         <Grid item xs={12} sm={3}></Grid>
       </Grid>
+
+
     </div>
+
+
   );
 }
