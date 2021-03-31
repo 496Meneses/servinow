@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
@@ -61,52 +61,169 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DetalleOfertaTwo() {
+
   const classes = useStyles();
+  const [idPrestador, setIdPrestador] = useState(2)
   const [solicitante, setSolicitante] = useState([])
   const [imagen, setImagen] = useState("1")
   const [objHabilidad, setHabilidad] = useState([])
   const [oferta, setOferta] = useState([])
+  const [estoyPostulado, setEstoyPostulado] = useState(false)
+  let letEstoyPostulado;
+
+
+  const postularmeOferta = async () => {
+    const request = {
+      "id_prestador": 2,
+      "id_oferta": 1
+    }
+
+    axios.post(`http://52.7.252.110:8082/ofertaService/postularAOferta`, request)
+      .then((response) => {
+        // Success 🎉
+        console.log("Response");
+        //Validar si ya se ha postulado 2 veces
+        if (response.data.error == null) {
+          console.log("Si se pudo postular")
+
+        } else {
+          console.log("Ya está postulado")
+        }
+
+        obtenerDetalleOferta()
+
+      })
+      .catch((error) => {
+        // Error 😨
+
+        if (error.response) {
+          /*
+           * The request was made and the server responded with a
+           * status code that falls out of the range of 2xx
+           */
+          console.log("Error.Response: " + error.response.data);
+          console.log("Error.Response: " + error.response.status);
+          console.log("Error.Response: " + error.response.headers);
+        } else if (error.request) {
+          /*
+           * The request was made but no response was received, `error.request`
+           * is an instance of XMLHttpRequest in the browser and an instance
+           * of http.ClientRequest in Node.js
+           */
+          console.log("Error.Request: " + error.request);
+        } else {
+          // Something happened in setting up the request and triggered an Error
+          console.log("General Error: " + error.message);
+        }
+        console.log("Error.config: " + error.config);
+        obtenerDetalleOferta()
+      });
+
+  }
+
+
+  const retirarmeOferta = async () => {
+    const request = {
+      "id_prestador": 2,
+      "id_oferta": 1
+    }
+
+    axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
+      .then((response) => {
+        // Success 🎉
+        console.log(response);
+        obtenerDetalleOferta()
+      })
+      .catch((error) => {
+        // Error 😨
+
+        if (error.response) {
+          /*
+           * The request was made and the server responded with a
+           * status code that falls out of the range of 2xx
+           */
+          console.log("Error.Response: " + error.response.data);
+          console.log("Error.Response: " + error.response.status);
+          console.log("Error.Response: " + error.response.headers);
+        } else if (error.request) {
+          /*
+           * The request was made but no response was received, `error.request`
+           * is an instance of XMLHttpRequest in the browser and an instance
+           * of http.ClientRequest in Node.js
+           */
+          console.log("Error.Request: " + error.request);
+        } else {
+          // Something happened in setting up the request and triggered an Error
+          console.log("General Error: " + error.message);
+        }
+        console.log("Error.config: " + error.config);
+
+        obtenerDetalleOferta()
+      });
+  }
+
   const obtenerDetalleOferta = async () => {
-      //http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=1
-      const respuesta = await axios.get("http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=19");
-      const ofertaObtenida = await respuesta.data;
-      setOferta(ofertaObtenida)
-      console.log(oferta)
-      setSolicitante(ofertaObtenida.solicitante)
-      setHabilidad(ofertaObtenida.habilidad)
-     
-      
-      if (ofertaObtenida.imagen != null) {
-        setImagen(ofertaObtenida.imagen)
-        console.log("Image: "+oferta.imagen)
-        
-      } else {
-        setImagen("https://source.unsplash.com/random")  
+
+    const respuesta = await axios.get("http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=1");
+    const ofertaObtenida = await respuesta.data;
+
+    setOferta(ofertaObtenida)
+    console.log("Oferta")
+    console.log(oferta)
+    console.log("Recorrer los postulados")
+
+
+    letEstoyPostulado = false
+    setEstoyPostulado(false)
+    ofertaObtenida.postulados.map((postulado, index) => {
+      if (postulado.usuarioYHabilidades.prestador.id_usuario == idPrestador) {
+        //Ya está postulado
+        console.log("Si está en la lista de postulados")
+        letEstoyPostulado = true
+        setEstoyPostulado(true)
+
       }
+    })
 
-      console.log(ofertaObtenida)
+    console.log("Estoy postulado State: " + estoyPostulado)
+    console.log("Estoy postulado Let: " + letEstoyPostulado)
+
+    setSolicitante(ofertaObtenida.solicitante)
+    setHabilidad(ofertaObtenida.habilidad)
+
+
+    if (ofertaObtenida.imagen != null) {
+      setImagen(ofertaObtenida.imagen)
+      console.log("Image: " + oferta.imagen)
+
+    } else {
+      setImagen("https://source.unsplash.com/random")
+    }
+
+    console.log(ofertaObtenida)
   }
 
-  const convertTimeStamp = (timestamp) =>{
-      //1616015430000
-      //var timestamp = 1616015430000
-      var date = new Date(timestamp);
-      //console.log(date.getTime())
-      //console.log(date)
-      return date
+  const convertTimeStamp = (timestamp) => {
+    //1616015430000
+    //var timestamp = 1616015430000
+    var date = new Date(timestamp);
+    //console.log(date.getTime())
+    //console.log(date)
+    return date
   }
+
   useEffect(() => {
-      obtenerDetalleOferta();
-      
-            
+    obtenerDetalleOferta();
+
+
   }, [])
   return (
     <div className={classes.root}>
-        
+
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h3" align="center" color="primary">
-            { oferta.titulo!=null ? oferta.titulo : "Title" }
+            {oferta.titulo != null ? oferta.titulo : "Title"}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
@@ -118,10 +235,10 @@ export default function DetalleOfertaTwo() {
             />
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5">
-              {oferta.titulo}
+                {oferta.titulo}
               </Typography>
               <Typography>
-              {oferta.descripcion}
+                {oferta.descripcion}
               </Typography>
               <br></br>
               <Typography gutterBottom variant="h4" color="secondary">
@@ -129,16 +246,21 @@ export default function DetalleOfertaTwo() {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" color="primary">
-                Postularme
-              </Button>
-              <Button  size="small" color="secondary">
-                No es de mi interes
-              </Button>
+              {
+                estoyPostulado ?
+
+                  <Button size="small" color="secondary" onClick={() => retirarmeOferta()}>
+                    No es de mi interes
+                  </Button>
+                  :
+                  <Button size="small" color="primary" onClick={() => postularmeOferta()}>
+                    Postularme
+                  </Button>
+              }
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={12} md={6}> 
+        <Grid item xs={12} sm={12} md={6}>
           <Paper className={classes.paper}>
             <Typography variant="h4" align="left">
               Descripción
@@ -146,16 +268,16 @@ export default function DetalleOfertaTwo() {
             <Divider />
             <br></br>
             <Typography align="justify">
-            { oferta.descripcion!=null ? oferta.descripcion : "The description would be here" }
+              {oferta.descripcion != null ? oferta.descripcion : "The description would be here"}
             </Typography>
             <br></br>
             <div >
               <Alert severity="info" icon={<DateRangeIcon />}>
-                Fecha Inicio: { String(convertTimeStamp(parseInt(oferta.fecha_inicio)))}
+                Fecha Inicio: {String(convertTimeStamp(parseInt(oferta.fecha_inicio)))}
               </Alert>
               <br></br>
               <Alert severity="warning" icon={<DateRangeIcon />}>
-                Fecha Fin: { String(convertTimeStamp(parseInt(oferta.fecha_fin)))}
+                Fecha Fin: {String(convertTimeStamp(parseInt(oferta.fecha_fin)))}
               </Alert>
             </div>
             <br></br>
@@ -165,9 +287,9 @@ export default function DetalleOfertaTwo() {
               className={classes.hastags}
               icon={<LabelImportantIcon />}
               color="primary"
-              label={"# "+objHabilidad.nombreCategoria}
+              label={"# " + objHabilidad.nombreCategoria}
             />
-            
+
             <br></br>
             <br></br>
             <Divider />
@@ -183,15 +305,25 @@ export default function DetalleOfertaTwo() {
 
             <br></br>
             <Typography variant="body1" align="center">
-            {solicitante.nombres+ " " +solicitante.apellidos}
+              {solicitante.nombres + " " + solicitante.apellidos}
             </Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={3}></Grid>
         <Grid item xs={12} sm={6} align="center">
-          <Button variant="contained" color="primary">
-            Postularme
+
+          {
+            estoyPostulado ?
+
+              <Button variant="contained" color="secondary" onClick={() => retirarmeOferta()}>
+                Retirarme
+              </Button>
+              :
+              <Button variant="contained" color="primary" onClick={() => postularmeOferta()}>
+                Postularme
           </Button>
+          }
+
         </Grid>
         <Grid item xs={12} sm={3}></Grid>
       </Grid>
