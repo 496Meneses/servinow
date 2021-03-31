@@ -226,7 +226,7 @@ export default function DetalleOfertaTwo() {
   }
 
   useEffect(() => {
-    obtenerDetalleOferta();
+    //obtenerDetalleOferta();
 
 
   }, [])
@@ -242,7 +242,7 @@ export default function DetalleOfertaTwo() {
         cargando ? <CircularIndeterminate /> :
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h3" align="center" color="primary">
+              <Typography id="title" variant="h3" align="center" color="primary">
                 {oferta.titulo != null ? oferta.titulo : "Title"}
               </Typography>
             </Grid>
