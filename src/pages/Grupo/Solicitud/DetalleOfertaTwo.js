@@ -8,6 +8,7 @@ import axios from "axios";
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { toast } from "react-toastify";
 import DialogComponent from "./DialogComponent";
+import CircularIndeterminate from "./CircularIndeterminate";
 import {
   Typography,
   Chip,
@@ -73,10 +74,11 @@ export default function DetalleOfertaTwo() {
   const [objHabilidad, setHabilidad] = useState([])
   const [oferta, setOferta] = useState([])
   const [estoyPostulado, setEstoyPostulado] = useState(false)
-
+  const [cargando, setCargando] = useState(false)
 
 
   const postularmeOferta = async () => {
+    setCargando(true)
     const request = {
       "id_prestador": 2,
       "id_oferta": 1
@@ -84,6 +86,7 @@ export default function DetalleOfertaTwo() {
 
     axios.post(`http://52.7.252.110:8082/ofertaService/postularAOferta`, request)
       .then((response) => {
+        setCargando(false)
         // Success 🎉
         console.log("Response");
         //Validar si ya se ha postulado 2 veces
@@ -103,7 +106,7 @@ export default function DetalleOfertaTwo() {
       })
       .catch((error) => {
         // Error 😨
-
+        setCargando(false)
         if (error.response) {
           /*
            * The request was made and the server responded with a
@@ -131,6 +134,7 @@ export default function DetalleOfertaTwo() {
 
 
   const retirarmeOferta = async () => {
+    setCargando(true)
     const request = {
       "id_prestador": 2,
       "id_oferta": 1
@@ -138,6 +142,7 @@ export default function DetalleOfertaTwo() {
 
     axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
       .then((response) => {
+        setCargando(false)
         // Success 🎉
         console.log(response);
         toast("Ya no te encuentras postulado 😥", {
@@ -148,7 +153,7 @@ export default function DetalleOfertaTwo() {
       })
       .catch((error) => {
         // Error 😨
-
+        setCargando(false)
         if (error.response) {
           /*
            * The request was made and the server responded with a
@@ -175,12 +180,14 @@ export default function DetalleOfertaTwo() {
   }
 
   const obtenerDetalleOferta = async () => {
-
+    setCargando(true)
     const respuesta = await axios.get("http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=1");
     const ofertaObtenida = await respuesta.data;
+    setCargando(false)
     setOferta(ofertaObtenida)
     setPostulados(ofertaObtenida.postulados)
     setEstoyPostulado(false)
+    setSolicitante(ofertaObtenida.solicitante)
     ofertaObtenida.postulados.map((postulado, index) => {
       if (postulado.usuarioYHabilidades.prestador.id_usuario == idPrestador) {
         //Ya está postulado
@@ -219,149 +226,166 @@ export default function DetalleOfertaTwo() {
   }
 
   useEffect(() => {
-    //obtenerDetalleOferta();
+    obtenerDetalleOferta();
 
 
   }, [])
   return (
+
+
+
+
     <div className={classes.root}>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography variant="h3" align="center" color="primary">
-            {oferta.titulo != null ? oferta.titulo : "Title"}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.cardMedia}
-              image={imagen}
-              title="Image Title"
-            />
-            <CardContent className={classes.cardContent}>
-              <Typography gutterBottom variant="h5">
-                {oferta.titulo}
+
+      {
+        cargando ? <CircularIndeterminate /> :
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant="h3" align="center" color="primary">
+                {oferta.titulo != null ? oferta.titulo : "Title"}
               </Typography>
-              <Typography>
-                {oferta.descripcion}
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={imagen}
+                  title="Image Title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5">
+                    {oferta.titulo}
+                  </Typography>
+                  <Typography>
+                    {oferta.descripcion}
+                  </Typography>
+                  <br></br>
+                  <Typography gutterBottom variant="h4" color="secondary">
+                    $48.000
               </Typography>
-              <br></br>
-              <Typography gutterBottom variant="h4" color="secondary">
-                $48.000
-              </Typography>
-            </CardContent>
-            <CardActions>
+                </CardContent>
+                <CardActions>
+                  {
+                    estoyPostulado ?
+
+                      <Button size="small" color="secondary" onClick={() => retirarmeOferta()}>
+                        No es de mi interes
+                  </Button>
+                      :
+                      <Button size="small" color="primary" onClick={() => postularmeOferta()}>
+                        Postularme
+                  </Button>
+
+                  }
+                </CardActions>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <Paper className={classes.paper}>
+                <Typography variant="h4" align="left">
+                  Descripción
+            </Typography>
+                <Divider />
+                <br></br>
+                <Typography align="justify">
+                  {oferta.descripcion != null ? oferta.descripcion : "The description would be here"}
+                </Typography>
+                <br></br>
+                <div >
+                  <Alert severity="info" icon={<DateRangeIcon />}>
+                    Fecha Inicio: {String(convertTimeStamp(parseInt(oferta.fecha_inicio)))}
+                  </Alert>
+                  <br></br>
+                  <Alert severity="warning" icon={<DateRangeIcon />}>
+                    Fecha Fin: {String(convertTimeStamp(parseInt(oferta.fecha_fin)))}
+                  </Alert>
+                </div>
+                <br></br>
+                <Typography variant="body1">Postulantes Activos</Typography>
+                <br></br>
+                <div className={classes.div}>
+
+                  <AvatarGroup max={4}>
+                    {
+                      postulados.map((postulado, index) => (
+                        //console.log(postulado.usuarioYHabilidades.prestador.url_imagen)
+                        /* console.log("Postulado # "+index)
+                        console.log(postulado) */
+                        <Avatar alt="Remy Sharp" title={postulado.usuarioYHabilidades.prestador.nombres} src={postulado.usuarioYHabilidades.prestador.url_imagen} />
+                      ))
+                    }
+
+
+                  </AvatarGroup>
+                </div>
+                <br></br>
+                <Divider />
+                <br></br>
+                <Chip
+                  className={classes.hastags}
+                  icon={<LabelImportantIcon />}
+                  color="primary"
+                  label={"# " + objHabilidad.nombreCategoria}
+                />
+
+                <br></br>
+                <br></br>
+                <Divider />
+                <br></br>
+                <Typography variant="subtitle1">Info del contacto </Typography>
+                {
+                  console.log(solicitante)
+                }
+                <div className={classes.div}>
+                  <Avatar
+                    className={classes.large}
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Chloris_chloris_%28profile%29.jpg/1280px-Chloris_chloris_%28profile%29.jpg"
+                    //src={solicitante.url_imagen}
+                  ></Avatar>
+                </div>
+
+                <br></br>
+                <Typography variant="body1" align="center">
+                  {solicitante.nombres + " " + solicitante.apellidos}
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={3}></Grid>
+            <Grid item xs={12} sm={6} align="center">
+
               {
                 estoyPostulado ?
 
-                  <Button size="small" color="secondary" onClick={() => retirarmeOferta()}>
-                    No es de mi interes
-                  </Button>
+                  <DialogComponent
+                    titulo={"ServiNow"}
+                    descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
+                    textoBoton={"Ya no quiero postularme"}
+                    colorBoton={"secondary"}
+                    metodoAEjecutar={retirarmeOferta}></DialogComponent>
                   :
-                  <Button size="small" color="primary" onClick={() => postularmeOferta()}>
-                    Postularme
-                  </Button>
-
+                  <DialogComponent
+                    titulo={"ServiNow"}
+                    descripcion={"¿Quieres postularte a esta oferta?"}
+                    textoBoton={"Postúlate!"}
+                    colorBoton={"primary"}
+                    metodoAEjecutar={postularmeOferta}></DialogComponent>
               }
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Paper className={classes.paper}>
-            <Typography variant="h4" align="left">
-              Descripción
-            </Typography>
-            <Divider />
-            <br></br>
-            <Typography align="justify">
-              {oferta.descripcion != null ? oferta.descripcion : "The description would be here"}
-            </Typography>
-            <br></br>
-            <div >
-              <Alert severity="info" icon={<DateRangeIcon />}>
-                Fecha Inicio: {String(convertTimeStamp(parseInt(oferta.fecha_inicio)))}
-              </Alert>
-              <br></br>
-              <Alert severity="warning" icon={<DateRangeIcon />}>
-                Fecha Fin: {String(convertTimeStamp(parseInt(oferta.fecha_fin)))}
-              </Alert>
-            </div>
-            <br></br>
-            <div className={classes.div}>
-              <AvatarGroup max={4}>
-                {
-                  postulados.map((postulado, index) => (
-                    //console.log(postulado.usuarioYHabilidades.prestador.url_imagen)
-                    /* console.log("Postulado # "+index)
-                    console.log(postulado) */
-                    <Avatar alt="Remy Sharp" title={postulado.usuarioYHabilidades.prestador.nombres} src={postulado.usuarioYHabilidades.prestador.url_imagen} />
-                  ))
-                }
-
-
-              </AvatarGroup>
-            </div>
-            <br></br>
-            <Divider />
-            <br></br>
-            <Chip
-              className={classes.hastags}
-              icon={<LabelImportantIcon />}
-              color="primary"
-              label={"# " + objHabilidad.nombreCategoria}
-            />
-
-            <br></br>
-            <br></br>
-            <Divider />
-            <br></br>
-            <Typography variant="subtitle1">Info del contacto </Typography>
-
-            <div className={classes.div}>
-              <Avatar
-                className={classes.large}
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Chloris_chloris_%28profile%29.jpg/1280px-Chloris_chloris_%28profile%29.jpg"
-              ></Avatar>
-            </div>
-
-            <br></br>
-            <Typography variant="body1" align="center">
-              {solicitante.nombres + " " + solicitante.apellidos}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={3}></Grid>
-        <Grid item xs={12} sm={6} align="center">
-
-          {
-            estoyPostulado ?
-
-            <DialogComponent
-            titulo={"ServiNow"}
-            descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
-            textoBoton={"Ya no quiero postularme"}
-            colorBoton={"secondary"}
-            metodoAEjecutar={retirarmeOferta}></DialogComponent>
-              :
-              <DialogComponent
-                titulo={"ServiNow"}
-                descripcion={"¿Quieres postularte a esta oferta?"}
-                textoBoton={"Postúlate!"}
-                colorBoton={"primary"}
-                metodoAEjecutar={postularmeOferta}></DialogComponent>
-          }
-         {/*  <Typography variant="h1" align="center" color="primary">
+              {/*  <Typography variant="h1" align="center" color="primary">
             Space
           </Typography> */}
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-        </Grid>
-        <Grid item xs={12} sm={3}></Grid>
-      </Grid>
+              <br></br>
+              <br></br>
+              <br></br>
+
+            </Grid>
+            <Grid item xs={12} sm={3}></Grid>
+          </Grid>
+
+
+      }
+
+
 
 
     </div>
