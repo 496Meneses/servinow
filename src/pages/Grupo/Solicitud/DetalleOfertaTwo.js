@@ -5,6 +5,8 @@ import LabelImportantIcon from "@material-ui/icons/LabelImportant";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import { toast } from "react-toastify";
 import {
   Typography,
   Chip,
@@ -65,11 +67,12 @@ export default function DetalleOfertaTwo() {
   const classes = useStyles();
   const [idPrestador, setIdPrestador] = useState(2)
   const [solicitante, setSolicitante] = useState([])
+  const [postulados, setPostulados] = useState([])
   const [imagen, setImagen] = useState("1")
   const [objHabilidad, setHabilidad] = useState([])
   const [oferta, setOferta] = useState([])
   const [estoyPostulado, setEstoyPostulado] = useState(false)
-  let letEstoyPostulado;
+
 
 
   const postularmeOferta = async () => {
@@ -85,6 +88,10 @@ export default function DetalleOfertaTwo() {
         //Validar si ya se ha postulado 2 veces
         if (response.data.error == null) {
           console.log("Si se pudo postular")
+          toast("Se ha postulado exitosamente!",{
+            type: 'success',
+            draggable:true
+          })
 
         } else {
           console.log("Ya está postulado")
@@ -132,6 +139,10 @@ export default function DetalleOfertaTwo() {
       .then((response) => {
         // Success 🎉
         console.log(response);
+        toast("Ya no te encuentras postulado 😥",{
+          type: 'success',
+          draggable:true
+        })
         obtenerDetalleOferta()
       })
       .catch((error) => {
@@ -166,27 +177,21 @@ export default function DetalleOfertaTwo() {
 
     const respuesta = await axios.get("http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=1");
     const ofertaObtenida = await respuesta.data;
-
     setOferta(ofertaObtenida)
-    console.log("Oferta")
-    console.log(oferta)
-    console.log("Recorrer los postulados")
-
-
-    letEstoyPostulado = false
+    setPostulados(ofertaObtenida.postulados)
     setEstoyPostulado(false)
     ofertaObtenida.postulados.map((postulado, index) => {
       if (postulado.usuarioYHabilidades.prestador.id_usuario == idPrestador) {
         //Ya está postulado
         console.log("Si está en la lista de postulados")
-        letEstoyPostulado = true
+        
         setEstoyPostulado(true)
 
       }
     })
 
     console.log("Estoy postulado State: " + estoyPostulado)
-    console.log("Estoy postulado Let: " + letEstoyPostulado)
+
 
     setSolicitante(ofertaObtenida.solicitante)
     setHabilidad(ofertaObtenida.habilidad)
@@ -279,6 +284,21 @@ export default function DetalleOfertaTwo() {
               <Alert severity="warning" icon={<DateRangeIcon />}>
                 Fecha Fin: {String(convertTimeStamp(parseInt(oferta.fecha_fin)))}
               </Alert>
+            </div>
+            <br></br>
+            <div className={classes.div}>
+              <AvatarGroup max={4}>
+                {
+                  postulados.map((postulado, index) => (
+                    //console.log(postulado.usuarioYHabilidades.prestador.url_imagen)
+                    /* console.log("Postulado # "+index)
+                    console.log(postulado) */
+                    <Avatar alt="Remy Sharp" title={postulado.usuarioYHabilidades.prestador.nombres} src={postulado.usuarioYHabilidades.prestador.url_imagen} />
+                  ))
+                }
+
+
+              </AvatarGroup>
             </div>
             <br></br>
             <Divider />
