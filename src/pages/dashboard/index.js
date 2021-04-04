@@ -10,6 +10,8 @@ import OfertListContainer from '../Grupo/Solicitud/david/containers/OfertListCon
 //import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
 import ListarPostulantesSolicitud from '../Grupo/Solicitud/ListarPostulantesSolicitud'
 import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 class Dashboard extends Component {
 
@@ -30,9 +32,18 @@ class Dashboard extends Component {
         return (
             <React.Fragment>
             {/* <ListarPostulantesSolicitud /> */}
+{/*
             <OfertListContainer/>
+            */}
             {/* <DetalleOfertaTwo/> */}
              {/* <CrearSolicitud/> */}
+
+            <DetalleOfertaTwo/>
+            <ToastContainer/>
+            
+           {/*  <OfertListContainer/> */}
+          
+            {/* <CrearSolicitud/> */}
             {/* {<div className="">
                     {this.props.loading && <Loader />}
                     <Row className="page-title align-items-center">
