@@ -34,14 +34,14 @@ import {
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import HomeIcon from '@material-ui/icons/Home';
-
+import { AlertView } from '../../../components/Alert'
 import PaymentIcon from '@material-ui/icons/Payment';
 
 const useStyles = makeStyles({
   root: {
     background: 'white',
-    border: 1,
-    borderRadius: 3,
+    border: 5,
+    borderRadius: 5,
     paddingTop: '30px',
     paddingLeft: '50px',
     marginTop: "300px"
@@ -51,9 +51,6 @@ const useStyles = makeStyles({
   },
   Row: {
     justifyContent: 'center',
-  },
-  Form: {
-    
   },
   form_section: {
     margin: "20px auto",
@@ -75,6 +72,11 @@ const useStyles = makeStyles({
 
 
 export const CrearSolicitud = () => {
+
+  const [open, setOpen] = useState(false)
+  const [typeAlert, setTypeAlert] = useState('success')
+  const [message, setMessage] = useState('')
+
 
   const classes = useStyles();
   const [titulo, setTitulo] = useState("")
@@ -140,7 +142,7 @@ export const CrearSolicitud = () => {
   }
   const handleCreate = async (event) => {
 
-
+    setOpen(false)
     let render = new FileReader();
     render.readAsDataURL(Imagen[0])
     render.onload = (e) => {
@@ -158,8 +160,14 @@ export const CrearSolicitud = () => {
       }).then(() => {
 
         console.log("RUN")
-      }).catch(() => {
+        setOpen(true)
+        setTypeAlert('success')
+        setMessage('Oferta creada correctamente')
 
+      }).catch(() => {
+        setOpen(true)
+        setTypeAlert('error')
+        setMessage('Error, Verifica los datos!')
         console.log("no funca")
       })
 
@@ -313,6 +321,7 @@ export const CrearSolicitud = () => {
                       helperText={touched.propina && errors.propina}
                       onBlur={handleBlur}
                       required
+                      type="number"
                       onChange={
                         e => {
                           handleChange(e);
@@ -387,7 +396,7 @@ export const CrearSolicitud = () => {
                       fullWidth
                       size="large"
                       type="submit"
-                      variant="text"
+                      variant="contained"
                     >
                       Crear
                     </Button>
@@ -397,10 +406,12 @@ export const CrearSolicitud = () => {
               <Col lg={6}>
               </Col>
             </Row>
+          <AlertView open = {open}  typeAlert = {typeAlert} message = {message}/>
           </CardBody>
 
         )}
       </Formik>
+      
     </Card>
   )
 }
