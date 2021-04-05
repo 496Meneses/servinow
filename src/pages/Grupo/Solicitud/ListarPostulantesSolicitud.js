@@ -56,32 +56,7 @@ export const ListarPostulantesSolicitud = () => {
   const postuladosPerPage = 3
   const pagesVisited = pageNumber * postuladosPerPage
   const pageCount = Math.ceil(postulados.length / postuladosPerPage)
-
-  const displayPostulados = postulados.slice(pagesVisited, pagesVisited + postuladosPerPage).map((postulados) => {
-    return (
-      <div className="cards">
-        <div className="grid-container">
-          <div className="perfil">
-            <img src={avatar} id="img-perfil"/>
-            <a href="" id="btn-perfil">Ver Perfil</a>
-          </div>
-          <div className="desc">
-            <p id="nombre">{postulados.last_name}</p>
-            {/* <hr style="border: 0.1% solid #07090A"/> */}
-            <p id="habilidades">
-              {postulados.desc}   
-                         
-            </p>
-            <div className="buttons">
-              <a href="" id="btn-aceptar">Aceptar</a>
-              <a href="" id="btn-rechazar">Rechazar</a>
-            </div> 
-          </div>
-        </div>
-      </div>
-    )
-  })
-  const [postulados1, setPostulados1] = useState([]);
+  
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -97,13 +72,14 @@ export const ListarPostulantesSolicitud = () => {
     setPageNumber(selected)
   }
   {/* <CardPostulante postulado={postulado} habilidades={postulados.usuarioYHabilidades.habilidades} key={index} /> */}
-  
+    
 
   const displayPostulados = postulados.slice(pagesVisited, pagesVisited + postuladosPerPage).map((postulado, index) => {
     {console.log(postulado)}
     return (
       <Paper className={classes.paper}>
         <Grid container spacing={4} style={{width:'100%', margin: '0 auto'}}>
+          
           <Grid item xs={12} sm={3} md={3} >
             <Box className={classes.div}>
               <Avatar
