@@ -63,12 +63,6 @@ class Routes extends Component {
                         );
                     })}
                 </Switch>
-
-               {/*  <Switch>
-                    <Route exact path='/' component={home}/> 
-                    <Route path='/ofertas' component={OfertApp}/>   
-                </Switch>   */} 
-
             </Layout>
         </BrowserRouter>
     }

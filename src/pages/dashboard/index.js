@@ -9,8 +9,6 @@ import ListarSolicitudes from '../Grupo/Solicitud/ListarSolicitudes';
 import OfertListContainer from '../Grupo/Solicitud/david/containers/OfertListContainer';
 
 
-//import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
-
 import ListarPostulantesSolicitud from '../Grupo/Solicitud/ListarPostulantesSolicitud'
 import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
 import { ToastContainer } from "react-toastify";
