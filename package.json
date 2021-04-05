@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fontsource/roboto": "^4.2.2",
     "@fullcalendar/bootstrap": "^4.3.0",
     "@fullcalendar/core": "^4.3.1",
     "@fullcalendar/daygrid": "^4.3.0",
@@ -19,6 +20,7 @@
     "bootstrap": "^4.6.0",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.8.4",
+    "fontsource-roboto": "^4.0.0",
     "formik": "^2.2.6",
     "jwt-decode": "^2.2.0",
     "metismenujs": "^1.1.0",
@@ -38,7 +40,7 @@
     "react-feather": "^2.0.3",
     "react-flatpickr": "^3.9.1",
     "react-loadable": "^5.5.0",
-    "react-paginate": "^7.1.0",
+    "react-paginate": "^7.1.2",
     "react-perfect-scrollbar": "^1.5.3",
     "react-redux": "^7.1.1",
     "react-router-auth": "^1.0.1",
@@ -47,6 +49,7 @@
     "react-select": "^3.0.5",
     "react-sortablejs": "^1.5.1",
     "react-text-mask": "^5.4.3",
+    "react-toastify": "^7.0.3",
     "reactstrap": "^8.0.1",
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",
@@ -71,6 +74,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "gh-pages": "^3.1.0"
   }
 }
