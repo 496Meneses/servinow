@@ -1,149 +1,105 @@
 import React,{ useEffect,useState } from 'react';
-import {GetOfertasDisponibles} from '../../../services'
+import { makeStyles } from '@material-ui/core/styles';
+import { InputLabel } from '@material-ui/core';
+import {GetOfertasDisponibles, GetAllOferts} from '../../../services';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '../components/OfertList';
-import Pagination from '../components/OfertPagination';
+import ReactPaginate from 'react-paginate';
 import axios from 'axios';
+import Pagination from '../components/OfertPagination';
+import { Card, CardMedia, CardContent, Typography, Button, Tooltip } from '@material-ui/core';
+import OfertCard from '../components/OfertCard';
+import { Fragment } from 'react';
+/* import ReactPaginate from 'react-paginate'; */
+import { Grid } from '@material-ui/core';
+
+import Paper from '@material-ui/core/Paper';
+
+
+ const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    /* '& > * + *': {
+      marginTop: theme.spacing(2),
+    }, */
+  },
+  title: {
+		color: 'black',
+	  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+})); 
 
 export const OfertListContainer = () => {
-
-  
   const [listaOferta, setListaOferta] = useState([])
-  //const [currentOffset, setCurrentOffset] = useState()
-  //const [pageCounter, setPageCounter] = useState()
-  const [post, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const classes = useStyles();
+
+/*   const handleChange = (event) => {
+    setListaOferta(Number(event.target.value));
+  }; */
+
+ 
+  const [pageNumber, setPageNumber] = useState(0)
+  const postuladosPerPage = 8
+  const pagesVisited = pageNumber * postuladosPerPage
+  const pageCount = Math.ceil(listaOferta.length / postuladosPerPage)
+  const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => {
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={1}>    {/*container direction="row" justify="center" alignItems="center"   className={classes.root} spacing={24} */}
+           <Grid justify="center" container item md={8} spacing={1}>{/* item lg={4} md={6} sm={6} xs={12} */}
+              <OfertCard key={index} oferta={oferta}/>
+           </Grid>
+                           
+        </Grid> 
+      </div>   
+    )
+  })
+
 
   useEffect(() => {
-      const fethPosts = async () => {
-        setLoading(true);
-        GetOfertasDisponibles(1).then((respuesta)=>{
-        setListaOferta(respuesta.data)
-        console.log(respuesta)
-        setPosts(respuesta.data);
-        setLoading(false);
-      })
-      }
-      fethPosts();
+    GetAllOferts(1).then((respuesta)=>{
+      setListaOferta(respuesta.data)
+      console.log(respuesta)
+    })
 
   }, [])
 
- /*  const increment= () => {
-    setCurrentOffset(currentOffset+10)
-    setPageCounter(pageCounter+1)
+  const changePage = ({selected}) => {
+    setPageNumber(selected)
   }
 
-  const decrement= () => {
-    setCurrentOffset(currentOffset+10)
-    setPageCounter(pageCounter+1)
-  } */
-
-  //Get current posts
-  //const indexOfLastPost = currentPage * postsPerPage;
-  //const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  //const currentPosts = List.slice(indexOfFirstPost, indexOfLastPost);
-
   return (
-    <div>
-        {/* <Pagination 
-          increment={increment()} 
-          decrement={decrement()} 
-          page={pageCounter} 
-        /> */}
-        <List listaOfertas={listaOferta} />
+    <div align="center">
+      <br></br>
+      {/* <h1 >Ofertas Disponibles</h1> */}
+      <Typography className={classes.title} component="p" variant="h5">OFERTAS DISPONIBLES</Typography>
+       {displayOferts} 
+       {/* <List listaOfertas={displayOferts}></List>  */}
+      <ReactPaginate 
+        nextLabel={"Siguiente"}
+        previousLabel={"Anterior"}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"paginacionBtns"}
+        previousLinkClassName={"antBtn"}
+        nextLinkClassName={"sigBtn"}
+        disabledClassName={"pagDisabled"}
+        activeClassName={"pagActiva"}
+
+      />
+        <br></br>
+        <br></br>
+        <br></br>
     </div>
+
+    
   )
 }
-
-// class OfertListContainer extends Component {
-
-//   state ={
-//     pokeData: [],
-//     currentOffset: 0,
-//     pageCounter: 1,
-//   }
-
-
-//   componentDidMount() {
-//     this.fetchData();
-//   }
-
-//   componentDidUpdate(prevProps,prevState) {
-//     const { currentOffset } = this.state;
-//     if (currentOffset !== prevState.currentOffset) {
-//       if (currentOffset < 0 ) {
-//         this.setState({
-//           currentOffset: 0,
-//           pageCounter: 1,
-//         });
-//         this.fetchData(prevState.currentOffset);
-//       }
-//       this.fetchData(currentOffset);
-//     }
-//   }
-
- 
-//     fetchData = (offset = 0) => {
-//     //const url ='https://pokeapi.co/api/v2/pokemon';
-//     const url='http://52.7.252.110:8082/ofertaService/getOfertasALasQueCalifico?id_prestador=1';
-//     let params = {
-//       offset: offset,
-//       limit: 21
-//     }
-
-//     axios.get(url, { params })
-//     .then(res => {
-//       console.log("DATOSSSSSSSSSS ",res)
-//       const { results } = res.data;
-
-//       this.setState({
-//         pokeData: results,
-//       })
-
-//     })
-//     .catch(error =>{
-//       console.log(error);
-//     })
-//   } 
-
-//  /*  useEffect(() => {
-//     GetOfertasDisponibles(1);
-    
-          
-//   }, []) */
-
-//   increment= () => {
-//     const { currentOffset, pageCounter } = this.state;
-//     this.setState({
-//       currentOffset: currentOffset + 21,
-//       pageCounter: pageCounter + 1,
-//     });
-//   }
-
-//   decrement= () => {
-//     const { currentOffset, pageCounter } = this.state;
-//     this.setState({
-//       currentOffset: currentOffset - 21,
-//       pageCounter: pageCounter - 1,
-//     });
-//   }
-
-//   render() {
-//     const { pokeData, pageCounter } = this.state;
-//     <h1>{console.log("ESTADOOOOOOOOOO ",this.state)}</h1>
-//     return(
-//       <>
-//          {/* <AppNav /> */} 
-//         <Pagination 
-//           increment={this.increment} 
-//           decrement={this.decrement} 
-//           page={pageCounter} 
-//         />
-//         <List pokedata={pokeData} />
-//       </>
-//     );
-//   }
-// }
 
 export default OfertListContainer;

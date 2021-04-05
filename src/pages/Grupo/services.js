@@ -35,3 +35,10 @@ export const GetOfertasDisponibles = (idPrestador) => {
     return axios.get(url)
 
 }
+
+//David
+export const GetAllOferts = (getTodasOfertas) => {
+    const url = `${URLAPI}ofertaService/getTodasOfertas`;//=${getTodasOfertas}
+    return axios.get(url)
+
+}

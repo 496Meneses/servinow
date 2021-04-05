@@ -15,6 +15,7 @@ const ForgetPassword = React.lazy(() => import('../pages/auth/ForgetPassword'));
 const Confirm = React.lazy(() => import('../pages/auth/Confirm'));
 // dashboard
 const Dashboard = React.lazy(() => import('../pages/dashboard'));
+const DetalleOfert = React.lazy(() => import('../pages/Grupo/Solicitud/DetalleOfertaTwo'));
 // apps
 // const CalendarApp = React.lazy(() => import('../pages/apps/Calendar'));
 // const EmailInbox = React.lazy(() => import('../pages/apps/Email/Inbox'));
@@ -97,6 +98,15 @@ const dashboardRoutes = {
     roles: ['Admin'],
     route: PrivateRoute
 };
+//detalle oferta
+const detalleOfert = {
+    path: '/oferta/detalle',
+    name: 'detalle',
+    icon: FeatherIcon.Home,
+    component: DetalleOfert,
+    roles: ['Admin'],
+    route: PrivateRoute
+};
 
 const authRoutes = {
     path: '/account',
@@ -130,7 +140,8 @@ const flattenRoutes = routes => {
 const allRoutes = [
     rootRoute,
     dashboardRoutes,
-    authRoutes
+    authRoutes,
+    detalleOfert
 ];
 const authProtectedRoutes = [dashboardRoutes,authRoutes];
 // const authProtectedRoutes = [dashboardRoutes, ...appRoutes, pagesRoutes, componentsRoutes, chartRoutes, formsRoutes, tableRoutes];

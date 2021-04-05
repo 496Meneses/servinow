@@ -5,11 +5,13 @@ import { getLoggedInUser } from '../../helpers/authUtils';
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud';
 import ListarOfertas from '../Grupo/Solicitud/ListarOfertas';
 import ListarSolicitudes from '../Grupo/Solicitud/ListarSolicitudes';
+
 import OfertListContainer from '../Grupo/Solicitud/david/containers/OfertListContainer';
 
+
 //import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud'
-import ListarPostulantesSolicitud from '../Grupo/Solicitud/ListarPostulantesSolicitud'
-import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
+import ListarPostulantesSolicitud from '../Grupo/Solicitud/ListarPostulantesSolicitud';
+import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo';
 
 class Dashboard extends Component {
 
@@ -29,10 +31,11 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-            {/* <ListarPostulantesSolicitud /> */}
-            <OfertListContainer/>
-            {/* <DetalleOfertaTwo/> */}
-             {/* <CrearSolicitud/> */}
+             {/* <ListarPostulantesSolicitud /> */}
+             <OfertListContainer/>  
+            {/*   <App/>  */} 
+             {/* <DetalleOfertaTwo/> */} 
+                {/* <CrearSolicitud/> */}  
             {/* {<div className="">
                     {this.props.loading && <Loader />}
                     <Row className="page-title align-items-center">

@@ -86,7 +86,8 @@ export const ListarPostulantesSolicitud = () => {
             <p id="nombre">{postulados.last_name}</p>
             {/* <hr style="border: 0.1% solid #07090A"/> */}
             <p id="habilidades">
-              {postulados.desc}              
+              {postulados.desc}   
+                         
             </p>
             <div className="buttons">
               <a href="" id="btn-aceptar">Aceptar</a>
