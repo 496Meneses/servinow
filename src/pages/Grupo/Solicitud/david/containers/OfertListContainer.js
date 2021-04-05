@@ -9,19 +9,10 @@ import axios from 'axios';
 import Pagination from '../components/OfertPagination';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip } from '@material-ui/core';
 import OfertCard from '../components/OfertCard';
-import { Fragment } from 'react';
-/* import ReactPaginate from 'react-paginate'; */
-import { Grid } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-
+import "../../../../../assets/css/style.css"
 
  const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    /* '& > * + *': {
-      marginTop: theme.spacing(2),
-    }, */
-  },
+
   title: {
 		color: 'black',
 	  },
@@ -41,19 +32,15 @@ export const OfertListContainer = () => {
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0)
   const postuladosPerPage = 4
-  const aux = [0,1];
   const pagesVisited = pageNumber * postuladosPerPage
   const pageCount = Math.ceil(listaOferta.length / postuladosPerPage)
+
   const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => {
     return (
        
-        <div className={classes.root}>
-        <Grid container direction="row" justify="center" alignItems="center"   className={classes.root} spacing={24} >    {/*container direction="row" justify="center" alignItems="center"   className={classes.root} spacing={24} */}
-           <Grid>{/* item lg={4} md={6} sm={6} xs={12} */}
+        <div className="contenedor-carta" >  
               <OfertCard key={index} oferta={oferta}/>
-           </Grid>
-                           
-        </Grid> 
+  
       </div>   
       
     )
@@ -73,13 +60,18 @@ export const OfertListContainer = () => {
   }
 
   return (
-    <div align="center">
+    <div>
       <br></br>
-      {/* <h1 >Ofertas Disponibles</h1> */}
-      <Typography className={classes.title} component="p" variant="h5">OFERTAS DISPONIBLES</Typography>
-       {displayOferts} 
-       {/* <List listaOfertas={displayOferts}></List>  */}
-      <div>
+
+      <h5>OFERTAS DISPONIBLES</h5>
+
+      <div className="contenedor-carta">
+        {displayOferts}
+      </div>
+      
+
+
+      <div className="contenedor-paginacion">
         <ReactPaginate 
           nextLabel={"Siguiente"}
           previousLabel={"Anterior"}
