@@ -29,8 +29,8 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-            {/* <ListarPostulantesSolicitud /> */}
-            <OfertListContainer/>
+            <ListarPostulantesSolicitud />
+            {/* <OfertListContainer/> */}
             {/* <DetalleOfertaTwo/> */}
             {/* <CrearSolicitud/> */}
             {/* {<div className="">
