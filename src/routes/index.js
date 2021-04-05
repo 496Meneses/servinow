@@ -100,7 +100,7 @@ const dashboardRoutes = {
 };
 //detalle oferta
 const detalleOfert = {
-    path: '/oferta/detalle',
+    path: '/oferta/detalle/:id',
     name: 'detalle',
     icon: FeatherIcon.Home,
     component: DetalleOfert,
@@ -116,6 +116,8 @@ const ofertas = {
     roles: ['Admin'],
     route: PrivateRoute
 };
+
+
 
 const crearSolicitud = {
     path: '/solicitud',
@@ -159,7 +161,6 @@ const flattenRoutes = routes => {
 const allRoutes = [
     rootRoute,
     dashboardRoutes,
-    authRoutes,
     detalleOfert,
     ofertas,
     crearSolicitud,

@@ -8,6 +8,7 @@ import axios from "axios";
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { toast } from "react-toastify";
 import DialogComponent from "./DialogComponent";
+import { useParams } from "react-router-dom"
 import CircularIndeterminate from "./CircularIndeterminate";
 import {
   Typography,
@@ -66,7 +67,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DetalleOfertaTwo() {
 
+  const { id } = useParams();
+  
+  
   const classes = useStyles();
+  
+  const [idOferta, setIdOferta] = useState(id)
   const [idPrestador, setIdPrestador] = useState(2)
   const [solicitante, setSolicitante] = useState([])
   const [postulados, setPostulados] = useState([])
@@ -81,7 +87,7 @@ export default function DetalleOfertaTwo() {
     setCargando(true)
     const request = {
       "id_prestador": 2,
-      "id_oferta": 1
+      "id_oferta": idOferta
     }
 
     axios.post(`http://52.7.252.110:8082/ofertaService/postularAOferta`, request)
@@ -137,7 +143,7 @@ export default function DetalleOfertaTwo() {
     setCargando(true)
     const request = {
       "id_prestador": 2,
-      "id_oferta": 1
+      "id_oferta": idOferta
     }
 
     axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
@@ -181,7 +187,7 @@ export default function DetalleOfertaTwo() {
 
   const obtenerDetalleOferta = async () => {
     setCargando(true)
-    const respuesta = await axios.get("http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=1");
+    const respuesta = await axios.get(`http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=${id}`);
     const ofertaObtenida = await respuesta.data;
     setCargando(false)
     setOferta(ofertaObtenida)
@@ -226,8 +232,7 @@ export default function DetalleOfertaTwo() {
   }
 
   useEffect(() => {
-    //obtenerDetalleOferta();
-
+    obtenerDetalleOferta();
 
   }, [])
   return (

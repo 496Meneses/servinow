@@ -46,25 +46,25 @@ class Routes extends Component {
     }
 
     render() {
-        const Layout = this.getLayout();
-        return <BrowserRouter>
-            <Layout {...this.props}>
-                <Switch>
-                    {routes.map((route, index) => {
-                        return (
-                            !route.children ?
-                                <route.route
-                                    key={index}
-                                    path={route.path}
-                                    roles={route.roles}
-                                    exact={route.exact}
-                                    component={route.component}></route.route>
-                                : null
-                        );
-                    })}
-                </Switch>
-            </Layout>
-        </BrowserRouter>
+            const Layout = this.getLayout();
+            return <BrowserRouter>
+                <Layout {...this.props}>
+                    <Switch>
+                        {routes.map((route, index) => {
+                            return (
+                                !route.children ?
+                                    <route.route
+                                        key={index}
+                                        path={route.path}
+                                        roles={route.roles}
+                                        exact={route.exact}
+                                        component={route.component}></route.route>
+                                    : null
+                            );
+                        })}
+                    </Switch>
+                </Layout>
+            </BrowserRouter>
     }
 }
 const mapStateToProps = state => {

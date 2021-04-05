@@ -117,9 +117,11 @@ function OfertCard({ oferta,classes,to = ""}) {
 								</form>
 								<br></br> */}
 					{/* <Tooltip title="Ver a detalle la oferta"> */}
-						<Button  variant="contained" color="secondary" href="http://localhost:3000/oferta/detalle"> {/* onClick={() => {alert('pulsado')}} */}
+						
+						<Button  variant="contained" color="secondary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
 							 Ver detalle 
 						</Button>
+						{/* <Link  to={`/oferta/detalle/${oferta.id}`}>Ver Detalle</Link> */}
 					{/* </Tooltip> */}
 						
 						&nbsp;&nbsp;&nbsp;

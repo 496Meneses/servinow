@@ -33,7 +33,7 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-
+                <ToastContainer/>
             </React.Fragment>
         )
     }
