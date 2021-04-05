@@ -6,7 +6,8 @@ const Pagination = ({ increment, decrement, page }) => {
 	
 	return(
 		<Fragment>
-			<h1>Ofertas Disponibles</h1>
+			{/* <h1>Ofertas Disponibles</h1> */}
+			<br></br>
 			<Button variant="outlined" color="primary" onClick={decrement} >Anterior</Button>
 			<Button variant="contained" color="primary">
 				{page}

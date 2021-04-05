@@ -5,12 +5,15 @@ import { getLoggedInUser } from '../../helpers/authUtils';
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud';
 import ListarOfertas from '../Grupo/Solicitud/ListarOfertas';
 import ListarSolicitudes from '../Grupo/Solicitud/ListarSolicitudes';
+
 import OfertListContainer from '../Grupo/Solicitud/david/containers/OfertListContainer';
+
 
 import ListarPostulantesSolicitud from '../Grupo/Solicitud/ListarPostulantesSolicitud'
 import DetalleOfertaTwo from '../Grupo/Solicitud/DetalleOfertaTwo'
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+
 
 class Dashboard extends Component {
 
@@ -30,7 +33,7 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-             <DetalleOfertaTwo/> 
+
             </React.Fragment>
         )
     }
