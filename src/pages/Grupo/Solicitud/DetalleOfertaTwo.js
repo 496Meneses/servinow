@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import DialogComponent from "./DialogComponent";
 import { useParams } from "react-router-dom"
 import CircularIndeterminate from "./CircularIndeterminate";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 import {
   Typography,
   Chip,
@@ -68,10 +70,10 @@ const useStyles = makeStyles((theme) => ({
 export default function DetalleOfertaTwo() {
 
   const { id } = useParams();
-  
-  
+
+
   const classes = useStyles();
-  
+
   const [idOferta, setIdOferta] = useState(id)
   const [idPrestador, setIdPrestador] = useState(2)
   const [solicitante, setSolicitante] = useState([])
@@ -242,7 +244,7 @@ export default function DetalleOfertaTwo() {
 
     <div className={classes.root}>
 
-
+      <ToastContainer />
       {
         cargando ? <CircularIndeterminate /> :
           <Grid container spacing={3}>
@@ -346,7 +348,7 @@ export default function DetalleOfertaTwo() {
                   <Avatar
                     className={classes.large}
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Chloris_chloris_%28profile%29.jpg/1280px-Chloris_chloris_%28profile%29.jpg"
-                    //src={solicitante.url_imagen}
+                  //src={solicitante.url_imagen}
                   ></Avatar>
                 </div>
 
