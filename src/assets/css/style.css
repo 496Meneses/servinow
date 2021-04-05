@@ -146,24 +146,24 @@ body {
     display: flex;
     justify-content: center;
     margin: 10px auto;
-    color: rgb(0, 41, 77);
+    /* color: #3F51B5; */
   }
   
   .paginacionBtns a{
     padding: 6px;
     margin: 1px;
     border-radius: 5px;
-    border: 1px solid #2b2eff;
-    color: #2b2eff;
+    border: 1px solid #3F51B5;
+    color: #000;
     cursor: pointer;
   }
   
   .paginacionBtns a:hover{
     color: rgb(255, 255, 255);
-    background-color: #2b2eff;
+    background-color: #3F51B5;
   }
   
   .pagActiva a{
     color: rgb(255, 255, 255);
-    background-color: #2b2eff;
+    background-color: #ffffff;
   }

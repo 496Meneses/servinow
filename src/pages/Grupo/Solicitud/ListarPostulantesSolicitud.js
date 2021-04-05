@@ -1,79 +1,62 @@
 import {
-  Box,
+  Card,
   Button,
-  TextField,
   Typography,
+   Grid, Paper, Container, Link, Divider, Box, Avatar, List, ListItem, ListItemText
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
-import { InputLabel } from '@material-ui/core';
 import { ConsultarPostuladosPorOfertaService } from "../services"
-import InputAdornment from '@material-ui/core/InputAdornment';
-
-import './../../../assets/css/style.css'
-import avatar from './../../../assets/images/perfil/avatar.png'
+import CardPostulante from './Juancho/CardPostulante'
 import ReactPaginate from 'react-paginate'
-import JsonData from './test.json'
-// ICONOS
+import './../../../assets/css/style.css'
 
-import {
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CustomInput,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-} from 'reactstrap';
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    background: 'white',
-    border: 1,
-    borderRadius: 3,
-    paddingTop: '30px',
-    paddingLeft: '50px',
-    marginTop: "300px"
+    flexGrow: 1,
+    padding: "20px 5%",
   },
-  title: {
-    margin: "20px 10px"
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    marginTop: "10px",
   },
-  Row: {
-    justifyContent: 'center',
+  cardGrid: {
+    padding: "20px 0"
   },
-  Form: {
-    
+  large: {
+    width: theme.spacing(12),
+    height: theme.spacing(12)
   },
-  form_section: {
-    margin: "20px auto",
-    width: '50%'
+  div: {
+    marginTop: 2,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
-  container: {
-    marginTop: '30px',
-    width: '120vh'
-  },
-  button: {
-    display: 'block',
-    width: '400px'
-  },
-  textField: {
-    width: 200,
-  },
-
-});
+  box: {
+    marginTop: 10,
+    marginLeft: 2,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end"
+  }
+}));
 
 
 export const ListarPostulantesSolicitud = () => {
 
   const classes = useStyles();
-  const [postulados, setPostulados] = useState(JsonData)
+  const [ofertas, setOfertas] = useState({})
+  const [postulados, setPostulados] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [pageNumber, setPageNumber] = useState(0)
   const postuladosPerPage = 3
   const pagesVisited = pageNumber * postuladosPerPage
   const pageCount = Math.ceil(postulados.length / postuladosPerPage)
+
   const displayPostulados = postulados.slice(pagesVisited, pagesVisited + postuladosPerPage).map((postulados) => {
     return (
       <div className="cards">
@@ -100,27 +83,86 @@ export const ListarPostulantesSolicitud = () => {
   })
   const [postulados1, setPostulados1] = useState([]);
   useEffect(() => {
-    ConsultarPostuladosPorOfertaService(1)
-      .then(request => {
-        console.log(request.data);
-        setPostulados1(request.data)
-        
-      })
-      .catch(() => console.log("Error"));
-  }, []);
-
+    const fetchData = async () => {
+      setIsLoading(true);
+      const response = await axios("http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=1");
+      setOfertas(response.data);
+      setPostulados(response.data.postulados)
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [])
 
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
+  {/* <CardPostulante postulado={postulado} habilidades={postulados.usuarioYHabilidades.habilidades} key={index} /> */}
+  
 
+  const displayPostulados = postulados.slice(pagesVisited, pagesVisited + postuladosPerPage).map((postulado, index) => {
+    {console.log(postulado)}
+    return (
+      <Paper className={classes.paper}>
+        <Grid container spacing={4} style={{width:'100%', margin: '0 auto'}}>
+          <Grid item xs={12} sm={3} md={3} >
+            <Box className={classes.div}>
+              <Avatar
+                className={classes.large}
+                src={postulado.usuarioYHabilidades.prestador.url_imagen}
+                />
+            </Box>
+            <Link 
+              component="button"
+              variant="body2"
+              onClick={() => {
+                console.info("var perfil.");
+              }}
+            >
+              Ver Perfil
+            </Link>
+          </Grid>
+          <Grid item xs={12} sm={9} md={9} >
+            <Typography variant="h5" align="left" color="primary">
+              {postulado.usuarioYHabilidades.prestador.nombres} {postulado.usuarioYHabilidades.prestador.apellidos} 
+            </Typography>
+            <Divider/>
+            <Typography variant="h6" align="left">
+              Habilidades:
+            </Typography>
+            {postulado.usuarioYHabilidades.habilidades.map((habilidad, index)=>(
+              <List aria-label="secondary mailbox folders">
+                <ListItem style={{margin: "-20px 0"}}>
+                  <ListItemText primary={habilidad.nombreHabilidad} />
+                </ListItem>
+              </List>
+/*               <Typography key={index} variant="p" align="center">
+                {habilidad.nombreCategoria}
+              </Typography> */
+            ))}
+            <Divider/>
+            <Box className={classes.box}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginRight: "10px" }}
+              >
+                Aceptar
+              </Button>
+              <Button variant="contained" color="secondary">
+                Rechazar
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </Paper>
+    )
+  })
 
   return (
-    <Card key={postulados.id_oferta}>
-      <Typography color="textPrimary" variant="h6" className={classes.title}>
-        Prestadores postulados a tu oferta Pasear Perro
+    <div className={classes.root} key={postulados.id_oferta}>
+      <Typography color="textPrimary" variant="h5" align="center" color="primary" className={classes.title}>
+        Prestadores postulados a tu oferta {ofertas.descripcion}
       </Typography>
-      {/* {console.log(ConsultarPostuladosPorOfertaService(1).numeroDePostulados)} */}
       {displayPostulados}
       <ReactPaginate
         nextLabel={"Siguiente"}
@@ -133,8 +175,7 @@ export const ListarPostulantesSolicitud = () => {
         disabledClassName={"pagDisabled"}
         activeClassName={"pagActiva"}
       />
-      {console.log(postulados1)}
-    </Card>
+    </div>
   )
 }
 
