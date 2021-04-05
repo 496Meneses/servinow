@@ -24,7 +24,7 @@ import {
   FormGroup,
 } from 'reactstrap';
 
-
+import Hidden from "@material-ui/core/Hidden";
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import HomeIcon from '@material-ui/icons/Home';
@@ -189,7 +189,7 @@ export const CrearSolicitud = () => {
         {({ errors, handleBlur, touched, handleChange, values }) => (
           <Grid container spacing={3}>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12} md={7}>
 
               <Form onSubmit={handleCreate} className="formulario">
                 <FormGroup className={classes.form_section}>
@@ -377,8 +377,11 @@ export const CrearSolicitud = () => {
             </Grid>
             
               <div className="form-img">
-                <Grid item xs={12} sm={6} alignContent='center'>
+                <Grid item xs={12} sm={12} md={6} alignContent='center'>
+                  <Hidden mdDown>
                   <img className="form-img__img" src="http://www.bhilva.com/assets/img/icons/question.png" />
+                  </Hidden>
+                  
                 </Grid>
               </div>
             
