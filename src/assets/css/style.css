@@ -137,8 +137,6 @@ body {
 }
 
 
-/* Pagination */
-
 .paginacionBtns {
     width: 80%;
     height: 40px;
@@ -167,3 +165,36 @@ body {
     color: rgb(255, 255, 255);
     background-color: #ffffff;
   }
+
+
+  .contenedorfrom{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 100px;
+    margin-top: 10px;
+  }
+
+  .formulario{
+      padding-top: 20px;
+      background-color: white;
+      border-radius: 5px;
+      min-width: 600px;
+      border: 2px solid white;
+      margin: 0;
+      box-shadow: 2px;
+      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.253);
+  }
+  .form-img{
+    min-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.form-img__img{
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+}
