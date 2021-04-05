@@ -8,7 +8,7 @@ function List({ listaOfertas }) {
     return(
       <Fragment>
         
-          <Grid container justify="center">
+          <Grid container >
           {listaOfertas.map((oferta,index) => {
             return <OfertCard key={index} oferta={oferta}/>
           })}

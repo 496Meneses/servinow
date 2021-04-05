@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardMedia, CardContent, Typography, Button, Tooltip } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 //import 'fontsource-roboto';
 import {makeStyles} from '@material-ui/core/styles';
@@ -10,8 +10,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardHeader from '@material-ui/core/CardHeader';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
-
-
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -40,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
 		width: 200,
 	  },
 
+	  control: {
+	    padding: theme.spacing(2),
+	  },
+
 	  title: {
 		color: 'black',
 	  },
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
  
 function OfertCard({ oferta,classes,to = ""}) {
 	 const sw = useStyles();
+	 const [spacing, setSpacing] = React.useState(2);
 	 const [anchorEl, setAnchorEl] = React.useState(null); 
 	 const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -58,10 +61,10 @@ function OfertCard({ oferta,classes,to = ""}) {
 		setAnchorEl(null);
 	  }; 
 	return(
-		<div className={classes.container}>
+		<div className={classes.root}>
 			<Card className={classes.item} >{/* style={{ backgroundImage: `url(${fondo})` }} */}
 			<Link to={to}>
-				<div className={classes.root}>
+				<div >
 				<div>
 					{/* <div align="center">
 						<img src={logo}/>
@@ -140,15 +143,18 @@ function OfertCard({ oferta,classes,to = ""}) {
 
 export default withStyles({
 	item:{
+		height: 550,
+   		width: 600,
+		   contain: 'content',
 		/* backgroundColor: 'orange', */
-		minWidth: "450px",
+		//minWidth: "750px",
 		textAlign: "left",
 		margin: "2em",
 		padding: '0.5em',
-		flex: 'auto'
+		
 	},
 	media:{
-		minHeight: "170px",
+		minHeight: "270px",
 		margin: "1em",
 	},
 })(OfertCard);
