@@ -17,6 +17,7 @@ import { BoxCategoria } from './BoxCategoria';
 import { Habilidades } from './BoxHabilidad';
 import '../../../../src/assets/css/style.css'
 import Grid from "@material-ui/core/Grid";
+import logo from '../../../assets/images/logoServinow.svg';
 // ICONOS
 
 import {
@@ -180,8 +181,7 @@ export const CrearSolicitud = () => {
           titulo: Yup.string()
             .max(255)
             .required('Debes proporcionar un titulo'),
-          propina: Yup.string()
-            .max(255)
+          propina: Yup.number().positive()
             .required('Debes proporcionar una propina'),
         })}
         onSubmit={() => { }}
