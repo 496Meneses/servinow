@@ -68,7 +68,7 @@ export const OfertListContainer = () => {
       <div className="contenedor-carta">
         {displayOferts}
       </div>
-      
+        
 
 
       <div className="contenedor-paginacion">
