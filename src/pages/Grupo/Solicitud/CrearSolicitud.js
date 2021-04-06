@@ -185,12 +185,6 @@ export const CrearSolicitud = () => {
             .required('Debes proporcionar un titulo'),
           propina: Yup.number().positive()
             .required('Debes proporcionar una propina'),
-          fechaInicio: Yup.date().max(new Date(), "Fecha no permitida"),
-          fechaFin: Yup.date().default(null).when("fechaInicio", {
-            is: Yup.date().isValid(),
-            then: Yup.date().min(Yup.ref("fechaInicio"), "Fecha fin es mas antigua que la fecha inicio"),
-            otherwise: Yup.date().nullable()
-        }).typeError("Fecha fin invalida")
         })}
         onSubmit={() => { }}
       >
