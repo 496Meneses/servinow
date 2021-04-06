@@ -269,7 +269,7 @@ export default function DetalleOfertaTwo() {
                   </Typography>
                   <br></br>
                   <Typography gutterBottom variant="h4" color="secondary">
-                    $48.000
+                   
               </Typography>
                 </CardContent>
                 <CardActions>
