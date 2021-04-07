@@ -248,3 +248,78 @@ body {
 .carta_boton:hover{
     color:#fff;
 }
+
+
+
+/* PERFIL */
+.contenedorPerfil{
+    text-align: center;
+
+    padding-bottom: 40px ;
+
+}
+
+
+.contenedorPerfil_Datos{
+    display: flex;
+    justify-content: center;
+    text-align: start;
+    flex-wrap: wrap;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
+    box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
+}
+
+.contenedorPerfil_Imagen{
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    align-self: center;
+    flex-grow: 1;
+    min-width: 360px;
+    text-align: center;
+    width: 330px;
+    height: 330px;
+    border-radius: 50%;
+
+}
+.contenedorPerfil_Imagen img{
+    align-self: center;
+    object-fit: cover;
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    
+    -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
+    box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
+}
+
+.contenedorPerfil_Contacto{
+
+    padding: 30px;
+    border-radius: 10px;
+    min-width: 360px;
+    
+    flex-grow: 2;
+}
+.boton_perfil{
+    width: 30px;
+}
+.contenedor_Habilidades{
+    padding: 2px
+}
+
+.contenedor_Habilidades h3{
+    text-align: center;
+}
+.contenedor_Habilidades input{
+    margin-left: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+}
+.boton_agregar_habilidad{
+    background-color: white;
+}

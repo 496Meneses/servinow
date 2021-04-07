@@ -87,10 +87,11 @@ function OfertCard({ oferta, classes, to = "" }) {
 
 				</div>
 			</Link>
+
 			<CardMedia className="carta__imagen" image={oferta.imagen} />
 			<div className="carta_contenedor">
 				<Typography component="p" variant="h6"></Typography>
-				<h5>Descripción</h5>
+				<h5><strong>Descripción</strong></h5>
 				<p className="carta__descripcion">{oferta.descripcion}</p>
 
 			</div>
