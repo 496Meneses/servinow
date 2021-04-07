@@ -5,10 +5,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
-import { InputLabel } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { CrearSolicitudService } from "../services"
@@ -16,16 +13,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { BoxCategoria } from './BoxCategoria';
 import { Habilidades } from './BoxHabilidad';
 import '../../../../src/assets/css/style.css'
-import Grid from "@material-ui/core/Grid";
-import logo from '../../../assets/images/logoServinow.svg';
 // ICONOS
-
-import {
-  Form,
-  FormGroup
-} from 'reactstrap';
-
-import Hidden from "@material-ui/core/Hidden";
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import HomeIcon from '@material-ui/icons/Home';
@@ -33,21 +21,9 @@ import { AlertView } from '../../../components/Alert'
 import PaymentIcon from '@material-ui/icons/Payment';
 
 const useStyles = makeStyles({
-  form_section: {
-    margin: "20px auto",
-    width: '70%'
-  },
   form_section_boton: {
     margin: "20px auto",
     width: '20%'
-  },
-  container: {
-    marginTop: '30px',
-    width: '120vh'
-  },
-  button: {
-    display: 'block',
-    width: '400px'
   },
 
 });
@@ -161,7 +137,7 @@ export const CrearSolicitud = () => {
 
 
   return (
-    <div className="contenedorfrom">
+    <div className="contenedorFormulario">
       <Formik
         initialValues={{
           descripcion: '',
@@ -189,17 +165,13 @@ export const CrearSolicitud = () => {
         onSubmit={() => { }}
       >
         {({ errors, handleBlur, touched, handleChange, values }) => (
-          <Grid container spacing={3}>
-
-            <Grid item xs={12} sm={12} md={7}>
-
-              <Form onSubmit={handleCreate} className="formulario">
-                <FormGroup className={classes.form_section}>
+              <form onSubmit={handleCreate} className="formulario">
+                <div className="form_section">
                   <TextField
                     fullWidth
                     label="Titulo"
                     name="titulo"
-                    variant="outlined"
+                    variant="standard"
                     error={Boolean(touched.titulo && errors.titulo)}
                     helperText={touched.titulo && errors.titulo}
                     onBlur={handleBlur}
@@ -219,9 +191,9 @@ export const CrearSolicitud = () => {
                       )
                     }}
                   />
-                </FormGroup>
+                </div>
 
-                <FormGroup className={classes.form_section}>
+                <div className="form_section">
 
                   <TextField
                     label="Descripcion"
@@ -239,7 +211,7 @@ export const CrearSolicitud = () => {
                         handleChangeInput(e);
                       }
                     }
-                    variant="outlined"
+                    variant="standard"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -251,14 +223,14 @@ export const CrearSolicitud = () => {
 
                   />
 
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
+                </div>
+                <div className="form_section">
 
                   <TextField
                     fullWidth
                     label="Barrio"
                     name="barrio"
-                    variant="outlined"
+                    variant="standard"
                     error={Boolean(touched.barrio && errors.barrio)}
                     helperText={touched.barrio && errors.barrio}
                     onBlur={handleBlur}
@@ -278,19 +250,19 @@ export const CrearSolicitud = () => {
                     }}
                   />
 
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
+                </div>
+                <div className="form_section">
                   <BoxCategoria callback={setCategoria}></BoxCategoria>
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
+                </div>
+                <div className="form_section">
                   <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
+                </div>
+                <div className="form_section">
                   <TextField
                     fullWidth
                     label="Propina"
                     name="propina"
-                    variant="outlined"
+                    variant="standard"
                     error={Boolean(touched.propina && errors.propina)}
                     helperText={touched.propina && errors.propina}
                     onBlur={handleBlur}
@@ -310,9 +282,9 @@ export const CrearSolicitud = () => {
                       )
                     }}
                   />
-                </FormGroup>
+                </div>
 
-                <FormGroup className={classes.form_section}>
+                <div className="form_section">
                   <TextField
                     fullWidth
                     label="Fecha inicio"
@@ -320,7 +292,7 @@ export const CrearSolicitud = () => {
                     type="datetime-local"
                     defaultValue="2021-04-10T08:24"
                     required
-                    variant="outlined"
+                    variant="standard"
                     onChange={
                       e => {
                         handleChange(e);
@@ -330,9 +302,9 @@ export const CrearSolicitud = () => {
                   >
 
                   </TextField>
-                </FormGroup>
+                </div>
 
-                <FormGroup className={classes.form_section}>
+                <div className="form_section">
                   <TextField
                     fullWidth
                     label="Fecha fin"
@@ -340,7 +312,7 @@ export const CrearSolicitud = () => {
                     type="datetime-local"
                     required
                     defaultValue="2021-04-10T10:24"
-                    variant="outlined"
+                    variant="standard"
                     onChange={
                       e => {
                         handleChange(e);
@@ -348,8 +320,8 @@ export const CrearSolicitud = () => {
                       }
                     }
                   />
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
+                </div>
+                <div className="form_section">
                   <div className="custom-file">
                     <input
                       type="file"
@@ -366,8 +338,8 @@ export const CrearSolicitud = () => {
                         </label>
                     {/* TODO IMG */}
                   </div>
-                </FormGroup>
-                <FormGroup className={classes.form_section_boton}>
+                </div>
+                <div className={classes.form_section_boton}>
                   <Button
                     color="primary"
                     fullWidth
@@ -377,21 +349,8 @@ export const CrearSolicitud = () => {
                   >
                     Crear
                     </Button>
-                </FormGroup>
-              </Form>
-            </Grid>
-            
-              <div className="form-img">
-                <Grid item xs={12} sm={12} md={6} alignContent='center'>
-                  <Hidden mdDown>
-                  <img className="form-img__img" src="http://www.bhilva.com/assets/img/icons/question.png" />
-                  </Hidden>
-                  
-                </Grid>
-              </div>
-            
-
-          </Grid>
+                </div>
+              </form>
 
 
         )}

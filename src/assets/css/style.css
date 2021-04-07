@@ -167,32 +167,44 @@ body {
     background-color: #ffffff;
   }
 
-
-  .contenedorfrom{
-    display: flex;
-    justify-content: center;
-    
+  .contenedorFormulario{
+      display: flex;
+      margin-bottom: 60px;
+      justify-content: center;
+      align-items: center;
   }
 
   .formulario{
-      padding-top: 20px;
-      background-color: white;
-      border-radius: 3px;
-      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.253);
-  }
-  .form-img{
-    width: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-}
-.form-img__img{
-    width: 360px;
-    height: 360px;
-    object-fit: cover;
-}
+      margin-top: 20px;
+      padding-top: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
 
+          
+    -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
+    box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
+
+  }
+  .form_section{
+      margin-top: 10px;
+      padding: 5px;
+      min-width: 360px;
+      
+  }
+
+  .form_section input[type="datetime-local"] {
+    font-size: 12px;
+}
+.form_section label{
+    font-size: 14px;
+}
+/* cartaOfertas */
 .contenedor-carta{
     display: flex;
     flex-wrap: wrap; 
@@ -311,22 +323,54 @@ body {
 .contenedor_Habilidades{
     padding: 2px;
     display: flex;
+    width: 100%;
 }
 .contenedor_Habilidades_input{
     border-radius: 10px;
     min-width: 150px;
     width: 330px;
-    margin-right: 30px;
-    margin-bottom: 10px;
 
 }
 
 .contenedor_Habilidades_button{
-    border-radius: 2px;
-    width: 10px;
-    margin-bottom: 10px;
+    border-radius: 50%;
+    font-size: 12px;
     margin-left: auto;
-    
+    border: none;
+    background-color: #3f51b5;
+    color: white;
+    align-self: center;
+    height: 40px;
+    width: 40px;
+    -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
+    box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
+
+
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    text-transform: uppercase;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+
+}
+
+.contenedor_Habilidades_button:hover{
+    border-radius: 50%;
+    font-size: 12px;
+    margin-left: auto;
+    border: none;
+    background-color: #3f51b5;
+    color: white;
+    align-self: center;
+    height: 40px;
+    width: 40px;
+    -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
+    box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
+
+
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    text-transform: uppercase;
+    box-shadow: 2px 4px 1px -2px rgb(0 0 0 / 20%), 2px 4px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 
 }
 
