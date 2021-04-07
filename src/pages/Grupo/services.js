@@ -47,3 +47,8 @@ export const GetAllUsers = () =>{
     const url = `${URLAPI}usuarioService/getUsuarios`;
     return axios.get(url)
 }
+
+export const GetHabilidadUser = () =>{
+    const url = `${URLAPI}usuarioService/getHabilidades?id_prestador=1`;
+    return axios.get(url)
+}

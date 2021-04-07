@@ -254,7 +254,7 @@ body {
 /* PERFIL */
 .contenedorPerfil{
     text-align: center;
-
+    margin: 0px;
     padding-bottom: 40px ;
 
 }
@@ -267,24 +267,28 @@ body {
     flex-wrap: wrap;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
+    
     -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
     box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
 }
 
 .contenedorPerfil_Imagen{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     border-radius: 10px;
     align-self: center;
     flex-grow: 1;
     min-width: 360px;
     text-align: center;
     width: 330px;
-    height: 330px;
-    border-radius: 50%;
+    height: 360px;
 
 }
+
 .contenedorPerfil_Imagen img{
+    margin-bottom: 10px;
     align-self: center;
     object-fit: cover;
     height: 300px;
@@ -300,38 +304,51 @@ body {
     padding: 30px;
     border-radius: 10px;
     min-width: 360px;
-    
     flex-grow: 2;
+    
+}
+.contenedorPerfil_Contacto h3{
+    color: black;
+    font-size: 18px;
 }
 .boton_perfil{
     width: 30px;
 }
 .contenedor_Habilidades{
-    padding: 2px
+    padding: 2px;
+    display: flex;
+}
+.contenedor_Habilidades_input{
+    border-radius: 10px;
+    min-width: 150px;
+    width: 330px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+
 }
 
-.contenedor_Habilidades h3{
-    text-align: center;
+.contenedor_Habilidades_button{
+    border-radius: 2px;
+    width: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    
+
 }
-.contenedor_Habilidades input{
-    margin-left: 10px;
-    font-size: 20px;
-    border-radius: 5px;
-    border: 1px solid black;
-    padding: 5px;
-}
-.boton_agregar_habilidad{
-    background-color: white;
-}
+
 
 .separador{
     border: 1px solid black;
 }
+
 .contenedor_Titulo{
-    background-color: rgb(255, 255, 255);
+    background-color: #3f51b5;
     border-radius: 10px;
     -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
     box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
     padding: 5px 0px;
     margin-top: 10px;
+}
+.contenedor_Titulo h1{
+    color: white;
 }

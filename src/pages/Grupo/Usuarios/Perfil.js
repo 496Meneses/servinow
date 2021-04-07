@@ -1,7 +1,9 @@
 
 import React, { useEffect, useState } from 'react'
+import{ GetHabilidadUser} from '../services'
 import Button from '@material-ui/core/Button';
 import { GetAllUsers } from "../services"
+import { TextField } from '@material-ui/core';
 import ("../../../assets/css/style.css")
 
 
@@ -11,7 +13,7 @@ import ("../../../assets/css/style.css")
 export const Perfil = () => {
 
     const [users, setUsers] = useState([])
-    
+    const [habilidades, setHabilidades] = useState([])
     // useEffect(() => {
     //     GetAllUsers().then((request) => {
     //         setUsers(request.data)
@@ -19,11 +21,12 @@ export const Perfil = () => {
     //     }).catch(error => alert(error))
     // }, [])
 
-    return users === undefined ? (
+    useEffect(() => {
+        GetHabilidadUser().then((request) => setHabilidades(request.data.habilidades))
+    },[])
+
+    return habilidades === null ? (
         <div className="contenedorPerfil">
-
-            <h1>Mi perfil</h1>
-
         </div>
 
     ):(
@@ -51,17 +54,24 @@ export const Perfil = () => {
                     <h3> <strong>Domicilio</strong> Carrera 65A 23BN 32</h3>
                     <h3> <strong>Correo </strong> acmeneses@unicauca.edu.co</h3>
                     
+                    
                     <h3> <strong>Descipción</strong> Estudiante universitario  </h3>
-
+                    <div className="separador"></div>
+                    <h3> <strong>Habilidades </strong></h3>
+ 
                     <div className="contenedor_Habilidades">
-                         <div className="separador"></div>
-                        <h3> <strong>Habilidades </strong></h3>
-                        <h6> Habilidad 1</h6>
-                        <h6> Habilidad 2</h6>
-                        <h6> Habilidad 3</h6>
-                        <h6> Habilidad 4</h6>
-                        
+                        <TextField className="contenedor_Habilidades_input" variant="outlined" placeholder="Agregar habilidad"></TextField>
+                        <Button  className="contenedor_Habilidades_button" variant="contained" color="primary">+</Button>
                     </div>
+                    <h5> 1.  Habilidad </h5>
+                    <h5> 2.  Habilidad</h5>
+                    <h5> 3.  Habilidad </h5> 
+                        {habilidades.map( (habilidad,index) => {
+                            {console.log(habilidad.nombreHabilidad)}
+                            <p key={index}> {habilidad.nombreHabilidad} </p>
+                        })}
+                        
+                    
                     
 
                 </div>
