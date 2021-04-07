@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
 	},
+	cardMedia: {
+		paddingTop: "56.25%", //16:9
+		minHeight: "200px",
+		margin: "1.5em",		
+	  },
+	  
 	orange: {
 		color: theme.palette.getContrastText(deepOrange[500]),
 		backgroundColor: deepOrange[500],
@@ -45,6 +51,55 @@ const useStyles = makeStyles((theme) => ({
 		color: 'black',
 	},
 
+	carta: {
+		height: 550,
+		width: 400,
+		contain: 'content',
+		/* backgroundColor: 'orange', */
+		//minWidth: "750px",
+		textAlign: "left",
+		margin: "1em",
+		padding: '0.5em',
+	},
+
+	carta__imagen: {
+		minHeight: "250px",
+		margin: "1.5em",
+	},
+
+	carta_contenedor: {
+		height: 150,
+		width: 300,	
+	},
+
+	carta_contenedor__boton: {
+		height: 100,
+		width: 300,
+		
+	},
+
+	carta_header: {
+		height: 65,
+   		display: "flex",
+		width: "100%",
+	},
+
+	carta__descripcion: {
+		height: "100%",
+    display: "flex",
+	},
+
+	cardContent: {
+	flexGrow: 1
+	},
+	
+	card: {
+    height: "90%",
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  
 }));
 
 
@@ -60,9 +115,9 @@ function OfertCard({ oferta, classes, to = "" }) {
 		setAnchorEl(null);
 	};
 	return (
-		<Card className='carta' >
-			<Link to={to}>
-				<div>
+		<Card className={sw.card} >
+		
+				<div className={classes.cardContent}>
 						<CardHeader
 							avatar={
 								<Avatar aria-label="recipe" className={sw.purple}>
@@ -82,20 +137,23 @@ function OfertCard({ oferta, classes, to = "" }) {
 								</h5>
 
 							}
-							className="carta_header"
+							className={sw.carta_header}
 						/>
 
 				</div>
-			</Link>
 
-			<CardMedia className="carta__imagen" image={oferta.imagen} />
-			<div className="carta_contenedor">
-				<Typography component="p" variant="h6"></Typography>
-				<h5><strong>Descripción</strong></h5>
-				<p className="carta__descripcion">{oferta.descripcion}</p>
+			<div >
+			<CardMedia 
+			className={sw.cardMedia} 
+			image={oferta.imagen} />
+			<div className={sw.carta_contenedor}>
+				{/* <Typography component="p" variant="h6"></Typography> */}
+				<h5>Descripción</h5>
+				<p>{oferta.descripcion}</p>
+
 
 			</div>
-			<div className="carta_contenedor__boton">
+			<div className={sw.carta_contenedor__boton}>
 				<Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
 							 Ver detalle
 				</Button>
@@ -105,10 +163,12 @@ function OfertCard({ oferta, classes, to = "" }) {
 					</Button>
 				</Tooltip>
 			</div>
+			</div>
 		</Card>
 
 	);
 }
+
 
 export default withStyles({
 	item: {

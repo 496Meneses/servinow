@@ -25,6 +25,10 @@ body {
       "perfil desc";
 }
 
+.carta__imagen{
+    
+}
+
 .desc a{
     text-align: center;
     width: 25%;
@@ -115,6 +119,7 @@ body {
     margin: auto;
     padding: 10px 0;
     align-items: center;
+
 }
 
 
