@@ -14,7 +14,6 @@ import {Box, Grid,Paper} from '@material-ui/core';
 import CircularIndeterminate from "../../CircularIndeterminate";
 import { ToastContainer } from "react-toastify";
 
-
  const useStyles = makeStyles((theme) => ({
 
   root: {
@@ -29,6 +28,10 @@ import { ToastContainer } from "react-toastify";
     height: "100%",
     display: "flex",
     flexDirection: "column"
+  },
+
+  contenedor_paginacion: {
+    flexDirection: 'row'
   },
 
 })); 
@@ -59,11 +62,9 @@ export const OfertListContainer = () => {
     setCargando(false)
     })
   }, [])
-
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
-
   return (
     <div>
       <br></br>
@@ -80,9 +81,9 @@ export const OfertListContainer = () => {
       </div>
       <div className="contenedor-paginacion">
        
-        <ReactPaginate 
-          nextLabel={"Siguiente"}
-          previousLabel={"Anterior"}
+        <ReactPaginate className="algo"
+          nextLabel={"Siguiente →"}
+          previousLabel={"← Anterior"}
           pageCount={pageCount}
           onPageChange={changePage}
           containerClassName={"paginacionBtns"}
@@ -98,5 +99,4 @@ export const OfertListContainer = () => {
     </div>  
   )
 }
-
 export default OfertListContainer;

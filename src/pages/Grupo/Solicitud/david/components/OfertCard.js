@@ -10,7 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardHeader from '@material-ui/core/CardHeader';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
-import "../../../../../assets/css/style.css"
+import "../../../../../assets/css/style.css";
+import CardActionArea from '@material-ui/core/CardActionArea';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
 	cardMedia: {
 		paddingTop: "56.25%", //16:9
 		minHeight: "200px",
-		margin: "1.5em",		
+		margin: "1.5em",
+		borderRadius: 10,
+		backgroundColor: '#ccc',		
 	  },
 	  
 	orange: {
@@ -62,21 +65,16 @@ const useStyles = makeStyles((theme) => ({
 		padding: '0.5em',
 	},
 
-	carta__imagen: {
-		minHeight: "250px",
-		margin: "1.5em",
-	},
-
 	carta_contenedor: {
 		height: 100,
 		width: 300,
-		margin: 20,	
+		margin: 25,	
 	},
 
 	carta_contenedor__boton: {
 		height: 100,
 		width: 300,
-		margin: 20,			
+		margin: 15,			
 	},
 
 	carta_header: {
@@ -116,13 +114,12 @@ function OfertCard({ oferta, classes, to = "" }) {
 		setAnchorEl(null);
 	};
 	return (
-		<Card className={sw.card} >
+		<Card className={sw.card}>
 		
 				<div className={classes.cardContent}>
 						<CardHeader
 							avatar={
-								<Avatar aria-label="recipe" className={sw.purple}>
-								</Avatar>
+								<Avatar aria-label="recipe" className={sw.purple}></Avatar>
 							}
 							action={
 								<div>
@@ -144,6 +141,7 @@ function OfertCard({ oferta, classes, to = "" }) {
 				</div>
 
 			<div >
+			<CardActionArea>
 			<CardMedia 
 			className={sw.cardMedia} 
 			image={oferta.imagen} />
@@ -152,6 +150,7 @@ function OfertCard({ oferta, classes, to = "" }) {
 				<h5>Descripción</h5>
 				<p>{oferta.descripcion}</p>
 			</div>
+			</CardActionArea>
 			<div className={sw.carta_contenedor__boton}>
 			 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
 							 Ver detalle
