@@ -196,10 +196,10 @@ body {
       min-width: 300px;
       
   }
-  .form_section input[type="datetime-local"] {
+.formulario input[type="datetime-local"] {
     font-size: 12px;
 }
-.form_section label{
+.formulario label{
     font-size: 14px;
 }
 /* cartaOfertas */

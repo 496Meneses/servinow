@@ -100,51 +100,51 @@ export const CrearSolicitud = () => {
     return fecha.split("-")[0] + "/" + fecha.split("-")[1] + "/" + fecha.split("-")[2].split("T")[0] + " " + fecha.split("-")[2].split("T")[1] + ":01"
   }
   const handleCreate = async (event) => {
-      setOpen(false)
-      let render = new FileReader();
-      render.readAsDataURL(Imagen[0])
-      render.onload = (e) => {
-        if (fechaFin=== " " || fechaInicio=== " "){
+    setOpen(false)
+    let render = new FileReader();
+    render.readAsDataURL(Imagen[0])
+    render.onload = (e) => {
+      if (fechaFin === " " || fechaInicio === " ") {
+        setOpen(true)
+        setTypeAlert('error')
+        setMessage('Debes seleccionar unas fechas validas!')
+      } else {
+        if (fechaInicio > fechaFin) {
           setOpen(true)
           setTypeAlert('error')
           setMessage('Debes seleccionar unas fechas validas!')
-        }else{
-          if(fechaInicio>fechaFin){
+
+        } else {
+          CrearSolicitudService({
+            "id_solicitante": 1, // TODO SOLICITANTE
+            "descripcion": descripcion,
+            "direccion": barrio,
+            "fecha_inicio": fechaInicio,    // "17/03/2021 21:10:30",
+            "fecha_fin": fechaFin, //"17/03/2021 22:10:30",
+            "titulo": titulo,
+            "id_habilidad": habilidad, // TODO HABILIDAD
+            "valor": propina,
+            "imagen": e.target.result
+
+          }).then(() => {
+
+            console.log("RUN")
+            setOpen(true)
+            setTypeAlert('success')
+            setMessage('Oferta creada correctamente')
+
+          }).catch(() => {
             setOpen(true)
             setTypeAlert('error')
-            setMessage('Debes seleccionar unas fechas validas!')
-          
-          }else{
-            CrearSolicitudService({
-              "id_solicitante": 1, // TODO SOLICITANTE
-              "descripcion": descripcion,
-              "direccion": barrio,
-              "fecha_inicio": fechaInicio,    // "17/03/2021 21:10:30",
-              "fecha_fin": fechaFin, //"17/03/2021 22:10:30",
-              "titulo": titulo,
-              "id_habilidad": habilidad, // TODO HABILIDAD
-              "valor": propina,
-              "imagen": e.target.result
-      
-            }).then(() => {
-      
-              console.log("RUN")
-              setOpen(true)
-              setTypeAlert('success')
-              setMessage('Oferta creada correctamente')
-      
-            }).catch(() => {
-              setOpen(true)
-              setTypeAlert('error')
-              setMessage('Error, Verifica los datos!')
-            })
-          }
-
+            setMessage('Error, Verifica los datos!')
+          })
         }
 
-
-  
       }
+
+
+
+    }
     event.preventDefault();
   }
 
@@ -178,191 +178,184 @@ export const CrearSolicitud = () => {
         onSubmit={() => { }}
       >
         {({ errors, handleBlur, touched, handleChange, values }) => (
-              <form onSubmit={handleCreate} className="formulario">
-                <div className="form_section">
-                  <TextField
-                    fullWidth
-                    label="Titulo"
-                    name="titulo"
-                    variant="standard"
-                    error={Boolean(touched.titulo && errors.titulo)}
-                    helperText={touched.titulo && errors.titulo}
-                    onBlur={handleBlur}
-                    required
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
+          <form onSubmit={handleCreate} className="formulario">
+            <div className="form_section">
 
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <TitleOutlinedIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </div>
+              <h6>Información de la solicitud</h6>
+              <TextField
+                fullWidth
+                label="Titulo"
+                name="titulo"
+                variant="standard"
+                error={Boolean(touched.titulo && errors.titulo)}
+                helperText={touched.titulo && errors.titulo}
+                onBlur={handleBlur}
+                required
+                onChange={
+                  e => {
+                    handleChange(e);
+                    handleChangeInput(e);
+                  }
+                }
 
-                <div className="form_section">
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <TitleOutlinedIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+              </div>
+              <div className="form_section">
+              <TextField
+                label="Descripcion"
+                name="descripcion"
+                fullWidth
+                multiline
+                rows={6}
+                error={Boolean(touched.descripcion && errors.descripcion)}
+                helperText={touched.descripcion && errors.descripcion}
+                onBlur={handleBlur}
+                required
+                onChange={
+                  e => {
+                    handleChange(e);
+                    handleChangeInput(e);
+                  }
+                }
+                variant="standard"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <TextFieldsIcon />
+                    </InputAdornment>
+                  )
+                }}
 
-                  <TextField
-                    label="Descripcion"
-                    name="descripcion"
-                    fullWidth
-                    multiline
-                    rows={6}
-                    error={Boolean(touched.descripcion && errors.descripcion)}
-                    helperText={touched.descripcion && errors.descripcion}
-                    onBlur={handleBlur}
-                    required
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                    variant="standard"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <TextFieldsIcon />
-                        </InputAdornment>
-                      )
-                    }}
 
+              />
 
-                  />
+            </div>
+            <div className="form_section">
+              <h6>Categoría de la solicitud</h6>
+              <BoxCategoria callback={setCategoria}></BoxCategoria>
+              <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
+            </div>
+            <div className="form_section">
+              <h6>Hora de la solicitud y dirección</h6>
+              <TextField
+                fullWidth
+                label="Barrio"
+                name="barrio"
+                variant="standard"
+                error={Boolean(touched.barrio && errors.barrio)}
+                helperText={touched.barrio && errors.barrio}
+                onBlur={handleBlur}
+                required
+                onChange={
+                  e => {
+                    handleChange(e);
+                    handleChangeInput(e);
+                  }
+                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <HomeIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+              <h6>Fecha inicio</h6>
+              <TextField
+                fullWidth
+                name="fechaInicio"
+                type="datetime-local"
+                defaultValue=""
+                required
+                variant="standard"
+                onChange={
+                  e => {
+                    handleChange(e);
+                    handleChangeInput(e);
+                  }
+                }
+              >
 
-                </div>
-                <div className="form_section">
-
-                  <TextField
-                    fullWidth
-                    label="Barrio"
-                    name="barrio"
-                    variant="standard"
-                    error={Boolean(touched.barrio && errors.barrio)}
-                    helperText={touched.barrio && errors.barrio}
-                    onBlur={handleBlur}
-                    required
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <HomeIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-
-                </div>
-                <div className="form_section">
-                  <BoxCategoria callback={setCategoria}></BoxCategoria>
-                </div>
-                <div className="form_section">
-                  <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
-                </div>
-                <div className="form_section">
-                  <TextField
-                    fullWidth
-                    label="Propina"
-                    name="propina"
-                    variant="standard"
-                    error={Boolean(touched.propina && errors.propina)}
-                    helperText={touched.propina && errors.propina}
-                    onBlur={handleBlur}
-                    required
-                    type="number"
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PaymentIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </div>
-
-                <div className="form_section">
-                  <h6>Fecha inicio</h6>
-                  <TextField
-                    fullWidth
-                    name="fechaInicio"
-                    type="datetime-local"
-                    defaultValue=""
-                    required
-                    variant="standard"
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                  >
-
-                  </TextField>
-                </div>
-
-                <div className="form_section">
-                <h6>Fecha Fin</h6>
-                  <TextField
-                    fullWidth             
-                    name="fechaFin"
-                    type="datetime-local"
-                    required
-                    variant="standard"
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                  />
-                </div>
-                <div className="form_section">
-                  <div className="custom-file">
-                    <input
-                      type="file"
-                      className="custom-file-input"
-                      id="img-file"
-                      onChange={async (e) => {
-                        setImagen(e.target.files)
-                        setImagenSeleccionada("Imagen Seleccionada")
-                      }}
-                      required
-                    />
-                    <label className="custom-file-label">
-                      {imagenSeleccionada}
-                        </label>
-                    {/* TODO IMG */}
-                  </div>
-                </div>
-                <div className={classes.form_section_boton}>
-                  <Button
-                    color="primary"
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                  >
-                    Crear
+              </TextField>
+              <h6>Fecha Fin</h6>
+              <TextField
+                fullWidth
+                name="fechaFin"
+                type="datetime-local"
+                required
+                variant="standard"
+                onChange={
+                  e => {
+                    handleChange(e);
+                    handleChangeInput(e);
+                  }
+                }
+              />
+            </div>
+            <div className="form_section">
+              <h6>Propina</h6>
+              <TextField
+                fullWidth
+                name="propina"
+                variant="standard"
+                error={Boolean(touched.propina && errors.propina)}
+                helperText={touched.propina && errors.propina}
+                onBlur={handleBlur}
+                required
+                type="number"
+                onChange={
+                  e => {
+                    handleChange(e);
+                    handleChangeInput(e);
+                  }
+                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PaymentIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </div>
+            <div className="form_section_img">
+              <h6>Imagen descriptiva</h6>
+              <div className="custom-file">
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  id="img-file"
+                  onChange={async (e) => {
+                    setImagen(e.target.files)
+                    setImagenSeleccionada("Imagen Seleccionada")
+                  }}
+                  required
+                />
+                <label className="custom-file-label">
+                  {imagenSeleccionada}
+                </label>
+                {/* TODO IMG */}
+              </div>
+            </div>
+            <div className={classes.form_section_boton}>
+              <Button
+                color="primary"
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                Crear
                     </Button>
-                </div>
-              </form>
+            </div>
+          </form>
 
 
         )}
