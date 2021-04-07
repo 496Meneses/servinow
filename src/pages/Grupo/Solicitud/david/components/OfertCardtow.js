@@ -1,5 +1,6 @@
-import React from 'react'
-import {makeStyles} from '@material-ui/core/styles'
+import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import CardHeader from '@material-ui/core/CardHeader';
 import {
   Typography,
   Button,
@@ -13,6 +14,7 @@ import {
   Toolbar,
   Container
 } from "@material-ui/core";
+
 const useStyles = makeStyles((theme)=>({
    container: {
     backgroundColor: theme.palette.background.paper,
@@ -49,6 +51,7 @@ const classes = useStyles();
         <div>
            
         <Card className={classes.card}>
+          
           <CardMedia
             className={classes.cardMedia}
             image={oferta.imagen}

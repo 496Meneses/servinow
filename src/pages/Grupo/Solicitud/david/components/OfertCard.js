@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
 	},
+	cardMedia: {
+		paddingTop: "56.25%", //16:9
+		minHeight: "200px",
+		margin: "1.5em",		
+	  },
+	  
 	orange: {
 		color: theme.palette.getContrastText(deepOrange[500]),
 		backgroundColor: deepOrange[500],
@@ -61,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
 		margin: "1.5em",
 	},
 
+	carta_contenedor: {
+		height: 150,
+		width: 300,	
+	},
+
 	carta_contenedor__boton: {
 		height: 100,
 		width: 300,
@@ -68,20 +79,27 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	carta_header: {
-		height: 60,
-		width: 380,
+		height: 65,
+   		display: "flex",
+		width: "100%",
 	},
 
 	carta__descripcion: {
-		height: 150,
-		width: 360,
+		height: "100%",
+    display: "flex",
 	},
 
+	cardContent: {
+	flexGrow: 1
+	},
+	
 	card: {
-    height: "100%",
+    height: "90%",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
+
+  
 }));
 
 
@@ -98,8 +116,8 @@ function OfertCard({ oferta, classes, to = "" }) {
 	};
 	return (
 		<Card className={sw.card} >
-			<Link to={to}>
-				<div>
+		
+				<div className={classes.cardContent}>
 						<CardHeader
 							avatar={
 								<Avatar aria-label="recipe" className={sw.purple}>
@@ -123,12 +141,15 @@ function OfertCard({ oferta, classes, to = "" }) {
 						/>
 
 				</div>
-			</Link>
-			<CardMedia className={sw.carta__imagen} image={oferta.imagen} />
-			<div className="carta_contenedor">
-				<Typography component="p" variant="h6"></Typography>
+			
+			<div >
+			<CardMedia 
+			className={sw.cardMedia} 
+			image={oferta.imagen} />
+			<div className={sw.carta_contenedor}>
+				{/* <Typography component="p" variant="h6"></Typography> */}
 				<h5>Descripción</h5>
-				<p className={sw.carta__descripcion}>{oferta.descripcion}</p>
+				<p>{oferta.descripcion}</p>
 
 			</div>
 			<div className={sw.carta_contenedor__boton}>
@@ -141,10 +162,12 @@ function OfertCard({ oferta, classes, to = "" }) {
 					</Button>
 				</Tooltip>
 			</div>
+			</div>
 		</Card>
 
 	);
 }
+
 
 export default withStyles({
 	item: {

@@ -12,6 +12,8 @@ import OfertCard from '../components/OfertCard';
 import OfertCardtow from '../components/OfertCardtow';
 import "../../../../../assets/css/style.css";
 import {Box, Grid,Paper} from '@material-ui/core';
+import CircularIndeterminate from "../../CircularIndeterminate";
+import { ToastContainer } from "react-toastify";
 
 
  const useStyles = makeStyles((theme) => ({
@@ -20,13 +22,10 @@ import {Box, Grid,Paper} from '@material-ui/core';
       flexGrow: 1
     },
     
-  title: {
-		color: 'black',
-	  },
-
   control: {
     padding: theme.spacing(2),
   },
+
 
   card: {
     height: "100%",
@@ -35,51 +34,55 @@ import {Box, Grid,Paper} from '@material-ui/core';
   },
 
 })); 
-
 export const OfertListContainer = () => {
-  /* setCargando(true) */
   const [listaOferta, setListaOferta] = useState([])
+  const [cargando, setCargando] = useState(false)
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0)
   const postuladosPerPage = 6
   const pagesVisited = pageNumber * postuladosPerPage
   const pageCount = Math.ceil(listaOferta.length / postuladosPerPage)
   const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => (
-          <Grid item xs={12} sm={6} md={4}>
-                 <OfertCard key={index} oferta={oferta}/>            
+         
+         <Grid item xs={12} sm={6} md={4}>
+           <ToastContainer />
+            {
+                cargando ? <CircularIndeterminate /> :
+                  <OfertCard key={index} oferta={oferta}/>            
+            }    
           </Grid>
   ))
- 
-
 
   useEffect(() => {
+    setCargando(true)
     GetAllOferts(1).then((respuesta)=>{
       setListaOferta(respuesta.data)
       console.log(respuesta)
+    setCargando(false)
     })
-
   }, [])
 
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
 
+
   return (
     <div>
       <br></br>
-
-      <h5>OFERTAS DISPONIBLES</h5>
-
-      <div className="contenedor-carta">
-         <div className={classes.root}>
-        <Grid container spacing={3}>
-           {displayOferts}
-        </Grid>
+      <Typography color="textPrimary" variant="h5" align="center" color="primary">
+        OFERTAS DISPONIBLES
+      </Typography>
+      <br></br>
+        <div className="contenedor-carta">
+          <div className={classes.root}>
+          <Grid container spacing={3}>
+            {displayOferts}
+          </Grid>
+        </div>
       </div>
-       
-      </div>
-
       <div className="contenedor-paginacion">
+       
         <ReactPaginate 
           nextLabel={"Siguiente"}
           previousLabel={"Anterior"}
