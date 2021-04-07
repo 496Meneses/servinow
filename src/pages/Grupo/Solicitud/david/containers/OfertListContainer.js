@@ -9,7 +9,6 @@ import axios from 'axios';
 import Pagination from '../components/OfertPagination';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip } from '@material-ui/core';
 import OfertCard from '../components/OfertCard';
-import OfertCardtow from '../components/OfertCardtow';
 import "../../../../../assets/css/style.css";
 import {Box, Grid,Paper} from '@material-ui/core';
 import CircularIndeterminate from "../../CircularIndeterminate";
@@ -18,7 +17,6 @@ import { ToastContainer } from "react-toastify";
 
  const useStyles = makeStyles((theme) => ({
 
-  
   root: {
       flexGrow: 1
     },
@@ -26,7 +24,6 @@ import { ToastContainer } from "react-toastify";
   control: {
     padding: theme.spacing(2),
   },
-
 
   card: {
     height: "100%",
@@ -67,7 +64,6 @@ export const OfertListContainer = () => {
     setPageNumber(selected)
   }
 
-
   return (
     <div>
       <br></br>
@@ -99,9 +95,7 @@ export const OfertListContainer = () => {
         <br></br>
         <br></br>
         <br></br>
-    </div>
-
-    
+    </div>  
   )
 }
 
