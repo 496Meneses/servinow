@@ -28,7 +28,7 @@ export const Perfil = () => {
 
     ):(
         <div className="contenedorPerfil">
-            <div className="contenedorTitulo">
+            <div className="contenedor_Titulo">
                 <h1 >Mi Perfil</h1>
             </div>
             
@@ -54,7 +54,7 @@ export const Perfil = () => {
                     <h3> <strong>Descipción</strong> Estudiante universitario  </h3>
 
                     <div className="contenedor_Habilidades">
-                         
+                         <div className="separador"></div>
                         <h3> <strong>Habilidades </strong></h3>
                         <h6> Habilidad 1</h6>
                         <h6> Habilidad 2</h6>
