@@ -43,8 +43,8 @@ export const CrearSolicitud = () => {
   const [categoria, setCategoria] = useState()
   const [habilidad, setHabilidad] = useState()
   const [propina, setpropina] = useState("")
-  const [fechaInicio, setFechaInicio] = useState("")
-  const [fechaFin, setFechaFin] = useState("")
+  const [fechaInicio, setFechaInicio] = useState(" ")
+  const [fechaFin, setFechaFin] = useState(" ")
   const [Imagen, setImagen] = useState("")
   const [imagenSeleccionada, setImagenSeleccionada] = useState("Seleccione una imagen")
 
@@ -104,37 +104,44 @@ export const CrearSolicitud = () => {
       let render = new FileReader();
       render.readAsDataURL(Imagen[0])
       render.onload = (e) => {
-        if(fechaInicio>fechaFin){
-          console.log("ERRORRRRRRRRR")
+        if (fechaFin=== " " || fechaInicio=== " "){
           setOpen(true)
           setTypeAlert('error')
-          setMessage('La fecha inicio no puede ser mayor que la fecha fin!')
-        
+          setMessage('Debes seleccionar unas fechas validas!')
         }else{
-          CrearSolicitudService({
-            "id_solicitante": 1, // TODO SOLICITANTE
-            "descripcion": descripcion,
-            "direccion": barrio,
-            "fecha_inicio": fechaInicio,    // "17/03/2021 21:10:30",
-            "fecha_fin": fechaFin, //"17/03/2021 22:10:30",
-            "titulo": titulo,
-            "id_habilidad": habilidad, // TODO HABILIDAD
-            "valor": propina,
-            "imagen": e.target.result
-    
-          }).then(() => {
-    
-            console.log("RUN")
-            setOpen(true)
-            setTypeAlert('success')
-            setMessage('Oferta creada correctamente')
-    
-          }).catch(() => {
+          if(fechaInicio>fechaFin){
             setOpen(true)
             setTypeAlert('error')
-            setMessage('Error, Verifica los datos!')
-          })
+            setMessage('Debes seleccionar unas fechas validas!')
+          
+          }else{
+            CrearSolicitudService({
+              "id_solicitante": 1, // TODO SOLICITANTE
+              "descripcion": descripcion,
+              "direccion": barrio,
+              "fecha_inicio": fechaInicio,    // "17/03/2021 21:10:30",
+              "fecha_fin": fechaFin, //"17/03/2021 22:10:30",
+              "titulo": titulo,
+              "id_habilidad": habilidad, // TODO HABILIDAD
+              "valor": propina,
+              "imagen": e.target.result
+      
+            }).then(() => {
+      
+              console.log("RUN")
+              setOpen(true)
+              setTypeAlert('success')
+              setMessage('Oferta creada correctamente')
+      
+            }).catch(() => {
+              setOpen(true)
+              setTypeAlert('error')
+              setMessage('Error, Verifica los datos!')
+            })
+          }
+
         }
+
 
   
       }
@@ -291,12 +298,12 @@ export const CrearSolicitud = () => {
                 </div>
 
                 <div className="form_section">
+                  <h6>Fecha inicio</h6>
                   <TextField
                     fullWidth
-                    label="Fecha inicio"
                     name="fechaInicio"
                     type="datetime-local"
-                    defaultValue="2021-04-10T08:24"
+                    defaultValue=""
                     required
                     variant="standard"
                     onChange={
@@ -311,13 +318,12 @@ export const CrearSolicitud = () => {
                 </div>
 
                 <div className="form_section">
+                <h6>Fecha Fin</h6>
                   <TextField
-                    fullWidth
-                    label="Fecha fin"
+                    fullWidth             
                     name="fechaFin"
                     type="datetime-local"
                     required
-                    defaultValue="2021-04-10T10:24"
                     variant="standard"
                     onChange={
                       e => {

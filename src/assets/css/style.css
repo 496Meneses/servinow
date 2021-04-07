@@ -129,7 +129,6 @@ body {
 .buttons {
     /* display: block; */
     display: inline-block;
-    float: right;
     position: relative;
     margin-top: auto;
     margin-bottom: 5px;
