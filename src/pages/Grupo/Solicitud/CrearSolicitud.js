@@ -100,38 +100,44 @@ export const CrearSolicitud = () => {
     return fecha.split("-")[0] + "/" + fecha.split("-")[1] + "/" + fecha.split("-")[2].split("T")[0] + " " + fecha.split("-")[2].split("T")[1] + ":01"
   }
   const handleCreate = async (event) => {
+      setOpen(false)
+      let render = new FileReader();
+      render.readAsDataURL(Imagen[0])
+      render.onload = (e) => {
+        if(fechaInicio>fechaFin){
+          console.log("ERRORRRRRRRRR")
+          setOpen(true)
+          setTypeAlert('error')
+          setMessage('La fecha inicio no puede ser mayor que la fecha fin!')
+        
+        }else{
+          CrearSolicitudService({
+            "id_solicitante": 1, // TODO SOLICITANTE
+            "descripcion": descripcion,
+            "direccion": barrio,
+            "fecha_inicio": fechaInicio,    // "17/03/2021 21:10:30",
+            "fecha_fin": fechaFin, //"17/03/2021 22:10:30",
+            "titulo": titulo,
+            "id_habilidad": habilidad, // TODO HABILIDAD
+            "valor": propina,
+            "imagen": e.target.result
+    
+          }).then(() => {
+    
+            console.log("RUN")
+            setOpen(true)
+            setTypeAlert('success')
+            setMessage('Oferta creada correctamente')
+    
+          }).catch(() => {
+            setOpen(true)
+            setTypeAlert('error')
+            setMessage('Error, Verifica los datos!')
+          })
+        }
 
-    setOpen(false)
-    let render = new FileReader();
-    render.readAsDataURL(Imagen[0])
-    render.onload = (e) => {
-      CrearSolicitudService({
-        "id_solicitante": 1, // TODO SOLICITANTE
-        "descripcion": descripcion,
-        "direccion": barrio,
-        "fecha_inicio": fechaInicio,    // "17/03/2021 21:10:30",
-        "fecha_fin": fechaFin, //"17/03/2021 22:10:30",
-        "titulo": titulo,
-        "id_habilidad": habilidad, // TODO HABILIDAD
-        "valor": propina,
-        "imagen": e.target.result
-
-      }).then(() => {
-
-        console.log("RUN")
-        setOpen(true)
-        setTypeAlert('success')
-        setMessage('Oferta creada correctamente')
-
-      }).catch(() => {
-        setOpen(true)
-        setTypeAlert('error')
-        setMessage('Error, Verifica los datos!')
-        console.log("no funca")
-      })
-
-    }
-
+  
+      }
     event.preventDefault();
   }
 

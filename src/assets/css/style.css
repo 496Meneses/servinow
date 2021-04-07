@@ -194,10 +194,9 @@ body {
   .form_section{
       margin-top: 10px;
       padding: 5px;
-      min-width: 360px;
+      min-width: 300px;
       
   }
-
   .form_section input[type="datetime-local"] {
     font-size: 12px;
 }
