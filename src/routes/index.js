@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import * as FeatherIcon from 'react-feather';
+
 import { isUserAuthenticated, getLoggedInUser } from '../helpers/authUtils';
 
 //librerias David
@@ -121,8 +122,8 @@ const ofertas = {
 
 const postulados = {
     path: '/postulados',
-    name: 'postulados',
-    icon: FeatherIcon.Home,
+    name: 'Postulados',
+    icon: FeatherIcon.Coffee,
     component: listaPostulados,
     roles: ['Admin'],
     route: PrivateRoute
@@ -132,7 +133,7 @@ const postulados = {
 const crearSolicitud = {
     path: '/solicitud',
     name: 'Crear Solicitud',
-    icon: FeatherIcon.Home,
+    icon: FeatherIcon.Mail,
     component: crearSolicitudComponent,
     roles: ['Admin'],
     route: PrivateRoute
@@ -177,7 +178,7 @@ const allRoutes = [
     postulados,
     //authRoutes
 ];
-const authProtectedRoutes = [dashboardRoutes,ofertas,crearSolicitud,postulados];
+const authProtectedRoutes = [ofertas,crearSolicitud,postulados];
 // const authProtectedRoutes = [dashboardRoutes, ...appRoutes, pagesRoutes, componentsRoutes, chartRoutes, formsRoutes, tableRoutes];
 const allFlattenRoutes = flattenRoutes(allRoutes);
 export { allRoutes, authProtectedRoutes, allFlattenRoutes};

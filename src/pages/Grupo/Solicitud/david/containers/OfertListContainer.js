@@ -78,7 +78,7 @@ export const OfertListContainer = () => {
       </div>
        
       </div>
-      
+
       <div className="contenedor-paginacion">
         <ReactPaginate 
           nextLabel={"Siguiente"}

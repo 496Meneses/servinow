@@ -17,6 +17,7 @@ import { BoxCategoria } from './BoxCategoria';
 import { Habilidades } from './BoxHabilidad';
 import '../../../../src/assets/css/style.css'
 import Grid from "@material-ui/core/Grid";
+import logo from '../../../assets/images/logoServinow.svg';
 // ICONOS
 
 import {
@@ -69,6 +70,7 @@ export const CrearSolicitud = () => {
   const [fechaInicio, setFechaInicio] = useState("")
   const [fechaFin, setFechaFin] = useState("")
   const [Imagen, setImagen] = useState("")
+  const [imagenSeleccionada, setImagenSeleccionada] = useState("Seleccione una imagen")
 
   useEffect(() => {
     setTitulo("")
@@ -169,6 +171,7 @@ export const CrearSolicitud = () => {
           titulo: '',
           habilidad: '',
           propina: '',
+
         }}
         validationSchema={Yup.object().shape({
           descripcion: Yup.string()
@@ -180,8 +183,7 @@ export const CrearSolicitud = () => {
           titulo: Yup.string()
             .max(255)
             .required('Debes proporcionar un titulo'),
-          propina: Yup.string()
-            .max(255)
+          propina: Yup.number().positive()
             .required('Debes proporcionar una propina'),
         })}
         onSubmit={() => { }}
@@ -316,7 +318,7 @@ export const CrearSolicitud = () => {
                     label="Fecha inicio"
                     name="fechaInicio"
                     type="datetime-local"
-                    defaultValue="2020-01-24T10:30"
+                    defaultValue="2021-04-10T08:24"
                     required
                     variant="outlined"
                     onChange={
@@ -336,8 +338,8 @@ export const CrearSolicitud = () => {
                     label="Fecha fin"
                     name="fechaFin"
                     type="datetime-local"
-                    defaultValue="2020-01-24T10:30"
                     required
+                    defaultValue="2021-04-10T10:24"
                     variant="outlined"
                     onChange={
                       e => {
@@ -353,11 +355,14 @@ export const CrearSolicitud = () => {
                       type="file"
                       className="custom-file-input"
                       id="img-file"
-                      onChange={async (e) => setImagen(e.target.files)}
+                      onChange={async (e) => {
+                        setImagen(e.target.files)
+                        setImagenSeleccionada("Imagen Seleccionada")
+                      }}
                       required
                     />
                     <label className="custom-file-label">
-                      Elije una imagen
+                      {imagenSeleccionada}
                         </label>
                     {/* TODO IMG */}
                   </div>
