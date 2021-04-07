@@ -1,4 +1,4 @@
-import React,{ useEffect,useState } from 'react';
+import React,{ useEffect,useState,Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputLabel } from '@material-ui/core';
 import {GetOfertasDisponibles, GetAllOferts} from '../../../services';
@@ -9,10 +9,17 @@ import axios from 'axios';
 import Pagination from '../components/OfertPagination';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip } from '@material-ui/core';
 import OfertCard from '../components/OfertCard';
-import "../../../../../assets/css/style.css"
+import OfertCardtow from '../components/OfertCardtow';
+import "../../../../../assets/css/style.css";
+import {Box, Grid,Paper} from '@material-ui/core';
+
 
  const useStyles = makeStyles((theme) => ({
 
+  root: {
+      flexGrow: 1
+    },
+    
   title: {
 		color: 'black',
 	  },
@@ -21,9 +28,12 @@ import "../../../../../assets/css/style.css"
     padding: theme.spacing(2),
   },
 
-  sigBtn: {
-    color: 'secondary'
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column"
   },
+
 })); 
 
 export const OfertListContainer = () => {
@@ -31,20 +41,15 @@ export const OfertListContainer = () => {
   const [listaOferta, setListaOferta] = useState([])
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0)
-  const postuladosPerPage = 4
+  const postuladosPerPage = 6
   const pagesVisited = pageNumber * postuladosPerPage
   const pageCount = Math.ceil(listaOferta.length / postuladosPerPage)
-
-  const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => {
-    return (
-       
-        <div className="contenedor-carta" >  
-              <OfertCard key={index} oferta={oferta}/>
-  
-      </div>   
-      
-    )
-  })
+  const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => (
+          <Grid item xs={12} sm={6} md={4}>
+                 <OfertCard key={index} oferta={oferta}/>            
+          </Grid>
+  ))
+ 
 
 
   useEffect(() => {
@@ -66,11 +71,14 @@ export const OfertListContainer = () => {
       <h5>OFERTAS DISPONIBLES</h5>
 
       <div className="contenedor-carta">
-        {displayOferts}
+         <div className={classes.root}>
+        <Grid container spacing={3}>
+           {displayOferts}
+        </Grid>
+      </div>
+       
       </div>
       
-
-
       <div className="contenedor-paginacion">
         <ReactPaginate 
           nextLabel={"Siguiente"}

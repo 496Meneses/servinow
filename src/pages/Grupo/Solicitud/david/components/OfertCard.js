@@ -45,6 +45,43 @@ const useStyles = makeStyles((theme) => ({
 		color: 'black',
 	},
 
+	carta: {
+		height: 550,
+		width: 400,
+		contain: 'content',
+		/* backgroundColor: 'orange', */
+		//minWidth: "750px",
+		textAlign: "left",
+		margin: "1em",
+		padding: '0.5em',
+	},
+
+	carta__imagen: {
+		minHeight: "250px",
+		margin: "1.5em",
+	},
+
+	carta_contenedor__boton: {
+		height: 100,
+		width: 300,
+		
+	},
+
+	carta_header: {
+		height: 60,
+		width: 380,
+	},
+
+	carta__descripcion: {
+		height: 150,
+		width: 360,
+	},
+
+	card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column"
+  },
 }));
 
 
@@ -60,7 +97,7 @@ function OfertCard({ oferta, classes, to = "" }) {
 		setAnchorEl(null);
 	};
 	return (
-		<Card className='carta' >
+		<Card className={sw.card} >
 			<Link to={to}>
 				<div>
 						<CardHeader
@@ -82,19 +119,19 @@ function OfertCard({ oferta, classes, to = "" }) {
 								</h5>
 
 							}
-							className="carta_header"
+							className={sw.carta_header}
 						/>
 
 				</div>
 			</Link>
-			<CardMedia className="carta__imagen" image={oferta.imagen} />
+			<CardMedia className={sw.carta__imagen} image={oferta.imagen} />
 			<div className="carta_contenedor">
 				<Typography component="p" variant="h6"></Typography>
 				<h5>Descripción</h5>
-				<p className="carta__descripcion">{oferta.descripcion}</p>
+				<p className={sw.carta__descripcion}>{oferta.descripcion}</p>
 
 			</div>
-			<div className="carta_contenedor__boton">
+			<div className={sw.carta_contenedor__boton}>
 				<Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
 							 Ver detalle
 				</Button>
