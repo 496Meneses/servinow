@@ -42,3 +42,8 @@ export const GetAllOferts = (getTodasOfertas) => {
     return axios.get(url)
 
 }
+
+export const GetAllUsers = () =>{
+    const url = `${URLAPI}usuarioService/getUsuarios`;
+    return axios.get(url)
+}

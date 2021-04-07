@@ -141,7 +141,7 @@ function OfertCard({ oferta, classes, to = "" }) {
 						/>
 
 				</div>
-			
+
 			<div >
 			<CardMedia 
 			className={sw.cardMedia} 
@@ -150,6 +150,7 @@ function OfertCard({ oferta, classes, to = "" }) {
 				{/* <Typography component="p" variant="h6"></Typography> */}
 				<h5>Descripción</h5>
 				<p>{oferta.descripcion}</p>
+
 
 			</div>
 			<div className={sw.carta_contenedor__boton}>

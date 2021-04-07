@@ -22,7 +22,7 @@ import logo from '../../../assets/images/logoServinow.svg';
 
 import {
   Form,
-  FormGroup,
+  FormGroup
 } from 'reactstrap';
 
 import Hidden from "@material-ui/core/Hidden";
