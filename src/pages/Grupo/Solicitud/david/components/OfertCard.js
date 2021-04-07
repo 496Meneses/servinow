@@ -68,14 +68,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	carta_contenedor: {
-		height: 150,
-		width: 300,	
+		height: 100,
+		width: 300,
+		margin: 20,	
 	},
 
 	carta_contenedor__boton: {
 		height: 100,
 		width: 300,
-		
+		margin: 20,			
 	},
 
 	carta_header: {
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 
 	carta__descripcion: {
 		height: "100%",
-    display: "flex",
+    	display: "flex",
 	},
 
 	cardContent: {
@@ -135,8 +136,8 @@ function OfertCard({ oferta, classes, to = "" }) {
 								<h5>
 									{oferta.titulo}
 								</h5>
-
 							}
+
 							className={sw.carta_header}
 						/>
 
@@ -150,11 +151,9 @@ function OfertCard({ oferta, classes, to = "" }) {
 				{/* <Typography component="p" variant="h6"></Typography> */}
 				<h5>Descripción</h5>
 				<p>{oferta.descripcion}</p>
-
-
 			</div>
 			<div className={sw.carta_contenedor__boton}>
-				<Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
+			 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
 							 Ver detalle
 				</Button>
 				<Tooltip title="Estado de la oferta">
