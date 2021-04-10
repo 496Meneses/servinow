@@ -21,62 +21,52 @@ export const Perfil = () => {
     //     }).catch(error => alert(error))
     // }, [])
 
-    useEffect(() => {
-        GetHabilidadUser().then((request) => setHabilidades(request.data.habilidades))
-    }, [])
 
     return habilidades === null ? (
         <div className="contenedorPerfil">
         </div>
 
     ) : (
-        <div className="contenedorPerfil">
-            <div className="contenedor_Titulo">
-                <h1 >Mi Perfil</h1>
-            </div>
+        <div className="contenedor-perfil">
+            <div className="contenedor-header">
+                {/* <div>
+                    <h2><strong>Perfil</strong></h2>
+                </div> */}
+                <div className="contenedor-imagen">
 
-
-            <br></br>
-
-            <div className="contenedorPerfil_Datos">
-                <div className="contenedorPerfil_Imagen">
-
-                    <img src="https://www.clara.es/medio/2020/07/27/corte-pelo-bob_b7cfa415_1280x1830.jpg" />
-
+                    <img src="https://i.pinimg.com/originals/97/1d/0f/971d0f350dc43032bb2d2fb73fc8f9cb.jpg" />
 
                 </div>
+            </div>
+            <div className="contenedor-datos">
 
-                <div className="contenedorPerfil_Contacto">
-
-                    <h3> <strong> Nombres</strong>  Sofia</h3>
-                    <h3> <strong>Apellidos </strong> Cardenas</h3>
-                    <h3> <strong>Telefono</strong> 32035603421</h3>
-                    <h3> <strong>Domicilio</strong> Carrera 65A 23BN 32</h3>
-                    <h3> <strong>Correo </strong> sofi@unicauca.edu.co</h3>
-
-
-                    <h3> <strong>Descipción</strong> Estudiante universitario  </h3>
-                    <div className="separador"></div>
-                    <h3> <strong>Habilidades </strong></h3>
-
-                    <div className="contenedor_Habilidades">
-                        <TextField className="contenedor_Habilidades_input" variant="outlined" placeholder="Agregar habilidad"></TextField>
-                        <input type="submit" className="contenedor_Habilidades_button" value="+"></input>
-                    </div>
-                    <h5> 1.  Habilidad </h5>
-                    <h5> 2.  Habilidad</h5>
-                    <h5> 3.  Habilidad </h5>
-                    {habilidades.map((habilidad, index) => {
-                        { console.log(habilidad.nombreHabilidad) }
-                        <p key={index}> {habilidad.nombreHabilidad} </p>
-                    })}
-
-
-
-
-                </div>
+                <h2><strong>Datos personales</strong></h2>
+                <h6>Ana Maria Rodriguez </h6>
+                <h6>Ingenieria audiovisual</h6>
+                <h6>Estudiante de ingenieria de sistemas</h6>
+                <h6>Me gusta mucho compartir mis conocimientos y oferto clases por si les interesa
+                contactarme
+                </h6>
+                <h6>
+                    Telefono: 3205341231
+                </h6>
+                <h6>
+                    Barrio actual: Barrio Valencia
+                </h6>
+            </div>
+            <div className="contenedor-habilidades">
+                <h2><strong>Habilidades</strong></h2>
+                <h6>Programadora CSS</h6>
+                <h6>Grandes Habilidades en JS</h6>
+                <h6>Usos buenos de frameworks como REACT,ANGULAR,CAKEPHP,FIREBASE</h6>
 
             </div>
+            <div className="contenedor-botones">
+
+                <input type="submit" placeholder="Editar Perfil"></input>
+
+            </div>
+
         </div>
     )
 }

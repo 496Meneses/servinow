@@ -43,8 +43,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 const rootRoute = {
     path: '/',
     exact: true,
-    component: () => <Redirect to="/home" />,
-    route: PrivateRoute,
+    component: () => <Redirect to="/ofertas" />,
 };
 
 // dashboards
@@ -72,7 +71,7 @@ const ofertas = {
     icon: FeatherIcon.Home,
     component: listaOfertas,
     roles: ['Admin'],
-    route: PrivateRoute
+    route: Route
 };
 
 const postulados = {
@@ -80,7 +79,6 @@ const postulados = {
     name: 'Postulados',
     icon: FeatherIcon.Coffee,
     component: listaPostulados,
-    roles: ['Admin'],
     route: PrivateRoute
 };
 
@@ -100,7 +98,7 @@ const verPerfil = {
     icon: FeatherIcon.User,
     component: verPerfilComponent,
     roles: ['Admin'],
-    route: PrivateRoute
+    route: Route
 };
 
 const authRoutes = {
