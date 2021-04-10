@@ -3,10 +3,10 @@ import Routes from './routes/Routes';
 
 
 import './assets/scss/theme.scss';
-
+import {ProvideAuth} from './components/UserContext'
 class App extends Component {
   render() {
-    return <Routes></Routes>;
+    return <ProvideAuth><Routes></Routes></ProvideAuth>;
   }
 }
 

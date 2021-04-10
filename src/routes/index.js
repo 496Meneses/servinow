@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import * as FeatherIcon from 'react-feather';
 
 import { isUserAuthenticated, getLoggedInUser } from '../helpers/authUtils';
-
+import {useAuth} from '../components/UserContext'
 //librerias David
 // auth
 const Login = React.lazy(() => import('../pages/auth/Login'));
@@ -20,70 +20,24 @@ const listaOfertas = React.lazy(() => import ('../pages/Grupo/Solicitud/david/co
 const listaPostulados = React.lazy(() => import ('../pages/Grupo/Solicitud/ListarPostulantesSolicitud'));
 const verPerfilComponent = React.lazy(() => import ('../pages/Grupo/Usuarios/Perfil'));
 
-// apps
-// const CalendarApp = React.lazy(() => import('../pages/apps/Calendar'));
-// const EmailInbox = React.lazy(() => import('../pages/apps/Email/Inbox'));
-// const EmailDetail = React.lazy(() => import('../pages/apps/Email/Detail'));
-// const EmailCompose = React.lazy(() => import('../pages/apps/Email/Compose'));
-// const ProjectList = React.lazy(() => import('../pages/apps/Project/List'));
-// const ProjectDetail = React.lazy(() => import('../pages/apps/Project/Detail/'));
-// const TaskList = React.lazy(() => import('../pages/apps/Tasks/List'));
-// const TaskBoard = React.lazy(() => import('../pages/apps/Tasks/Board'));
 
-// // pages
-// const Starter = React.lazy(() => import('../pages/other/Starter'));
-// const Profile = React.lazy(() => import('../pages/other/Profile/'));
-// const Activity = React.lazy(() => import('../pages/other/Activity'));
-// const Invoice = React.lazy(() => import('../pages/other/Invoice'));
-// const Pricing = React.lazy(() => import('../pages/other/Pricing'));
-// const Error404 = React.lazy(() => import('../pages/other/Error404'));
-// const Error500 = React.lazy(() => import('../pages/other/Error500'));
-
-// // ui
-// const BSComponents = React.lazy(() => import('../pages/uikit/BSComponents/'));
-// const FeatherIcons = React.lazy(() => import('../pages/uikit/Icons/Feather'));
-// const UniconsIcons = React.lazy(() => import('../pages/uikit/Icons/Unicons'));
-// const Widgets = React.lazy(() => import('../pages/uikit/Widgets/'));
-
-// // charts
-// const Charts = React.lazy(() => import('../pages/charts/'));
-
-// // forms
-// const BasicForms = React.lazy(() => import('../pages/forms/Basic'));
-// const FormAdvanced = React.lazy(() => import('../pages/forms/Advanced'));
-// const FormValidation = React.lazy(() => import('../pages/forms/Validation'));
-// const FormWizard = React.lazy(() => import('../pages/forms/Wizard'));
-// const FileUpload = React.lazy(() => import('../pages/forms/FileUpload'));
-// const Editor = React.lazy(() => import('../pages/forms/Editor'));
-
-// // tables
-// const BasicTables = React.lazy(() => import('../pages/tables/Basic'));
-// const AdvancedTables = React.lazy(() => import('../pages/tables/Advanced'));
+const PrivateRoute = ({ component: Component, roles, ...rest }) => {
+    const auth = useAuth();
+    return (
+        <Route {...rest}
+            component= {
+                (props) => (
+                    ( auth.isAuthenticated)
+                    ? (<Component {...props}/>)
+                    : (<Redirect to="/account/login"/>)
+                )
+            }
+        
+        />
+    );
 
 
-// handle auth and authorization
-const PrivateRoute = ({ component: Component, roles, ...rest }) => (
-    <Route
-        {...rest}
-        render={props => {
-            // if (!isUserAuthenticated()) {
-            //     // not logged in so redirect to login page with the return url
-            //     return <Redirect to={{ pathname: '/account/login', state: { from: props.location } }} />;
-            // }
-
-            const loggedInUser = getLoggedInUser();
-            // check if route is restricted by role
-            // if (roles && roles.indexOf(loggedInUser.role) === -1) {
-            //     // role not authorised so redirect to home page
-            //     return <Redirect to={{ pathname: '/' }} />;
-            // }
-            // return <Redirect to={{ pathname: '/home' }} />;
-
-            // authorised so return component
-            return <Component {...props} />;
-        }}
-    />
-);
+}
 
 // root routes
 const rootRoute = {
@@ -149,18 +103,18 @@ const verPerfil = {
     route: PrivateRoute
 };
 
-// const authRoutes = {
-//     path: '/account',
-//     name: 'Auth',
-//     children: [
-//         {
-//             path: '/account/login',
-//             name: 'Login',
-//             component: Login,
-//             route: Route,
-//         }
-//     ],
-// };
+const authRoutes = {
+    path: '/account',
+    name: 'Auth',
+    children: [
+        {
+            path: '/account/login',
+            name: 'Login',
+            component: Login,
+            route: Route,
+        }
+    ],
+};
 
 // flatten the list of all nested routes
 const flattenRoutes = routes => {
@@ -185,8 +139,8 @@ const allRoutes = [
     ofertas,
     crearSolicitud,
     postulados,
-    verPerfil
-    //authRoutes
+    verPerfil,
+    authRoutes
 ];
 const authProtectedRoutes = [ofertas,crearSolicitud,postulados,verPerfil];
 // const authProtectedRoutes = [dashboardRoutes, ...appRoutes, pagesRoutes, componentsRoutes, chartRoutes, formsRoutes, tableRoutes];
