@@ -43,9 +43,12 @@ const Routes = (props) => {
     
     const auth = useAuth();
     const getLayout = () => {
-        if (!auth.isAuthenticated) return AuthLayout;
-        let layoutCls = HorizontalLayout;
-        return layoutCls;
+        if (localStorage.getItem("usuario")) {let layoutCls = HorizontalLayout;
+            return layoutCls;};
+            return AuthLayout;
+            
+
+
     }
     const Layout = getLayout();
             return <BrowserRouter>

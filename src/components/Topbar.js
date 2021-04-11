@@ -57,12 +57,17 @@ const ProfileMenus = [{
 const ProfileMenusUsuario = [{
   label: 'Mi perfil',
   icon: User,
-  redirectTo: "/ofertas",
+  redirectTo: "/perfil",
 },
 {
   label: 'Editar Perfil',
   icon: Settings,
-  redirectTo: "/ofertas"
+  redirectTo: "/perfil/editar"
+},
+{
+  label: 'Cerrar Sesión',
+  icon: Settings,
+  redirectTo: "/account/login"
 },
 ]
 

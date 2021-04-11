@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 
@@ -21,13 +20,18 @@ function useProvideAuth() {
 
     useEffect(() => {
         if (localStorage.getItem("usuario")){
-            alert("logeado")
             setisAuthenticated(true)
         }
     }, [])
+
+    const cerrarSesion = () => {
+        if (localStorage.getItem("usuario")){
+            localStorage.removeItem("usuario")
+        }
+    }
+
     const login = (username, password) => {
         if (localStorage.getItem("usuario")){
-            alert("logeado")
             setisAuthenticated(true)
         }else{
             setisAuthenticated(false)
@@ -49,5 +53,6 @@ function useProvideAuth() {
         setUser,
         login,
         isAuthenticated,
+        cerrarSesion,
     };
 }

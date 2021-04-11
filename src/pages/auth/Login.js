@@ -28,7 +28,8 @@
 
         const renderRedirectToRoot = () => {
 
-            if (auth.isAuthenticated) {
+            if (localStorage.getItem("usuario")) {
+                
                 return <Redirect to='/ofertas' />
             }
         }
