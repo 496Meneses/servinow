@@ -43,7 +43,7 @@ const Routes = (props) => {
     
     const auth = useAuth();
     const getLayout = () => {
-        if (!auth.isAuthenticated) return HorizontalLayout;
+        if (!auth.isAuthenticated) return AuthLayout;
         let layoutCls = HorizontalLayout;
         return layoutCls;
     }

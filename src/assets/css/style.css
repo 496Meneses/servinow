@@ -256,6 +256,8 @@ body {
 
 
 /* PERFIL */
+
+/* TODO utilizar mejor grid AREAS*/
 .contenedor-perfil{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -334,7 +336,7 @@ body {
         margin-bottom:  60px;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.6s;
-        padding: 40px;
+        padding: 10px;
     
     }
     .contenedor-perfil:hover{
@@ -364,6 +366,70 @@ body {
     
     }
     .contenedor-habilidades{
+        display: flex;
+        flex-direction: column;
+        min-height: 200px;
+    
+    }
+    .contenedor-botones{
+        min-height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    }
+    .contenedor-botones input[type="submit"]{
+        height: 50px;
+        background-color:#3f51b5;
+        box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+        padding: 6px 16px;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif; 
+        border: none;
+        width: 200px;
+        color: white;
+    
+    }
+}
+/* TODO desborde de contenido en habilidades*/
+@media screen and (max-width:600px){
+    .contenedor-perfil{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-bottom:  60px;
+
+        transition: 0.6s;
+        padding-left: 15px;
+    
+    }
+    .contenedor-perfil:hover{
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    .contenedor-header{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .contenedor-imagen{
+        
+        margin-top: 5px;
+        height: 300px;
+        width: 100%;
+
+    }
+    .contenedor-imagen img{
+        width: 100%;
+        height: 100%;
+        object-fit: scale-down;
+    }
+    .contenedor-datos{
+        padding-top: 20px;
+        min-height: 300px;
+    
+    }
+    .contenedor-habilidades{
+        overflow: auto;
         display: flex;
         flex-direction: column;
         min-height: 200px;

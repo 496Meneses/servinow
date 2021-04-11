@@ -58,7 +58,7 @@ export const Perfil = () => {
                 <h2><strong>Habilidades</strong></h2>
                 <h6>Programadora CSS</h6>
                 <h6>Grandes Habilidades en JS</h6>
-                <h6>Usos buenos de frameworks como REACT,ANGULAR,CAKEPHP,FIREBASE</h6>
+                <h6>Usos buenos de frameworks como REACT, ANGULAR, CAKEPHP, FIREBASE</h6>
 
             </div>
             <div className="contenedor-botones">

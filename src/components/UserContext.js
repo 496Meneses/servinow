@@ -16,15 +16,30 @@ export function ProvideAuth({ children }) {
 
 function useProvideAuth() {
     const [user, setUser] = useState(null);
-    const [isAuthenticated, setisAuthenticated] = useState(false)
+    const [isAuthenticated, setisAuthenticated] = useState()
+
+
+    useEffect(() => {
+        if (localStorage.getItem("usuario")){
+            alert("logeado")
+            setisAuthenticated(true)
+        }
+    }, [])
     const login = (username, password) => {
-        if (username!=null){
-            localStorage.setItem("usuario", username );
-            setUser(username)
+        if (localStorage.getItem("usuario")){
+            alert("logeado")
             setisAuthenticated(true)
         }else{
             setisAuthenticated(false)
+            if (username!=null){
+                localStorage.setItem("usuario", username );
+                setUser(username)
+                setisAuthenticated(true)
+            }else{
+                setisAuthenticated(false)
+            }
         }
+        
         
         
     }
@@ -34,6 +49,5 @@ function useProvideAuth() {
         setUser,
         login,
         isAuthenticated,
-        setisAuthenticated
     };
 }

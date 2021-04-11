@@ -43,7 +43,8 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 const rootRoute = {
     path: '/',
     exact: true,
-    component: () => <Redirect to="/ofertas" />,
+    component: () => <Redirect to="/home" />,
+    route: PrivateRoute
 };
 
 // dashboards
@@ -138,7 +139,7 @@ const allRoutes = [
     crearSolicitud,
     postulados,
     verPerfil,
-    authRoutes
+    authRoutes,
 ];
 const authProtectedRoutes = [ofertas,crearSolicitud,postulados,verPerfil];
 // const authProtectedRoutes = [dashboardRoutes, ...appRoutes, pagesRoutes, componentsRoutes, chartRoutes, formsRoutes, tableRoutes];
