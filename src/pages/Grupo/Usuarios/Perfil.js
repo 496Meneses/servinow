@@ -41,35 +41,35 @@ export const Perfil = () => {
                 <div className="contenedor-datos__titulo">
                     <h3><strong>Datos personales</strong></h3>
                     <button type="button"><EditIcon color="primary"></EditIcon></button>
-                    
-                
+
+
                 </div>
                 <div className="contenedor-datos-datos">
 
-                    <div>
-                        <h5><strong>Nombre(s) y apellido(s):   </strong> {usuarioLogeado.nombres} {usuarioLogeado.apellidos}</h5>
-
-                    <div>
-                        <h5><strong>Documento: </strong> {usuarioLogeado.documento}</h5>
-                    </div>
-                    <div>
-                        <h5><strong>Genero: </strong> {usuarioLogeado.genero}</h5>
-                    </div>
-                    <div>
-                        <h5><strong>E-mail: </strong> {usuarioLogeado.mail} </h5>
-                    </div>
-                    <div>
-                        <h5><strong>Teléfono: </strong> {usuarioLogeado.telefono}</h5>
-                    </div>
-                    <div>
-                        <h5><strong>Teléfono alternativo: </strong> {usuarioLogeado.telefono_alternativo}</h5>
-                    </div>
-                    <div>
-                        <h5><strong>Dirección: </strong> {usuarioLogeado.direccion}</h5>
+                    <div className="contenedor-datos-datos-1">
+                        <h5><strong>Nombre(s) y apellido(s):   </strong> </h5>
+                        <h5><strong>Documento: </strong> </h5>
+                        <h5><strong>Genero: </strong> </h5>
+                        <h5><strong>E-mail: </strong></h5>
+                        <h5><strong>Teléfono: </strong> </h5>
+                        <h5><strong>Teléfono alternativo: </strong></h5>
+                        <h5><strong>Dirección: </strong> </h5>
                     </div>
 
+                    <div className="contenedor-datos-datos-2">
+                        <h5>{usuarioLogeado.nombres} {usuarioLogeado.apellidos}</h5>
 
- 
+                        <h5>{usuarioLogeado.documento}</h5>
+                        <h5>{usuarioLogeado.genero}</h5>
+                        <h5> {usuarioLogeado.mail} </h5>
+                        <h5>{usuarioLogeado.telefono}</h5>
+                        <h5> {usuarioLogeado.telefono_alternativo}</h5>
+                        <h5>{usuarioLogeado.direccion}</h5>
+                    </div>
+
+
+
+
                 </div>
 
             </div>
@@ -78,13 +78,13 @@ export const Perfil = () => {
                 <div className="contenedor-descripcion__titulo">
                     <h3><strong>¿Quien soy?</strong></h3>
                     <button type="button"><EditIcon color="primary"></EditIcon></button>
-                    <label for="EditarDescrion"/>
-                
+                    <label for="EditarDescrion" />
+
                 </div>
                 <div className="contenedor-descripcion__descripcion">
                     <h5>{usuarioLogeado.descripcion}</h5>
                 </div>
-                
+
             </div>
             <div className="contenedor-habilidades">
                 <h3><strong>Habilidades</strong></h3>
