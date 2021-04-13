@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React,{ useEffect,useState,Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -12,7 +13,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import "../../../../../assets/css/style.css";
 import CardActionArea from '@material-ui/core/CardActionArea';
-
+import {GetAllUsers} from '../../../services';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -20,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardMedia: {
 		paddingTop: "56.25%", //16:9
-		minHeight: "200px",
-		margin: "1.5em",
+		minHeight: "250px",
+		margin: "1.2em",
 		borderRadius: 10,
 		backgroundColor: '#ccc',		
 	  },
@@ -66,15 +67,20 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	carta_contenedor: {
-		height: 100,
-		width: 300,
-		margin: 25,	
+		height: 120,
+		width: 350,
+		margin: 20,
+		bottom: 10,	
 	},
 
 	carta_contenedor__boton: {
 		height: 100,
 		width: 300,
 		margin: 15,			
+	},
+
+	boton_eliminar: {
+		textAlign: "right"
 	},
 
 	carta_header: {
@@ -89,20 +95,18 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	cardContent: {
-	flexGrow: 1
+	flexGrow: 1,
 	},
 	
 	card: {
     height: "90%",
     display: "flex",
     flexDirection: "column",
-  },
-
-  
+  }, 
 }));
 
-
 function OfertCard({ oferta, classes, to = "" }) {
+	/* const [listaUsuarios, setListaUsuarios] = useState([]) */
 	const sw = useStyles();
 	const [spacing, setSpacing] = React.useState(2);
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -110,6 +114,15 @@ function OfertCard({ oferta, classes, to = "" }) {
 		setAnchorEl(event.currentTarget);
 	};
 
+/* 	useEffect(() => {
+
+		GetAllUsers(1).then((respuesta)=>{
+			setListaUsuarios(respuesta.data)
+			  console.log(respuesta)
+		
+		})
+	  }, [])
+ */
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
@@ -119,7 +132,9 @@ function OfertCard({ oferta, classes, to = "" }) {
 				<div className={classes.cardContent}>
 						<CardHeader
 							avatar={
-								<Avatar aria-label="recipe" className={sw.purple}></Avatar>
+								<div>
+									<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
+								</div>
 							}
 							action={
 								<div>
@@ -146,27 +161,38 @@ function OfertCard({ oferta, classes, to = "" }) {
 			className={sw.cardMedia} 
 			image={oferta.imagen} />
 			<div className={sw.carta_contenedor}>
+			 <Tooltip title="Estado de la oferta">
+					<Button color="primary" style={{ top: '30%', right: -245}}>
+						<Typography>{oferta.estado}</Typography>
+					</Button>
+				</Tooltip> 
 				{/* <Typography component="p" variant="h6"></Typography> */}
 				<h5>Descripción</h5>
 				<p>{oferta.descripcion}</p>
 			</div>
+			
 			</CardActionArea>
 			<div className={sw.carta_contenedor__boton}>
 			 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
 							 Ver detalle
 				</Button>
-				<Tooltip title="Estado de la oferta">
+				 {/* <Tooltip title="Estado de la oferta">
 					<Button color="primary">
 						<Typography>{oferta.estado}</Typography>
 					</Button>
-				</Tooltip>
+				</Tooltip>  */}
+	{/* 
+				 <Button className={sw.boton_eliminar} color="primary">
+						<Typography>e</Typography>
+				</Button> */}
+				
+				
 			</div>
 			</div>
 		</Card>
 
 	);
 }
-
 
 export default withStyles({
 	item: {

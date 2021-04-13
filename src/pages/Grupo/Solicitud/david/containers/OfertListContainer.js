@@ -10,9 +10,10 @@ import Pagination from '../components/OfertPagination';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip } from '@material-ui/core';
 import OfertCard from '../components/OfertCard';
 import "../../../../../assets/css/style.css";
-import {Box, Grid,Paper} from '@material-ui/core';
+import {Box,Grid,Paper} from '@material-ui/core';
 import CircularIndeterminate from "../../CircularIndeterminate";
 import { ToastContainer } from "react-toastify";
+
 
  const useStyles = makeStyles((theme) => ({
 
@@ -34,6 +35,7 @@ import { ToastContainer } from "react-toastify";
     flexDirection: 'row'
   },
 
+
 })); 
 export const OfertListContainer = () => {
   const [listaOferta, setListaOferta] = useState([])
@@ -46,14 +48,16 @@ export const OfertListContainer = () => {
   const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => (
          
          <Grid item xs={12} sm={6} md={4}>
-           <ToastContainer />
+            <ToastContainer />
             {
-                cargando ? <CircularIndeterminate /> :
+                cargando ? <CircularIndeterminate /> : 
                   <OfertCard key={index} oferta={oferta}/>            
-            }    
+            }
           </Grid>
   ))
 
+
+  
   useEffect(() => {
     setCargando(true)
     GetAllOferts(1).then((respuesta)=>{
@@ -62,40 +66,43 @@ export const OfertListContainer = () => {
     setCargando(false)
     })
   }, [])
+
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
   return (
     <div>
-      <br></br>
-      <Typography color="textPrimary" variant="h5" align="center" color="primary">
-        OFERTAS DISPONIBLES
-      </Typography>
-      <br></br>
-        <div className="contenedor-carta">
-          <div className={classes.root}>
-          <Grid container spacing={3}>
-            {displayOferts}
-          </Grid>
-        </div>
-      </div>
-      <div className="contenedor-paginacion">
-       
-        <ReactPaginate className="algo"
-          nextLabel={"Siguiente →"}
-          previousLabel={"← Anterior"}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={"paginacionBtns"}
-          previousLinkClassName={"antBtn"}
-          nextLinkClassName={"sigBtn"}
-          disabledClassName={"pagDisabled"}
-          activeClassName={"pagActiva"}
-        />
-      </div>
-        <br></br>
-        <br></br>
-        <br></br>
+            <br></br>
+              <Typography color="textPrimary" variant="h5" align="center" color="primary">
+                OFERTAS DISPONIBLES
+              </Typography>
+              <br></br>
+                <div className="contenedor-carta">
+                  <div className={classes.root}>
+                  <Grid container spacing={3}>
+                    {displayOferts}
+                  </Grid>
+                </div>
+              </div>
+              <div className="contenedor-paginacion">   
+                <ReactPaginate className="algo"
+                  nextLabel={"Siguiente"}
+                  previousLabel={"Anterior"}
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"paginacionBtns"}
+                  previousLinkClassName={"antBtn"}
+                  nextLinkClassName={"sigBtn"}
+                  disabledClassName={"pagDisabled"}
+                  activeClassName={"pagActiva"}
+                />
+              </div>
+                <br></br>
+                <br></br>
+                <br></br>
+        
+      
+      
     </div>  
   )
 }
