@@ -20,6 +20,11 @@ class ProfileDropdown extends Component {
         });
     }
 
+    logout() {
+        localStorage.removeItem("usuario")
+        window.location.replace("/account/login");
+    }
+
     render() {
         const profilePic = this.props.profilePic || null;
         const tag = this.props.tag || "div";
@@ -49,10 +54,19 @@ class ProfileDropdown extends Component {
                             const Icon = item.icon;
                             return <React.Fragment key={i + "-profile-menu"}>
                                 {item.hasDivider ? <DropdownItem divider /> : null}
-                            <Link to={item.redirectTo} className="dropdown-item notify-item">
+
+
+                            {(item.label === "Cerrar Sesión") ? (
+                            <Link to={item.redirectTo} onClick={this.logout} className="dropdown-item notify-item">
                                     <Icon className="icon-dual icon-xs mr-2"></Icon>
                                     <span>{item.label}</span>
-                                </Link>
+                            </Link>
+                            ):
+                            (<Link to={item.redirectTo} className="dropdown-item notify-item">
+                            <Icon className="icon-dual icon-xs mr-2"></Icon>
+                            <span>{item.label}</span>
+                            </Link>)}    
+                            
                             </React.Fragment>
                         })}
                     </div>

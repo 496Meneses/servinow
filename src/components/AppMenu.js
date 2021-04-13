@@ -8,6 +8,7 @@ import { initMenu, changeActiveMenuFromLocation } from '../redux/actions';
 
 
 const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activatedMenuItemIds }) => {
+
     const Icon = item.icon || null;
     return (
         <li className={classNames('side-nav-item', { 'mm-active': activatedMenuItemIds.indexOf(item.id) >= 0 })}>
@@ -65,6 +66,7 @@ const MenuItemLink = ({ item, className }) => {
     const Icon = item.icon || null;
     return (
         <Link to={item.path} className={classNames('side-nav-link-ref', 'side-sub-nav-link', className)}>
+            
             {item.icon && <Icon />}
             {item.badge && <span className={`font-size-12 badge badge-${item.badge.variant} float-right`}>{item.badge.text}</span>}
             <span> {item.name} </span>

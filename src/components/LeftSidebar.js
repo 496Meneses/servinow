@@ -10,20 +10,25 @@ import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from
 import * as FeatherIcon from 'react-feather';
 
 import AppMenu from './AppMenu';
-import profilePic from '../assets/images/users/avatar-7.jpg';
+import {useAuth} from '../components/UserContext'
 
 
 /**
  * User Widget
  */
 const UserProfile = () => {
+    const auth= useAuth();
     return <React.Fragment>
+        
         <div className="media user-profile mt-2 mb-2">
-            <img src={profilePic} className="avatar-sm rounded-circle mr-2" alt="Shreyu" />
-            <img src={profilePic} className="avatar-xs rounded-circle mr-2" alt="Shreyu" />
+            <img src="https://toppng.com/uploads/preview/user-font-awesome-nuevo-usuario-icono-11563566658mjtfvilgcs.png" className="avatar-sm rounded-circle mr-2" alt="Shreyu" />
+            <img src="https://toppng.com/uploads/preview/user-font-awesome-nuevo-usuario-icono-11563566658mjtfvilgcs.png" className="avatar-xs rounded-circle mr-2" alt="Shreyu" />
 
-            <div className="media-body">
-                <h6 className="pro-user-name mt-0 mb-0">Pepito Perez</h6>
+            <div className="media-body">{
+                (!auth.isAuthenticated) ? (<h6 className="pro-user-name mt-0 mb-0">Invitado</h6>):(<h6 className="pro-user-name mt-0 mb-0">{auth.user}</h6>)
+            }
+                
+                
                 <span className="pro-user-desc">Usuario</span>
             </div>
 

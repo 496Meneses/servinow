@@ -8,8 +8,11 @@ import { showRightSidebar } from '../redux/actions';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
 
-import logo from '../assets/images/logo.png';
-import profilePic from '../assets/images/users/avatar-7.jpg';
+import logo from '../assets/images/logoServinow.svg';
+import profilePic from '../assets/images/users/avatar-3.jpg';
+import profileInvitado from '../assets/images/perfi.png';
+import {useAuth} from "./UserContext"
+
 
 
 const Notifications = [{
@@ -41,48 +44,39 @@ const Notifications = [{
 },];
 
 const ProfileMenus = [{
-  label: 'My Account',
+  label: 'Iniciar Sesión',
   icon: User,
-  redirectTo: "/",
+  redirectTo: "/account/login",
 },
 {
-  label: 'Settings',
+  label: 'Registrarse',
   icon: Settings,
-  redirectTo: "/"
+  redirectTo: "/ofertas"
+},
+]
+const ProfileMenusUsuario = [{
+  label: 'Mi perfil',
+  icon: User,
+  redirectTo: "/perfil",
 },
 {
-  label: 'Support',
-  icon: HelpCircle,
-  redirectTo: "/"
+  label: 'Editar Perfil',
+  icon: Settings,
+  redirectTo: "/perfil/editar"
 },
 {
-  label: 'Lock Screen',
-  icon: Lock,
-  redirectTo: "/"
+  label: 'Cerrar Sesión',
+  icon: Settings,
+  redirectTo: "/ofertas"
 },
-{
-  label: 'Logout',
-  icon: LogOut,
-  redirectTo: "/account/logout",
-  hasDivider: true
-}]
+]
 
 
-class Topbar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleRightSideBar = this.handleRightSideBar.bind(this);
+const Topbar =(props) => {
+  const handleRightSideBar = () => {
+    props.showRightSidebar();
   }
-
-  /**
-   * Toggles the right sidebar
-   */
-  handleRightSideBar = () => {
-    this.props.showRightSidebar();
-  }
-
-  render() {
+  const auth = useAuth();
     return (
       <React.Fragment>
         <div className="navbar navbar-expand flex-column flex-md-row navbar-custom">
@@ -101,7 +95,7 @@ class Topbar extends Component {
             { /* menu*/}
             <ul className="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0">
               <li className="">
-                <button className="button-menu-mobile open-left disable-btn" onClick={this.props.openLeftMenuCallBack}>
+                <button className="button-menu-mobile open-left disable-btn" onClick={props.openLeftMenuCallBack}>
                   <Menu className="menu-icon" />
                   <X className="close-icon" />
                 </button>
@@ -109,15 +103,23 @@ class Topbar extends Component {
             </ul>
             
             <ul className="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
-              <NotificationDropdown notifications={Notifications} />
-              <ProfileDropdown profilePic={profilePic} menuItems={ProfileMenus} username={'Shreyu N'} description="Administrator" />
+
+              {
+                (!auth.isAuthenticated) ? (<>
+                  <ProfileDropdown profilePic={profileInvitado} menuItems={ProfileMenus} username={"Invitado"} description="Usuario" /></>
+                ) : (
+                  <>
+                  <NotificationDropdown notifications={Notifications} />
+                  <ProfileDropdown profilePic={profilePic} menuItems={ProfileMenusUsuario} username={auth.user} description="Usuario" /></>
+                )
+              }
+              
             </ul>
 
           </Container>
         </div>
       </React.Fragment >
     );
-  }
 }
 
 export default connect(

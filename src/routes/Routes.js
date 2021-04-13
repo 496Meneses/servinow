@@ -7,6 +7,8 @@ import { isUserAuthenticated } from '../helpers/authUtils';
 import * as layoutConstants from '../constants/layout';
 import { allFlattenRoutes as routes } from './index';
 
+import {useAuth} from "../components/UserContext"
+
 const loading = () => <div></div>;
 
 // All layouts/containers
@@ -37,18 +39,19 @@ const HorizontalLayout = Loadable({
     loading,
 });
 
-class Routes extends Component {
+const Routes = (props) => {
+    
+    const auth = useAuth();
+    const getLayout = () => {
+            let layoutCls = HorizontalLayout;
+            return layoutCls
+            
 
-    getLayout = () => {
-        if (!isUserAuthenticated()) return AuthLayout;
-        let layoutCls = VerticalLayout;
-        return layoutCls;
+
     }
-
-    render() {
-            const Layout = this.getLayout();
+    const Layout = getLayout();
             return <BrowserRouter>
-                <Layout {...this.props}>
+                <Layout {...props}>
                     <Switch>
                         {routes.map((route, index) => {
                             return (
@@ -64,8 +67,8 @@ class Routes extends Component {
                         })}
                     </Switch>
                 </Layout>
+                
             </BrowserRouter>
-    }
 }
 const mapStateToProps = state => {
     return {
