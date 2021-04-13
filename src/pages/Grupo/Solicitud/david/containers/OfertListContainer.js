@@ -100,9 +100,7 @@ export const OfertListContainer = () => {
                 <br></br>
                 <br></br>
                 <br></br>
-        
-      
-      
+  
     </div>  
   )
 }
