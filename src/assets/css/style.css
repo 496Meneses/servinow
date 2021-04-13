@@ -194,7 +194,7 @@ body {
     
 }
 .form-img__img{
-    width: 400px;
-    height: 400px;
+    width: 70%;
+    height: 70%;
     object-fit: cover;
 }

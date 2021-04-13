@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Hidden,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -17,6 +18,7 @@ import { BoxCategoria } from './BoxCategoria';
 import { Habilidades } from './BoxHabilidad';
 import '../../../../src/assets/css/style.css'
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 // ICONOS
 
 import {
@@ -31,7 +33,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { AlertView } from '../../../components/Alert'
 import PaymentIcon from '@material-ui/icons/Payment';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   form_section: {
     margin: "20px auto",
     width: '70%'
@@ -48,8 +50,19 @@ const useStyles = makeStyles({
     display: 'block',
     width: '400px'
   },
-
-});
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+   
+    
+  },
+  myDiv:{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+}));
 
 
 export const CrearSolicitud = () => {
@@ -189,199 +202,209 @@ export const CrearSolicitud = () => {
         {({ errors, handleBlur, touched, handleChange, values }) => (
           <Grid container spacing={3}>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} md={8}>
+              <Paper className={classes.paper}>
 
-              <Form onSubmit={handleCreate} className="formulario">
-                <FormGroup className={classes.form_section}>
-                  <TextField
-                    fullWidth
-                    label="Titulo"
-                    name="titulo"
-                    variant="outlined"
-                    error={Boolean(touched.titulo && errors.titulo)}
-                    helperText={touched.titulo && errors.titulo}
-                    onBlur={handleBlur}
-                    required
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <TitleOutlinedIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </FormGroup>
-
-                <FormGroup className={classes.form_section}>
-
-                  <TextField
-                    label="Descripcion"
-                    name="descripcion"
-                    fullWidth
-                    multiline
-                    rows={6}
-                    error={Boolean(touched.descripcion && errors.descripcion)}
-                    helperText={touched.descripcion && errors.descripcion}
-                    onBlur={handleBlur}
-                    required
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                    variant="outlined"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <TextFieldsIcon />
-                        </InputAdornment>
-                      )
-                    }}
-
-
-                  />
-
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
-
-                  <TextField
-                    fullWidth
-                    label="Barrio"
-                    name="barrio"
-                    variant="outlined"
-                    error={Boolean(touched.barrio && errors.barrio)}
-                    helperText={touched.barrio && errors.barrio}
-                    onBlur={handleBlur}
-                    required
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <HomeIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
-                  <BoxCategoria callback={setCategoria}></BoxCategoria>
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
-                  <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
-                  <TextField
-                    fullWidth
-                    label="Propina"
-                    name="propina"
-                    variant="outlined"
-                    error={Boolean(touched.propina && errors.propina)}
-                    helperText={touched.propina && errors.propina}
-                    onBlur={handleBlur}
-                    required
-                    type="number"
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PaymentIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </FormGroup>
-
-                <FormGroup className={classes.form_section}>
-                  <TextField
-                    fullWidth
-                    label="Fecha inicio"
-                    name="fechaInicio"
-                    type="datetime-local"
-                    defaultValue="2020-01-24T10:30"
-                    required
-                    variant="outlined"
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                  >
-
-                  </TextField>
-                </FormGroup>
-
-                <FormGroup className={classes.form_section}>
-                  <TextField
-                    fullWidth
-                    label="Fecha fin"
-                    name="fechaFin"
-                    type="datetime-local"
-                    defaultValue="2020-01-24T10:30"
-                    required
-                    variant="outlined"
-                    onChange={
-                      e => {
-                        handleChange(e);
-                        handleChangeInput(e);
-                      }
-                    }
-                  />
-                </FormGroup>
-                <FormGroup className={classes.form_section}>
-                  <div className="custom-file">
-                    <input
-                      type="file"
-                      className="custom-file-input"
-                      id="img-file"
-                      onChange={async (e) => setImagen(e.target.files)}
+                <Form onSubmit={handleCreate} >
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Titulo"
+                      name="titulo"
+                      variant="outlined"
+                      error={Boolean(touched.titulo && errors.titulo)}
+                      helperText={touched.titulo && errors.titulo}
+                      onBlur={handleBlur}
                       required
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <TitleOutlinedIcon />
+                          </InputAdornment>
+                        )
+                      }}
                     />
-                    <label className="custom-file-label">
-                      Elije una imagen
+                  </FormGroup>
+
+                  <FormGroup className={classes.form_section}>
+
+                    <TextField
+                      label="Descripcion"
+                      name="descripcion"
+                      fullWidth
+                      multiline
+                      rows={6}
+                      error={Boolean(touched.descripcion && errors.descripcion)}
+                      helperText={touched.descripcion && errors.descripcion}
+                      onBlur={handleBlur}
+                      required
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                      variant="outlined"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <TextFieldsIcon />
+                          </InputAdornment>
+                        )
+                      }}
+
+
+                    />
+
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+
+                    <TextField
+                      fullWidth
+                      label="Barrio"
+                      name="barrio"
+                      variant="outlined"
+                      error={Boolean(touched.barrio && errors.barrio)}
+                      helperText={touched.barrio && errors.barrio}
+                      onBlur={handleBlur}
+                      required
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <HomeIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+                    <BoxCategoria callback={setCategoria}></BoxCategoria>
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+                    <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Propina"
+                      name="propina"
+                      variant="outlined"
+                      error={Boolean(touched.propina && errors.propina)}
+                      helperText={touched.propina && errors.propina}
+                      onBlur={handleBlur}
+                      required
+                      type="number"
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PaymentIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </FormGroup>
+
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Fecha inicio"
+                      name="fechaInicio"
+                      type="datetime-local"
+                      defaultValue="2020-01-24T10:30"
+                      required
+                      variant="outlined"
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                    >
+
+                    </TextField>
+                  </FormGroup>
+
+                  <FormGroup className={classes.form_section}>
+                    <TextField
+                      fullWidth
+                      label="Fecha fin"
+                      name="fechaFin"
+                      type="datetime-local"
+                      defaultValue="2020-01-24T10:30"
+                      required
+                      variant="outlined"
+                      onChange={
+                        e => {
+                          handleChange(e);
+                          handleChangeInput(e);
+                        }
+                      }
+                    />
+                  </FormGroup>
+                  <FormGroup className={classes.form_section}>
+                    <div className="custom-file">
+                      <input
+                        type="file"
+                        className="custom-file-input"
+                        id="img-file"
+                        onChange={async (e) => setImagen(e.target.files)}
+                        required
+                      />
+                      <label className="custom-file-label">
+                        Elije una imagen
                         </label>
-                    {/* TODO IMG */}
-                  </div>
-                </FormGroup>
-                <FormGroup className={classes.form_section_boton}>
-                  <Button
-                    color="primary"
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                  >
-                    Crear
+                      {/* TODO IMG */}
+                    </div>
+                  </FormGroup>
+                  <FormGroup className={classes.form_section_boton}>
+                    <Button
+                      color="primary"
+                      fullWidth
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                    >
+                      Crear
                     </Button>
-                </FormGroup>
-              </Form>
+                  </FormGroup>
+                </Form>
+
+              </Paper>
+
             </Grid>
-            
-              <div className="form-img">
-                <Grid item xs={12} sm={6} alignContent='center'>
-                  <img className="form-img__img" src="http://www.bhilva.com/assets/img/icons/question.png" />
-                </Grid>
-              </div>
-            
+
+            <Hidden smDown>
+              <Grid item xs={12} md={4} justifyContent >
+                <Box height="100%">
+                  <Paper className={classes.paper}>
+                    <img className="form-img__img" src="http://www.bhilva.com/assets/img/icons/question.png" />
+                  </Paper>
+                  {/* <img className="form-img__img" src="http://www.bhilva.com/assets/img/icons/question.png" /> */}
+                  </Box>
+
+              </Grid>
+            </Hidden>
+
 
           </Grid>
 
