@@ -18,6 +18,7 @@ const DetalleOfert = React.lazy(() => import('../pages/Grupo/Solicitud/DetalleOf
 const crearSolicitudComponent = React.lazy(() => import ('../pages/Grupo/Solicitud/CrearSolicitud'));
 const listaOfertas = React.lazy(() => import ('../pages/Grupo/Solicitud/david/containers/OfertListContainer'));
 const listaPostulados = React.lazy(() => import ('../pages/Grupo/Solicitud/ListarPostulantesSolicitud'));
+const listarSolicitudesSolicitante = React.lazy(() => import ('../pages/Grupo/Solicitud/Solicitante'));
 const verPerfilComponent = React.lazy(() => import ('../pages/Grupo/Usuarios/Perfil'));
 
 
@@ -83,6 +84,15 @@ const postulados = {
     route: PrivateRoute
 };
 
+const listarSolicitudes = {
+    path: '/solicitudes',
+    name: 'Solicitudes',
+    icon: FeatherIcon.Coffee,
+    component: listarSolicitudesSolicitante,
+    route: PrivateRoute
+};
+
+
 
 const crearSolicitud = {
     path: '/solicitud',
@@ -138,10 +148,11 @@ const allRoutes = [
     ofertas,
     crearSolicitud,
     postulados,
+    listarSolicitudes,
     verPerfil,
     authRoutes,
 ];
-const authProtectedRoutes = [ofertas,crearSolicitud,postulados,verPerfil];
+const authProtectedRoutes = [ofertas,crearSolicitud,postulados,verPerfil, listarSolicitudes];
 // const authProtectedRoutes = [dashboardRoutes, ...appRoutes, pagesRoutes, componentsRoutes, chartRoutes, formsRoutes, tableRoutes];
 const allFlattenRoutes = flattenRoutes(allRoutes);
 export { allRoutes, authProtectedRoutes, allFlattenRoutes};
