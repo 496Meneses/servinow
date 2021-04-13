@@ -43,8 +43,9 @@ const Routes = (props) => {
     
     const auth = useAuth();
     const getLayout = () => {
-            let layoutCls = HorizontalLayout;
-            return layoutCls
+        if (localStorage.getItem("usuario")) {let layoutCls = HorizontalLayout;
+            return layoutCls;};
+            return AuthLayout;
             
 
 

@@ -258,183 +258,57 @@ body {
 /* PERFIL */
 
 /* TODO utilizar mejor grid AREAS*/
-
-.contenedor-perfil {
-    font-size: 20px;
+.contenedor-perfil{
     display: grid;
-    grid-template-columns: 500px 1fr 1fr 1fr;
-    grid-template-rows: 150px 1fr 1fr 1fr 1fr 1fr;
-    gap: 0px 50px;
-    grid-template-areas:
-      "Titulo Titulo Titulo Titulo"
-      "contenedor-header contenedor-datos contenedor-datos contenedor-datos"
-      "contenedor-header contenedor-datos contenedor-datos contenedor-datos"
-      "contenedor-header contenedor-descripcion contenedor-descripcion contenedor-descripcion"
-      "contenedor-header contenedor-habilidades contenedor-habilidades contenedor-habilidades"
-      "contenedor-header contenedor-botones contenedor-botones contenedor-botones";
-    margin-top: 20px;
-    height: 100%;
-    margin-bottom:  60px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    min-height: 600px;
+    grid-gap: 15px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.6s;
-    padding: 30px;
-    background-color: #fff;
-    }
-
-.contenedor-perfil h5{
-    font-size: 20px;
-}
-.contenedor-perfil h3{
-    font-size: 28px;
-}
-
-
-.Titulo { 
-    grid-area: Titulo;
-    
+    padding: 40px;
+    margin-bottom: 50px;
 
 }
-.Titulo h2 { 
-    text-align: center; 
-
+.contenedor-perfil:hover{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
-.contenedor-datos { grid-area: contenedor-datos; }
-.contenedor-descripcion { grid-area: contenedor-descripcion; }
-.contenedor-habilidades { grid-area: contenedor-habilidades; }
-.contenedor-header { grid-area: contenedor-header; }
-.contenedor-botones { grid-area: contenedor-botones; }
-
 .contenedor-header{
+    grid-row: 1/ span 4;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 30px;
+    
+    
+}
+.contenedor-imagen{
+    margin-top: 5px;
+    height: 100%;
+    width: 100%;
+    
 }
 .contenedor-imagen img{
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: scale-down;
 }
+.contenedor-datos{
+    grid-column: 2 / span 2;
+    grid-row: 1 / span 2;
 
-/* CAMBIAR FOTO*/
-.contenedor-cambiarFoto{
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: center;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-.input-file-input {
-    display:none;
-    color: rgb(0, 0, 0);
-}
-.input-file__btn {
-      color: black;
-      width: 170px;
-      text-align: center;
-      line-height: 22px;
-      cursor: pointer;
-      text-decoration: underline;
-}
-.input-file__btn:hover {
-      color: rgb(6, 73, 173);
-      text-decoration: underline ;
-}
-  
-.input-file__btn:active {
-      -webkit-box-shadow: 0 3px 5px var(--color-shadow-btn-active) inset;
-      box-shadow: 0 3px 5px var(--color-shadow-btn-active) inset;
-      color: rgb(0, 0, 0);
-}
-
-/* end CAMBIAR FOTO*/
-/* DATOS */
-.contenedor-datos__titulo{
-    display:flex;
-    justify-content: center;
-}
-
-.contenedor-datos__titulo button{
-    margin-left: 80px;
-    border: none;
-    background-color: white;
-}
-
-.contenedor-datos-datos {
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    
-}
-.contenedor-datos-datos-1 {
-
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    
-}
-.contenedor-datos-datos-2 {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.contenedor-datos-datos h5{
-    display: inline-block;
-    margin-left: 5px;
-    
-}
-.contenedor-descripcion__titulo{
-    display: flex;
-    justify-content: center;
-}
-.contenedor-descripcion__titulo button{
-    margin-left: 80px;
-    border: none;
-    background-color: white;
-}
-.contenedor-descripcion{
-    display: flex;
-    flex-direction: column;
-
-}
-.contenedor-descripcion__descripcion{
-    
-    background-color: rgb(231, 231, 231);
-    border-top: 1px solid rgb(231, 231, 231);
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    width: 60%;
-    align-self: center;
-
-}
-
-
-.contenedor-habilidades h3{
-    text-align: center;
-}
-.contenedor-habilidades div{
-    background-color: rgb(231, 231, 231);
-    border-top: 1px solid rgb(231, 231, 231);
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
 }
 .contenedor-habilidades{
-    overflow: auto;
+    grid-column: 2/ span 2;
+    grid-row: 3 / span 2;
     display: flex;
     flex-direction: column;
-    min-height: 200px;
-    border-bottom: 1px solid black;
 
 }
-
 .contenedor-botones{
-    min-height: 100px;
+    grid-column: 2/ span 2;
+    grid-row: 4/ span 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -447,39 +321,15 @@ body {
     padding: 6px 16px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif; 
     border: none;
-    width: 200px;
+    width: 300px;
     color: white;
 
 }
 
-
-
-
-
-
 /* PERFIL RESPONSIVE */
 
 
-@media screen and (max-width:1500px){
-    .contenedor-descripcion__descripcion{
-
-        width: 90%;
-
-    
-    }
-}
-
-
 @media screen and (max-width:1200px){
-    .contenedor-descripcion__descripcion{
-        width: 90%;
-    }
-    h3{
-        font-size: 15px;
-    }
-    h5{
-        font-size: 13px;
-    }
     .contenedor-perfil{
         display: flex;
         flex-direction: column;
@@ -487,9 +337,7 @@ body {
         margin-bottom:  60px;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.6s;
-        padding: 30px;
-        background-color: #fff;
-        font-size: 15px;
+        padding: 10px;
     
     }
     .contenedor-perfil:hover{
@@ -499,80 +347,31 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: 450px;
         align-items: center;
     }
     .contenedor-imagen{
         
         margin-top: 5px;
-        height: 340px;
-        width: 340px;
-        border-radius: 50%;
-        
+        height: 300px;
+        width: 100%;
 
     }
     .contenedor-imagen img{
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-    }
-    .contenedor-datos__titulo{
-        display:flex;
-        justify-content: center;
-    }
-    .contenedor-datos__titulo button{
-        margin-left: 30px;
-    }
-    .contenedor-descripcion__titulo{
-        display: flex;
-        justify-content: center;
-    }
-    .contenedor-descripcion__titulo button{
-        margin-left: 30px;
+        object-fit: scale-down;
     }
     .contenedor-datos{
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
         padding-top: 20px;
-        min-height: 150px;
+        min-height: 300px;
     
-    }
-    .contenedor-datos h3{
-        text-align: center;
-    
-    }
-    .contenedor-descripcion h6{
-        background-color: white;
-        border-top: 1px solid white;
-        border-radius: 5px;
-        padding: 10px;
-        
-    }
-    .contenedor-descripcion h3{
-        text-align: center;
-        
-    }
-    
-    .contenedor-habilidades h3{
-        text-align: center;
-    }
-    .contenedor-habilidades div{
-        background-color: white;
-        border-top: 1px solid white;
-        border-radius: 5px;
-        padding: 10px;
     }
     .contenedor-habilidades{
-        overflow: auto;
         display: flex;
         flex-direction: column;
         min-height: 200px;
-        border-bottom: 1px solid black;
     
     }
-
-
     .contenedor-botones{
         min-height: 100px;
         display: flex;
@@ -592,105 +391,49 @@ body {
     
     }
 }
-@media screen and (max-width:1300px){
-    .contenedor-descripcion__descripcion{
-        width: 90%;
-    }
-    .contenedor-perfil h5{
-        font-size: 14px
-
-    }
-}
-@media screen and (max-width:610px){
-
+/* TODO desborde de contenido en habilidades*/
+@media screen and (max-width:600px){
     .contenedor-perfil{
         display: flex;
         flex-direction: column;
         height: 100%;
         margin-bottom:  60px;
+
         transition: 0.6s;
         padding-left: 15px;
-        box-shadow: 0;
-        border: none;
-        padding: 10px;
-    
     
     }
-    .contenedor-perfil h5{
-        font-size: 15px
-
+    .contenedor-perfil:hover{
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     }
-    .contenedor-perfil h3{
-        font-size: 20px
-
-    }
-    
     .contenedor-header{
         display: flex;
         flex-direction: column;
-        justify-content: baseline;
-        align-items: center;
-        min-height: 300px;
-        
-    }
-    .contenedor-cambiarFoto{
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: end;
-        -ms-flex-pack: end;
         justify-content: center;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        margin-top: 10px;
+        align-items: center;
     }
-    .input-file-input {
-        display:none;
-        color: rgb(0, 0, 0);
-    }
-    .input-file__btn {
-          color: black;
-          width: 170px;
-          text-align: center;
-          line-height: 22px;
-          cursor: pointer;
-          text-decoration: underline;
-    }
-    .input-file__btn:hover {
-        color: rgb(6, 73, 173);
-        text-decoration: underline ;
-    }
-    .input-file__btn:active {
-          -webkit-box-shadow: 0 3px 5px var(--color-shadow-btn-active) inset;
-          box-shadow: 0 3px 5px var(--color-shadow-btn-active) inset;
-          color: rgb(0, 0, 0);
-      }
     .contenedor-imagen{
-        height: 200px;
-        width: 200px;
-        border-radius: 50%;
+        
+        margin-top: 5px;
+        height: 300px;
+        width: 100%;
 
     }
     .contenedor-imagen img{
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
+        object-fit: scale-down;
     }
     .contenedor-datos{
-        border-top: 1px solid black;
-        padding-bottom: 5px;
-        padding-top: 5px;
-        min-height: 150px;
+        padding-top: 20px;
+        min-height: 300px;
     
     }
-
     .contenedor-habilidades{
         overflow: auto;
         display: flex;
         flex-direction: column;
         min-height: 200px;
-        border-bottom: 1px solid black;
     
     }
     .contenedor-botones{
@@ -712,35 +455,3 @@ body {
     
     }
 }
-
-@media screen and (max-width:480px){
-
-    .contenedor-perfil h5{
-        font-size: 12px
-
-    }
-    .contenedor-perfil h3{
-        font-size: 18px
-
-    }
-}
-@media screen and (max-width:380px){
-
-    .contenedor-perfil h5{
-        font-size: 7px
-
-    }
-    .contenedor-perfil h2{
-        font-size: 16px
-
-    }
-    .contenedor-perfil label{
-        font-size: 12px
-
-    }
-    .contenedor-perfil h3{
-        font-size: 12px
-
-    }
-}
-

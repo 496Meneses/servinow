@@ -67,7 +67,7 @@ const ProfileMenusUsuario = [{
 {
   label: 'Cerrar Sesión',
   icon: Settings,
-  redirectTo: "/ofertas"
+  redirectTo: "/account/login"
 },
 ]
 
