@@ -83,11 +83,11 @@ export default function CenteredGrid() {
                           <option value={10}>Disponibles</option>
                             {console.log("opción 1")}
                           <option value={20}>En proceso</option>
-                          
+                            {console.log("opción 1")}
                           <option value={30}>Finalizadas</option>
-                          
+                            {console.log("opción 1")}
                           <option value={40}>Canceladas</option>
-                          
+                            {console.log("opción 1")}
                         </Select>
                       </FormControl>
                       
