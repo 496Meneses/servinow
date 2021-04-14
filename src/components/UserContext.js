@@ -15,7 +15,7 @@ export function ProvideAuth({ children }) {
 
 function useProvideAuth() {
     const [user, setUser] = useState(null);
-    const [isAuthenticated, setisAuthenticated] = useState()
+    const [isAuthenticated, setisAuthenticated] = useState(false)
 
 
     useEffect(() => {
@@ -34,6 +34,8 @@ function useProvideAuth() {
         if (localStorage.getItem("usuario")){
             setisAuthenticated(true)
         }else{
+
+
             setisAuthenticated(false)
             if (username!=null){
                 localStorage.setItem("usuario", username );
