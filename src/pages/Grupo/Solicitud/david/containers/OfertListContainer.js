@@ -129,9 +129,7 @@ export const OfertListContainer = (props) => {
                 <br></br>
                 <br></br>
                 <br></br>
-        
-      
-      
+  
     </div>  
   )
 }

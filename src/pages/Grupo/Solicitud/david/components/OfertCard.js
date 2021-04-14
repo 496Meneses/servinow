@@ -161,7 +161,7 @@ function OfertCard({ oferta, classes, to = "" }) {
 			className={sw.cardMedia} 
 			image={oferta.imagen} />
 			<div className={sw.carta_contenedor}>
-			 <Tooltip title="Estado de la oferta">
+			  <Tooltip title="Estado de la oferta">
 					<Button color="primary" style={{ top: '30%', right: -245}}>
 						<Typography>{oferta.estado}</Typography>
 					</Button>
@@ -176,17 +176,12 @@ function OfertCard({ oferta, classes, to = "" }) {
 			 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
 							 Ver detalle
 				</Button>
-				 {/* <Tooltip title="Estado de la oferta">
+				{/* <Tooltip title="Estado de la oferta">
 					<Button color="primary">
 						<Typography>{oferta.estado}</Typography>
 					</Button>
-				</Tooltip>  */}
-	{/* 
-				 <Button className={sw.boton_eliminar} color="primary">
-						<Typography>e</Typography>
-				</Button> */}
-				
-				
+				</Tooltip> */}  
+								
 			</div>
 			</div>
 		</Card>
