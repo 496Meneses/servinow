@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-
+import {LoginService} from "../pages/Grupo/services" 
 
 
 const authContext = createContext();
@@ -31,19 +31,27 @@ function useProvideAuth() {
     }
 
     const login = (username, password) => {
+
         if (localStorage.getItem("usuario")){
             setisAuthenticated(true)
         }else{
 
+            LoginService(`${username}:${password}`).then(
+                (request) =>{
+                    alert("entro")
+                    setisAuthenticated(true)
+                    localStorage.setItem("usuario", request );
 
-            setisAuthenticated(false)
-            if (username!=null){
-                localStorage.setItem("usuario", username );
-                setUser(username)
-                setisAuthenticated(true)
-            }else{
-                setisAuthenticated(false)
-            }
+                }).catch(setisAuthenticated(false))
+
+            // setisAuthenticated(false)
+            // if (username!=null){
+            //     localStorage.setItem("usuario", username );
+            //     setUser(username)
+            //     setisAuthenticated(true)
+            // }else{
+            //     setisAuthenticated(false)
+            // }
         }
         
         

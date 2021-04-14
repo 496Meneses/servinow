@@ -59,9 +59,10 @@ export const GetHabilidadUser = () =>{
 export const LoginService = (usuario) => {
 
     const url = `${URLAPI}loginService/login`;
-    return axios.post(url, usuario, {
+    return axios.post(url,{}, {
         headers:{
-            'Content-Type': 'application/json',
+
+            'Authorization': "Basic "+btoa(usuario)
           }
       } );
 }
