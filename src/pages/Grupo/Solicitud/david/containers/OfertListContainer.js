@@ -1,7 +1,7 @@
 import React,{ useEffect,useState,Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputLabel } from '@material-ui/core';
-import {GetOfertasDisponibles, GetAllOferts} from '../../../services';
+import {GetOfertasDisponibles, GetAllOferts, ConsultarPostuladosPorOfertaService} from '../../../services';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '../components/OfertList';
 import ReactPaginate from 'react-paginate';
@@ -39,7 +39,7 @@ import { ToastContainer } from "react-toastify";
 export const OfertListContainer = (props) => {
   
 
-  
+  console.log("Obtuve " +props.estado)
   const [listaOferta, setListaOferta] = useState([])
   const [listaOfertaFromApi, setListaOfertaFromApi] = useState([])
   const [cargando, setCargando] = useState(false)
@@ -71,8 +71,8 @@ export const OfertListContainer = (props) => {
     })
   }, [])
 
+
   useEffect(() => {
-  
     setCargando(true)
     let nuevaListaOfertas = []    
     listaOfertaFromApi.map((data)=>{
@@ -84,6 +84,17 @@ export const OfertListContainer = (props) => {
     setCargando(false)
     setListaOferta(nuevaListaOfertas)  
   }, [props.msg])
+
+
+
+  useEffect(() => {
+    setCargando(true)
+    let nuevaListaOfertas = []    
+ 
+    setListaOferta(nuevaListaOfertas)  
+  }, [props.estado])
+
+
 
   const changePage = ({selected}) => {
     setPageNumber(selected)
