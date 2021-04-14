@@ -1,7 +1,7 @@
 import React,{ useEffect,useState,Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputLabel } from '@material-ui/core';
-import {GetOfertasDisponibles, GetAllOferts} from '../../../services';
+import {GetOfertasDisponibles, GetAllOferts, ConsultarPostuladosPorOfertaService} from '../../../services';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '../components/OfertList';
 import ReactPaginate from 'react-paginate';
@@ -10,9 +10,10 @@ import Pagination from '../components/OfertPagination';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip } from '@material-ui/core';
 import OfertCard from '../components/OfertCard';
 import "../../../../../assets/css/style.css";
-import {Box, Grid,Paper} from '@material-ui/core';
+import {Box,Grid,Paper} from '@material-ui/core';
 import CircularIndeterminate from "../../CircularIndeterminate";
 import { ToastContainer } from "react-toastify";
+
 
  const useStyles = makeStyles((theme) => ({
 
@@ -35,8 +36,12 @@ import { ToastContainer } from "react-toastify";
   },
 
 })); 
-export const OfertListContainer = () => {
+export const OfertListContainer = (props) => {
+  
+
+  console.log("Obtuve " +props.estado)
   const [listaOferta, setListaOferta] = useState([])
+  const [listaOfertaFromApi, setListaOfertaFromApi] = useState([])
   const [cargando, setCargando] = useState(false)
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0)
@@ -46,56 +51,87 @@ export const OfertListContainer = () => {
   const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => (
          
          <Grid item xs={12} sm={6} md={4}>
-           <ToastContainer />
+            <ToastContainer />
             {
-                cargando ? <CircularIndeterminate /> :
+                cargando ? <CircularIndeterminate /> : 
                   <OfertCard key={index} oferta={oferta}/>            
-            }    
+            }
           </Grid>
   ))
 
+
+  
   useEffect(() => {
     setCargando(true)
-    GetAllOferts(1).then((respuesta)=>{
+    GetAllOferts().then((respuesta)=>{
       setListaOferta(respuesta.data)
+      setListaOfertaFromApi(respuesta.data)
       console.log(respuesta)
     setCargando(false)
     })
   }, [])
+
+
+  useEffect(() => {
+    setCargando(true)
+    let nuevaListaOfertas = []    
+    listaOfertaFromApi.map((data)=>{
+      if(data.descripcion.includes(props.msg)){
+        nuevaListaOfertas.push(data)
+      }
+    })
+    console.log(nuevaListaOfertas)
+    setCargando(false)
+    setListaOferta(nuevaListaOfertas)  
+  }, [props.msg])
+
+
+
+  useEffect(() => {
+    setCargando(true)
+    let nuevaListaOfertas = []    
+ 
+    setListaOferta(nuevaListaOfertas)  
+  }, [props.estado])
+
+
+
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
   return (
     <div>
-      <br></br>
-      <Typography color="textPrimary" variant="h5" align="center" color="primary">
-        OFERTAS DISPONIBLES
-      </Typography>
-      <br></br>
-        <div className="contenedor-carta">
-          <div className={classes.root}>
-          <Grid container spacing={3}>
-            {displayOferts}
-          </Grid>
-        </div>
-      </div>
-      <div className="contenedor-paginacion">
-       
-        <ReactPaginate className="algo"
-          nextLabel={"Siguiente →"}
-          previousLabel={"← Anterior"}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={"paginacionBtns"}
-          previousLinkClassName={"antBtn"}
-          nextLinkClassName={"sigBtn"}
-          disabledClassName={"pagDisabled"}
-          activeClassName={"pagActiva"}
-        />
-      </div>
-        <br></br>
-        <br></br>
-        <br></br>
+            <br></br>
+              <Typography color="textPrimary" variant="h5" align="center" color="primary">
+                OFERTAS DISPONIBLES
+              </Typography>
+              <br></br>
+                <div className="contenedor-carta">
+                  <div className={classes.root}>
+                  <Grid container spacing={3}>
+                    {displayOferts}
+                  </Grid>
+                </div>
+              </div>
+              <div className="contenedor-paginacion">   
+                <ReactPaginate className="algo"
+                  nextLabel={"Siguiente"}
+                  previousLabel={"Anterior"}
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"paginacionBtns"}
+                  previousLinkClassName={"antBtn"}
+                  nextLinkClassName={"sigBtn"}
+                  disabledClassName={"pagDisabled"}
+                  activeClassName={"pagActiva"}
+                />
+              </div>
+                <br></br>
+                <br></br>
+                <br></br>
+        
+      
+      
     </div>  
   )
 }

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Hidden,
   TextField,
   Typography,
 } from '@material-ui/core';
