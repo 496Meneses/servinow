@@ -39,7 +39,7 @@ import { ToastContainer } from "react-toastify";
 export const OfertListContainer = (props) => {
   
 
-  const [cadenaBusqueda, setCadenaBusqueda] = useState(props.msg)
+  
   const [listaOferta, setListaOferta] = useState([])
   const [listaOfertaFromApi, setListaOfertaFromApi] = useState([])
   const [cargando, setCargando] = useState(false)
