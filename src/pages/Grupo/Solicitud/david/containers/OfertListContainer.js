@@ -36,8 +36,12 @@ import { ToastContainer } from "react-toastify";
   },
 
 })); 
-export const OfertListContainer = () => {
+export const OfertListContainer = (props) => {
+  
+
+  const [cadenaBusqueda, setCadenaBusqueda] = useState(props.msg)
   const [listaOferta, setListaOferta] = useState([])
+  const [listaOfertaFromApi, setListaOfertaFromApi] = useState([])
   const [cargando, setCargando] = useState(false)
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0)
@@ -59,12 +63,28 @@ export const OfertListContainer = () => {
   
   useEffect(() => {
     setCargando(true)
-    GetAllOferts(1).then((respuesta)=>{
+    GetAllOferts().then((respuesta)=>{
       setListaOferta(respuesta.data)
+      setListaOfertaFromApi(respuesta.data)
       console.log(respuesta)
     setCargando(false)
     })
   }, [])
+
+  useEffect(() => {
+  
+    setCargando(true)
+    let nuevaListaOfertas = []    
+    listaOfertaFromApi.map((data)=>{
+      if(data.descripcion.includes(props.msg)){
+        nuevaListaOfertas.push(data)
+      }
+    })
+    console.log(nuevaListaOfertas)
+    setCargando(false)
+    setListaOferta(nuevaListaOfertas)  
+  }, [props.msg])
+
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
