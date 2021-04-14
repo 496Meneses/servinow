@@ -157,8 +157,7 @@ const allRoutes = [
     authRoutes,
     misSolicitudes
 ];
-const authProtectedRoutes = [ofertas,crearSolicitud,postulados,verPerfil, listarSolicitudes];
-const authProtectedRoutes = [ofertas,crearSolicitud,misSolicitudes];
+const authProtectedRoutes = [ofertas,crearSolicitud,listarSolicitudes];
 // const authProtectedRoutes = [dashboardRoutes, ...appRoutes, pagesRoutes, componentsRoutes, chartRoutes, formsRoutes, tableRoutes];
 const allFlattenRoutes = flattenRoutes(allRoutes);
 export { allRoutes, authProtectedRoutes, allFlattenRoutes};
