@@ -6,7 +6,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { CrearSolicitudService } from "../services"
@@ -21,13 +20,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import { AlertView } from '../../../components/Alert'
 import PaymentIcon from '@material-ui/icons/Payment';
 
-const useStyles = makeStyles({
-  form_section_boton: {
-    margin: "20px auto",
-    width: '20%'
-  },
-
-});
 
 
 export const CrearSolicitud = () => {
@@ -35,9 +27,6 @@ export const CrearSolicitud = () => {
   const [open, setOpen] = useState(false)
   const [typeAlert, setTypeAlert] = useState('success')
   const [message, setMessage] = useState('')
-
-
-  const classes = useStyles();
   const [titulo, setTitulo] = useState("")
   const [descripcion, setDescripcion] = useState("")
   const [barrio, setBarrio] = useState("")
@@ -48,6 +37,7 @@ export const CrearSolicitud = () => {
   const [fechaFin, setFechaFin] = useState(" ")
   const [Imagen, setImagen] = useState("")
   const [imagenSeleccionada, setImagenSeleccionada] = useState("Seleccione una imagen")
+  const [imagenPrev, setImagenPrev] = useState('')
 
   useEffect(() => {
     setTitulo("")
@@ -148,7 +138,16 @@ export const CrearSolicitud = () => {
     }
     event.preventDefault();
   }
-
+  const onChangeInputFile = async (e) => {
+    setImagen(e.target.files)
+    setImagenSeleccionada("Imagen Seleccionada")
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = function () {
+      setImagenPrev(reader.result)
+      alert(reader.result)
+    };
+  }
 
   return (
     <div className="contenedorFormulario">
@@ -180,9 +179,7 @@ export const CrearSolicitud = () => {
       >
         {({ errors, handleBlur, touched, handleChange, values }) => (
           <form onSubmit={handleCreate} className="formulario">
-            <div className="form_section">
-
-              <h6>Información de la solicitud</h6>
+            <div className="Datos">
               <TextField
                 fullWidth
                 label="Titulo"
@@ -207,8 +204,7 @@ export const CrearSolicitud = () => {
                   )
                 }}
               />
-              </div>
-              <div className="form_section">
+
               <TextField
                 label="Descripcion"
                 name="descripcion"
@@ -233,18 +229,7 @@ export const CrearSolicitud = () => {
                     </InputAdornment>
                   )
                 }}
-
-
               />
-
-            </div>
-            <div className="form_section">
-              <h6>Categoría de la solicitud</h6>
-              <BoxCategoria callback={setCategoria}></BoxCategoria>
-              <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
-            </div>
-            <div className="form_section">
-              <h6>Hora de la solicitud y dirección</h6>
               <TextField
                 fullWidth
                 label="Barrio"
@@ -268,39 +253,70 @@ export const CrearSolicitud = () => {
                   )
                 }}
               />
-              <h6>Fecha inicio</h6>
-              <TextField
-                fullWidth
-                name="fechaInicio"
-                type="datetime-local"
-                defaultValue=""
-                required
-                variant="standard"
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
-                  }
-                }
-              >
+              <div className='Datos_Fechayhora'>
+                <h6>Fecha y hora de la solicitud</h6>
 
-              </TextField>
-              <h6>Fecha Fin</h6>
-              <TextField
-                fullWidth
-                name="fechaFin"
-                type="datetime-local"
-                required
-                variant="standard"
-                onChange={
-                  e => {
-                    handleChange(e);
-                    handleChangeInput(e);
+                <h6>Fecha y hora inicio</h6>
+                <TextField
+                  fullWidth
+                  name="fechaInicio"
+                  type="datetime-local"
+                  defaultValue=""
+                  required
+                  variant="standard"
+                  onChange={
+                    e => {
+                      handleChange(e);
+                      handleChangeInput(e);
+                    }
                   }
-                }
-              />
+                >
+
+                </TextField>
+                <h6>Fecha y hora Fin</h6>
+                <TextField
+                  fullWidth
+                  name="fechaFin"
+                  type="datetime-local"
+                  required
+                  variant="standard"
+                  onChange={
+                    e => {
+                      handleChange(e);
+                      handleChangeInput(e);
+                    }
+                  }
+                />
+
+              </div>
+              <div className='Datos_categoriaYhabilidad'>
+                <h6>Categoría de la solicitud</h6>
+                <BoxCategoria callback={setCategoria}></BoxCategoria>
+                <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
+              </div>
             </div>
-            <div className="form_section">
+
+            <div class="IMAGEN">
+              <h6>Imagen descriptiva</h6>
+
+              <div className="imagenPrev">
+
+
+              </div>
+              <div className="custom-file">
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  id="img-file"
+                  onChange={(e) => onChangeInputFile(e)}
+                  required
+                />
+                <label className="custom-file-label">
+                  {imagenSeleccionada}
+                </label>
+                {/* TODO IMG */}
+              </div>
+
               <h6>Propina</h6>
               <TextField
                 fullWidth
@@ -325,27 +341,11 @@ export const CrearSolicitud = () => {
                   )
                 }}
               />
+
             </div>
-            <div className="form_section_img">
-              <h6>Imagen descriptiva</h6>
-              <div className="custom-file">
-                <input
-                  type="file"
-                  className="custom-file-input"
-                  id="img-file"
-                  onChange={async (e) => {
-                    setImagen(e.target.files)
-                    setImagenSeleccionada("Imagen Seleccionada")
-                  }}
-                  required
-                />
-                <label className="custom-file-label">
-                  {imagenSeleccionada}
-                </label>
-                {/* TODO IMG */}
-              </div>
-            </div>
-            <div className={classes.form_section_boton}>
+
+
+            <div className="Botones">
               <Button
                 color="primary"
                 fullWidth
@@ -357,7 +357,6 @@ export const CrearSolicitud = () => {
                     </Button>
             </div>
           </form>
-
 
         )}
       </Formik>

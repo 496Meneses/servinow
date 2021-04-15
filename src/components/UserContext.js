@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import {LoginService} from "../pages/Grupo/services" 
-
+import { Redirect, Link } from 'react-router-dom'
 
 const authContext = createContext();
 
@@ -38,9 +38,10 @@ function useProvideAuth() {
 
             LoginService(`${username}:${password}`).then(
                 (request) =>{
-                    alert("entro")
+                    
                     setisAuthenticated(true)
                     localStorage.setItem("usuario", request );
+                    return <Redirect to='/ofertas' />
 
                 }).catch(setisAuthenticated(false))
 
