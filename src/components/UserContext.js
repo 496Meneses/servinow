@@ -16,17 +16,22 @@ export function ProvideAuth({ children }) {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setisAuthenticated] = useState(false)
-
+    const [autenticationBasic, setAutenticationBasic] = useState(null)
 
     useEffect(() => {
         if (localStorage.getItem("usuario")){
             setisAuthenticated(true)
+            setUser(JSON.parse(localStorage.getItem("usuario")))
+            setAutenticationBasic(localStorage.getItem("autenticacion"))
+            
         }
     }, [])
 
     const cerrarSesion = () => {
         if (localStorage.getItem("usuario")){
             localStorage.removeItem("usuario")
+            setisAuthenticated(false)
+            setUser(null)
         }
     }
 
@@ -34,13 +39,18 @@ function useProvideAuth() {
 
         if (localStorage.getItem("usuario")){
             setisAuthenticated(true)
+            setUser(JSON.parse(localStorage.getItem("usuario")))
+            setAutenticationBasic(`${username}:${password}`)
         }else{
 
             LoginService(`${username}:${password}`).then(
                 (request) =>{
                     
                     setisAuthenticated(true)
-                    localStorage.setItem("usuario", request );
+                    setUser(JSON.parse(JSON.stringify(request.data)))
+                    setAutenticationBasic(`${username}:${password}`)
+                    localStorage.setItem("autenticacion",`${username}:${password}`) // TODO SEGURIDAD!!!
+                    localStorage.setItem("usuario", JSON.stringify(request.data) );
                     return <Redirect to='/ofertas' />
 
                 }).catch(setisAuthenticated(false))
@@ -65,5 +75,6 @@ function useProvideAuth() {
         login,
         isAuthenticated,
         cerrarSesion,
+        autenticationBasic,
     };
 }

@@ -37,7 +37,7 @@ export const CrearSolicitud = () => {
   const [fechaFin, setFechaFin] = useState(" ")
   const [Imagen, setImagen] = useState("")
   const [imagenSeleccionada, setImagenSeleccionada] = useState("Seleccione una imagen")
-  const [imagenPrev, setImagenPrev] = useState('')
+  const [imagenPrev, setImagenPrev] = useState('https://www.redeszone.net/app/uploads-redeszone.net/2019/06/subir-archivos-sin-registro.jpg')
 
   useEffect(() => {
     setTitulo("")
@@ -184,18 +184,18 @@ export const CrearSolicitud = () => {
                 fullWidth
                 label="Titulo"
                 name="titulo"
-                variant="standard"
+                variant="outlined"
                 error={Boolean(touched.titulo && errors.titulo)}
                 helperText={touched.titulo && errors.titulo}
                 onBlur={handleBlur}
                 required
+                style = {{ marginTop : "30px" }}
                 onChange={
                   e => {
                     handleChange(e);
                     handleChangeInput(e);
                   }
                 }
-
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -215,13 +215,14 @@ export const CrearSolicitud = () => {
                 helperText={touched.descripcion && errors.descripcion}
                 onBlur={handleBlur}
                 required
+                style = {{ marginTop : "30px" }}
                 onChange={
                   e => {
                     handleChange(e);
                     handleChangeInput(e);
                   }
                 }
-                variant="standard"
+                variant="outlined"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -234,11 +235,12 @@ export const CrearSolicitud = () => {
                 fullWidth
                 label="Barrio"
                 name="barrio"
-                variant="standard"
+                variant="outlined"
                 error={Boolean(touched.barrio && errors.barrio)}
                 helperText={touched.barrio && errors.barrio}
                 onBlur={handleBlur}
                 required
+                style = {{ marginTop : "30px", marginBottom : "30px"  }}
                 onChange={
                   e => {
                     handleChange(e);
@@ -263,7 +265,7 @@ export const CrearSolicitud = () => {
                   type="datetime-local"
                   defaultValue=""
                   required
-                  variant="standard"
+                  variant="outlined"
                   onChange={
                     e => {
                       handleChange(e);
@@ -279,7 +281,7 @@ export const CrearSolicitud = () => {
                   name="fechaFin"
                   type="datetime-local"
                   required
-                  variant="standard"
+                  variant="outlined"
                   onChange={
                     e => {
                       handleChange(e);
@@ -287,7 +289,6 @@ export const CrearSolicitud = () => {
                     }
                   }
                 />
-
               </div>
               <div className='Datos_categoriaYhabilidad'>
                 <h6>Categoría de la solicitud</h6>
@@ -297,31 +298,36 @@ export const CrearSolicitud = () => {
             </div>
 
             <div class="IMAGEN">
+
               <h6>Imagen descriptiva</h6>
 
               <div className="imagenPrev">
-
-
-              </div>
-              <div className="custom-file">
+                  <img className="imagenPrev__img" src={imagenPrev}></img>
+                  <div className="custom-file">
                 <input
                   type="file"
                   className="custom-file-input"
                   id="img-file"
                   onChange={(e) => onChangeInputFile(e)}
                   required
+                  variant="outlined"
                 />
+
+
                 <label className="custom-file-label">
                   {imagenSeleccionada}
                 </label>
                 {/* TODO IMG */}
               </div>
+              
+              </div>
 
+              <div className="formulario-propina">
               <h6>Propina</h6>
               <TextField
                 fullWidth
                 name="propina"
-                variant="standard"
+                variant="outlined"
                 error={Boolean(touched.propina && errors.propina)}
                 helperText={touched.propina && errors.propina}
                 onBlur={handleBlur}
@@ -341,9 +347,10 @@ export const CrearSolicitud = () => {
                   )
                 }}
               />
+              </div>
+
 
             </div>
-
 
             <div className="Botones">
               <Button
@@ -352,6 +359,7 @@ export const CrearSolicitud = () => {
                 size="large"
                 type="submit"
                 variant="contained"
+                
               >
                 Crear
                     </Button>

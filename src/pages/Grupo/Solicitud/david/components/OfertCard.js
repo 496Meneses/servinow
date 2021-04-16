@@ -2,7 +2,7 @@
 import React,{ useEffect,useState,Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 //import 'fontsource-roboto';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
@@ -13,7 +13,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import "../../../../../assets/css/style.css";
 import CardActionArea from '@material-ui/core/CardActionArea';
-import {GetAllUsers} from '../../../services';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -113,6 +112,7 @@ function OfertCard({ oferta, classes, to = "" }) {
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
+	const url = `/oferta/detalle/${oferta.id_oferta}`
 
 /* 	useEffect(() => {
 
@@ -173,9 +173,8 @@ function OfertCard({ oferta, classes, to = "" }) {
 			
 			</CardActionArea>
 			<div className={sw.carta_contenedor__boton}>
-			 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
-							 Ver detalle
-				</Button>
+			<Link to={url} className="btn btn-primary carta_boton">Ver detalle</Link>
+
 				{/* <Tooltip title="Estado de la oferta">
 					<Button color="primary">
 						<Typography>{oferta.estado}</Typography>

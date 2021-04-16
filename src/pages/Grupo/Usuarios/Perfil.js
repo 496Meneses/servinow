@@ -18,8 +18,9 @@ export const Perfil = () => {
         descripcion: "Soy estudiante de ingenieria de sistemas y puedo aportar en clases de todo tipo para programar"
     })
 
-
     return (
+
+        
         <div className="contenedor-perfil">
             <div className="Titulo">
                 <h2><strong>Mi Perfil</strong></h2>
@@ -28,7 +29,11 @@ export const Perfil = () => {
 
                 <div className="contenedor-imagen">
 
-                    <img src="https://i.pinimg.com/originals/97/1d/0f/971d0f350dc43032bb2d2fb73fc8f9cb.jpg" />
+                    {(localStorage.getItem("usuario")) ? (<img src={JSON.parse(localStorage.getItem("usuario")).url_imagen} />)
+                    : 
+                    (<img src="https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg" />)
+                    } 
+                    
                     <div className="contenedor-cambiarFoto">
                         <input type="file" id="cambiarImagen" className="input-file-input" value="" />
                         <label for="cambiarImagen" className="input-file__btn">Cambiar Foto</label>
@@ -66,10 +71,6 @@ export const Perfil = () => {
                         <h5> {usuarioLogeado.telefono_alternativo}</h5>
                         <h5>{usuarioLogeado.direccion}</h5>
                     </div>
-
-
-
-
                 </div>
 
             </div>

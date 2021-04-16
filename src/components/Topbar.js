@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
@@ -11,7 +11,7 @@ import ProfileDropdown from './ProfileDropdown';
 import logo from '../assets/images/logoServinow.svg';
 import profilePic from '../assets/images/users/avatar-3.jpg';
 import profileInvitado from '../assets/images/perfi.png';
-import {useAuth} from "./UserContext"
+import { useAuth } from "./UserContext"
 
 
 
@@ -72,54 +72,69 @@ const ProfileMenusUsuario = [{
 ]
 
 
-const Topbar =(props) => {
+const Topbar = (props) => {
   const handleRightSideBar = () => {
     props.showRightSidebar();
   }
   const auth = useAuth();
-    return (
-      <React.Fragment>
-        <div className="navbar navbar-expand flex-column flex-md-row navbar-custom">
-          <Container fluid>
-            { /* logo */}
-            <Link to="/" className="navbar-brand mr-0 mr-md-2 logo">
-              <span className="logo-lg">
-                <img src={logo} alt="" height="75" />
-                <span className="d-inline h5 ml-2 text-logo">SERVINOW</span>
-              </span>
-              <span className="logo-sm">
-                <img src={logo} alt="" height="64" />
-              </span>
-            </Link>
 
-            { /* menu*/}
-            <ul className="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0">
-              <li className="">
-                <button className="button-menu-mobile open-left disable-btn" onClick={props.openLeftMenuCallBack}>
-                  <Menu className="menu-icon" />
-                  <X className="close-icon" />
-                </button>
-              </li>
-            </ul>
-            
-            <ul className="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
 
-              {
-                (!auth.isAuthenticated) ? (<>
-                  <ProfileDropdown profilePic={profileInvitado} menuItems={ProfileMenus} username={"Invitado"} description="Usuario" /></>
-                ) : (
+  useEffect(() => {
+    console.log("USUARIOOOOOO", auth.user)
+  }, [auth.user])
+  return (
+    <React.Fragment>
+      <div className="navbar navbar-expand flex-column flex-md-row navbar-custom">
+        <Container fluid>
+          { /* logo */}
+          <Link to="/" className="navbar-brand mr-0 mr-md-2 logo">
+            <span className="logo-lg">
+              <img src={logo} alt="" height="75" />
+              <span className="d-inline h5 ml-2 text-logo">SERVINOW</span>
+            </span>
+            <span className="logo-sm">
+              <img src={logo} alt="" height="64" />
+            </span>
+          </Link>
+
+          { /* menu*/}
+          <ul className="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0">
+            <li className="">
+              <button className="button-menu-mobile open-left disable-btn" onClick={props.openLeftMenuCallBack}>
+                <Menu className="menu-icon" />
+                <X className="close-icon" />
+              </button>
+            </li>
+          </ul>
+
+          <ul className="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
+
+            {
+              (!auth.isAuthenticated) ? (<>
+                <ProfileDropdown profilePic={profileInvitado} menuItems={ProfileMenus} username={"Invitado"} description="Usuario" /></>
+              ) : (
+
+
+                (auth.user) ? (
                   <>
-                  <NotificationDropdown notifications={Notifications} />
-                  <ProfileDropdown profilePic={profilePic} menuItems={ProfileMenusUsuario} username={auth.user} description="Usuario" /></>
-                )
-              }
-              
-            </ul>
+                    <NotificationDropdown notifications={Notifications} />
+                    <ProfileDropdown profilePic={auth.user.url_imagen} menuItems={ProfileMenusUsuario} username={auth.user.nombres} description="Usuario" />
+                  </>
+                ) :
+                  (
+                    <>
+                      <ProfileDropdown profilePic={profileInvitado} menuItems={ProfileMenus} username={"Invitado"} description="Usuario" /></>
+                  )
 
-          </Container>
-        </div>
-      </React.Fragment >
-    );
+              )
+            }
+
+          </ul>
+
+        </Container>
+      </div>
+    </React.Fragment >
+  );
 }
 
 export default connect(

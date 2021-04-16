@@ -27,7 +27,7 @@
 
         const renderRedirectToRoot = () => {
 
-            if (localStorage.getItem("usuario")) {
+            if (auth.user) {
                 
                 return <Redirect to='/ofertas' />
             }

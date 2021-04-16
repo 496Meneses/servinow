@@ -27,7 +27,7 @@ import {
   Divider,
   Container
 } from "@material-ui/core";
-import { ContactSupportOutlined } from "@material-ui/icons";
+import { ContactSupportOutlined, DetailsTwoTone } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function DetalleOfertaTwo() {
+export const DetalleOfertaTwo = () =>{
 
   const { id } = useParams();
 
@@ -235,13 +235,8 @@ export default function DetalleOfertaTwo() {
 
   useEffect(() => {
     obtenerDetalleOferta();
-
   }, [])
   return (
-
-
-
-
     <div className={classes.root}>
 
       <ToastContainer />
@@ -400,3 +395,4 @@ export default function DetalleOfertaTwo() {
 
   );
 }
+export default DetalleOfertaTwo;
