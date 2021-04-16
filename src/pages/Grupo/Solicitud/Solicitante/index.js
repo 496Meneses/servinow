@@ -4,9 +4,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Search from '@material-ui/icons/Search';
-
 import { OfertListContainer } from "../david/containers/OfertListContainer";
 //inicio david
+import {  Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -23,9 +23,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    formControl: {
+        margin: theme.spacing(1.3),
+        minWidth: 110,
+      },
     paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
+        padding: theme.spacing(4),
         color: theme.palette.text.secondary,
     }, button: {
         margin: theme.spacing(1),
@@ -46,50 +49,63 @@ const useStyles = makeStyles((theme) => ({
     //fin David
 }));
 
+//inicio Lino
 export default function CenteredGrid() {
-
-
-
     const classes = useStyles();
 
-
     const [cadenaBusqueda, setCadenaBusqueda] = useState('');
-
-    const handleSearch = () => {
+        const handleSearch = () => {
         setCadenaBusqueda("");
     }
-
-
     const updateSearch = e => {
         setCadenaBusqueda(e.target.value);
     }
-    const [open, setOpen] = React.useState(false);
-    const [age, setAge] = React.useState('');
-
+        const [open, setOpen] = React.useState(false);
+        const [age, setAge] = React.useState('');
+       
     //inicio david
-    const handleChange = (event) => {
-        setAge(Number(event.target.value) || '');
-    };
+    const [cadenaBusqueda2, setCadenaBusqueda2] = useState('');
+        const handleSearch2 = () => {
+        setCadenaBusqueda2("");
+    }
+    const updateSearch2 = e => {
+        setCadenaBusqueda2(e.target.value);
+    }
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const [open2, setOpen2] = React.useState(false);
+    const [age2, setAge2] = React.useState('');
     //fin david
+    /////////////////////////////////////////////////////////////
+    const handleChange = (event) => {
+      setAge(Number(event.target.value) || '');
+        };
 
+        const handleClickOpen = () => {
+            setOpen(true);
+        };
+
+        const handleClose = () => {
+            setOpen(false);
+        };   
+    
+ 
     return (
         <div className={classes.root}>
-            <Grid container spacing={2}>
+             <Paper className={classes.paper}>
+             <Grid container spacing={2}>
                 <Grid item xs={12} sm={8}>
-                    <Paper className={classes.paper}>
+                    
                         <div className={classes.div}>
                             <form className={classes.root} noValidate autoComplete="off" >
-                                <TextField id="outlined-basic" label="Buscar" value={cadenaBusqueda} variant="outlined" style={{ width: "100%" }} onChange={updateSearch} />
+                                <TextField 
+                                id="outlined-basic" 
+                                label="Buscar" 
+                                variant="outlined" 
+                                style={{ width: "100%" }} 
+                                value={cadenaBusqueda}
+                                onChange={updateSearch} />
                             </form>
-                            <Button
+                          {/*   <Button
                                 variant="contained"
                                 color="primary"
                                 size="large"
@@ -97,62 +113,47 @@ export default function CenteredGrid() {
                                 startIcon={<Search />}
                                 onClick={handleSearch}
                             >
-                                Buscar
-                            </Button>
+                                Buscarrr
+                            </Button> */}
                         </div>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Paper className={classes.paper}>
-                        <div>
-                            <Button onClick={handleClickOpen} variant="contained" color="primary">BUSACAR OFERTAS POR ESTADO</Button>
-                            <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-                                <DialogTitle>OFERTAS</DialogTitle>
-                                <DialogContent>
-                                    <form className={classes.container}>
-                                        <FormControl className={classes.formControl}>
-                                            <InputLabel htmlFor="demo-dialog-native">Estados</InputLabel>
-                                            <Select
-                                                native
-                                                value={age}
-                                                onChange={handleChange}
-                                                input={<Input id="demo-dialog-native" />}
+                
+                            </Grid>
+                                <Grid item xs={12} sm={4}>
+                                            
+                                    <div className={classes.div}>
+
+                                    <FormControl variant="outlined" className={classes.root}>
+                                        <InputLabel>Estado</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-outlined-label"
+                                            id="demo-simple-select-outlined"
+                                            value={cadenaBusqueda2}
+                                            onChange={updateSearch2}
+                                            label="Age"
                                             >
-                                                <option aria-label="None" value="" />
+                                        <MenuItem value="">
+                                        <Typography color="primary">OFERTAS</Typography>
+                                        </MenuItem>
+                                            <MenuItem value="DISPONIBLE">DISPONIBLE</MenuItem>
+                                            <MenuItem value="EN PROCESO">EN PROCESO</MenuItem>
+                                            <MenuItem value="FINALIZADA">FINALIZADA</MenuItem>
+                                            <MenuItem value="CANCELADA">CANCELADA</MenuItem>
+                                        </Select>
+                                    </FormControl>
 
-                                                <option value={'DISPONIBLE'}>Disponibles</option>
-                                                
-                                                <option value={'EN PROCESO'}>En proceso</option>
-                                                
-                                                <option value={'FINALIZADA'}>Finalizadas</option>
-                                                
-                                                <option value={'CANCELADA'}>Canceladas</option>
-                                                
-                                            </Select>
-                                        </FormControl>
-
-                                    </form>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={handleClose} color="primary">
-                                        Cancel
-                    </Button>
-                                    <Button onClick={handleClose} color="primary">
-                                        Ok
-                    </Button>
-                                </DialogActions>
-                            </Dialog>
-                        </div>
-                    </Paper>
+                                    </div>
+                    
 
                 </Grid>
                 <Grid item xs={12} sm={12}>
 
-                    <OfertListContainer msg={cadenaBusqueda} estado={age}></OfertListContainer>
+                    <OfertListContainer msg={cadenaBusqueda} msg2={cadenaBusqueda2}></OfertListContainer>
 
                 </Grid>
 
             </Grid>
+             </Paper>
+            
         </div>
     );
 }

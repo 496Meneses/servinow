@@ -14,202 +14,223 @@ import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import "../../../../../assets/css/style.css";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import {GetAllUsers} from '../../../services';
+import CircularIndeterminate from "../../CircularIndeterminate";
+import { ToastContainer } from "react-toastify";
+
 
 const useStyles = makeStyles((theme) => ({
+	
 	root: {
-		display: 'flex',
-	},
-	cardMedia: {
-		paddingTop: "56.25%", //16:9
+        flexGrow: 1,
+    },
+
+	card_media: {
+		 //16:9
 		minHeight: "250px",
 		margin: "1.2em",
 		borderRadius: 10,
-		backgroundColor: '#ccc',		
+		backgroundColor: '#eeeeee',
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		textAlign: "center",		
 	  },
-	  
-	orange: {
-		color: theme.palette.getContrastText(deepOrange[500]),
-		backgroundColor: deepOrange[500],
-	},
-	purple: {
-		color: theme.palette.getContrastText(deepPurple[500]),
-		backgroundColor: deepPurple[500],
-	},
-	container: {
 
-		display: 'flex',
-		flexWrap: 'wrap',
-
-	},
-	textField: {
-		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1),
-		width: 200,
+	title1: {
+		color: '#00a152',
 	},
 
-	control: {
-		padding: theme.spacing(2),
+	title2: {
+		color: '#ffc400',
 	},
 
-	title: {
-		color: 'black',
+	title3: {
+		color: '#ff1744',
 	},
 
-	carta: {
-		height: 550,
-		width: 400,
-		contain: 'content',
-		/* backgroundColor: 'orange', */
-		//minWidth: "750px",
-		textAlign: "left",
-		margin: "1em",
-		padding: '0.5em',
+	title4: {
+		color: '#d500f9',
 	},
 
+	color_titulo: {
+		color: '#fff',	
+	},
 	carta_contenedor: {
-		height: 120,
-		width: 350,
-		margin: 20,
-		bottom: 10,	
+		height: 60,
+		width: '90%',
+		margin: 20,	
+		
+		
 	},
+
+	carta_disponible: {
+		margin: 5,		
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		textAlign: "center",
+	},
+
+	titulo_oferta: {
+		margin: 0.3,		
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		
+	},
+	
+	descripcion_oferta: {
+		margin: 5,		
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+
+	valor_oferta: {
+		margin: 5,		
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+
+	
 
 	carta_contenedor__boton: {
-		height: 100,
-		width: 300,
-		margin: 15,			
-	},
-
-	boton_eliminar: {
-		textAlign: "right"
+		margin: 20,	
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",		
 	},
 
 	carta_header: {
-		height: 65,
+		height: 73,
    		display: "flex",
 		width: "100%",
-	},
-
-	carta__descripcion: {
-		height: "100%",
-    	display: "flex",
-	},
-
-	cardContent: {
-	flexGrow: 1,
+		backgroundColor: "#3f51b5",
 	},
 	
 	card: {
-    height: "90%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
   }, 
+
+  paper: {
+    padding: theme.spacing(4),
+    color: theme.palette.text.secondary,
+}, button: {
+    margin: theme.spacing(1),
+},
+
+
 }));
 
-function OfertCard({ oferta, classes, to = "" }) {
+export default function OfertCard({ oferta }) {
 	/* const [listaUsuarios, setListaUsuarios] = useState([]) */
-	const sw = useStyles();
+	const classes = useStyles();
+	const colorEstado = 0;
+	const [cargando, setCargando] = useState(false)
 	const [spacing, setSpacing] = React.useState(2);
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 
-/* 	useEffect(() => {
-
-		GetAllUsers(1).then((respuesta)=>{
-			setListaUsuarios(respuesta.data)
-			  console.log(respuesta)
-		
-		})
-	  }, [])
- */
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 	return (
-		<Card className={sw.card}>
-		
-				<div className={classes.cardContent}>
-						<CardHeader
-							avatar={
-								<div>
-									<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
-								</div>
-							}
-							action={
-								<div>
-									<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-										<MoreVertIcon color='inherit' />
-									</IconButton>
-								</div>
-							}
-
-							title={
-								<h5>
-									{oferta.titulo}
-								</h5>
-							}
-
-							className={sw.carta_header}
-						/>
-
-				</div>
-
-			<div >
-			<CardActionArea>
-			<CardMedia 
-			className={sw.cardMedia} 
-			image={oferta.imagen} />
-			<div className={sw.carta_contenedor}>
-			 <Tooltip title="Estado de la oferta">
-					<Button color="primary" style={{ top: '30%', right: -245}}>
-						<Typography>{oferta.estado}</Typography>
-					</Button>
-				</Tooltip> 
-				{/* <Typography component="p" variant="h6"></Typography> */}
-				<h5>Descripción</h5>
-				<p>{oferta.descripcion}</p>
-			</div>
+		<div className={classes.root}>
+		{/* 	 <ToastContainer />
+                {
+                    cargando ? <CircularIndeterminate /> : */}
+						<paper className={classes.paper}>
+							<Card className={classes.card}>
+									<div>
+											<CardHeader backgroundColor="primary"
+												avatar={
+													<div>
+														<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
+													</div>
+												}
+												action={
+													<div>
+														<IconButton className={classes.color_titulo} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+															<MoreVertIcon color='inherit' />
+														</IconButton>
+													</div>
+												}
 			
-			</CardActionArea>
-			<div className={sw.carta_contenedor__boton}>
-			 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
-							 Ver detalle
-				</Button>
-				 {/* <Tooltip title="Estado de la oferta">
-					<Button color="primary">
-						<Typography>{oferta.estado}</Typography>
-					</Button>
-				</Tooltip>  */}
-	{/* 
-				 <Button className={sw.boton_eliminar} color="primary">
-						<Typography>e</Typography>
-				</Button> */}
+												title={
+													<div className={classes.titulo_oferta}>
+														<Typography className={classes.color_titulo}  variant="h6">{oferta.titulo}</Typography>
+													</div>
+												}
+			
+												className={classes.carta_header}
+											/>
+			
+									</div>
+			
+								<div >
+								<CardActionArea>
+									<CardMedia className={classes.card_media} image={oferta.imagen} />
+										<div className={classes.carta_contenedor}>
+											<div className={classes.carta_disponible}>
+												{/* <h5>Descripción</h5> */}
+												<Typography variant="h6">Descripción</Typography>
+													<Tooltip title="Estado de la oferta">
+														<div>
+														{(() =>{
+																switch(oferta.estado){
+																	case 'DISPONIBLE':
+																		return <Typography  className={classes.title1}>{oferta.estado}</Typography>
+																		break;
+																	case 'EN PROCESO':
+																		return <Typography  className={classes.title2}>{oferta.estado}</Typography>
+																		break;
+																	case 'FINALIZADA':
+																		return <Typography  className={classes.title3}>{oferta.estado}</Typography>
+																		break;
+																	case 'CANCELADA':
+																		return <Typography  className={classes.title4}>{oferta.estado}</Typography>
+																		break;
+																		default:
+																			return console.log('default');
+																			break;
+																	}																
+															})()}
+														</div> 
+					
+													</Tooltip>
+											</div>
+											{/* <Typography component="p" variant="h6"></Typography> 
+											<p>{oferta.descripcion}</p>*/}
+											<div className={classes.descripcion_oferta}>
+												<Typography variant="h7">
+													{oferta.descripcion}
+												</Typography>
+											</div>
+										</div>
+										<div className={classes.carta_contenedor__boton}>
+											<div className={classes.valor_oferta}>
+													<Typography variant="h6">
+														$ {oferta.valor}
+													</Typography>
+											</div>
+										</div>
+								</CardActionArea>
+								<div className={classes.carta_contenedor__boton}>
+								<Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
+												Ver detalle
+									</Button>				
+								</div>
+								</div>
+							</Card>
+						</paper>
 				
-				
-			</div>
-			</div>
-		</Card>
-
+				{/* } */}
+					</div>
 	);
 }
 
-
-export default withStyles({
-	item: {
-		height: 550,
-		width: 600,
-		contain: 'content',
-		/* backgroundColor: 'orange', */
-		//minWidth: "750px",
-		textAlign: "left",
-		margin: "2em",
-		padding: '0.5em',
-
-
-	},
-	media: {
-		minHeight: "270px",
-		margin: "1em",
-	},
-})(OfertCard);
