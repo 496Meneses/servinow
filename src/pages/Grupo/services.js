@@ -52,3 +52,16 @@ export const GetHabilidadUser = () =>{
     const url = `${URLAPI}usuarioService/getHabilidades?id_prestador=1`;
     return axios.get(url)
 }
+
+
+
+
+export const LoginService = (usuario) => {
+
+    const url = `${URLAPI}loginService/login`;
+    return axios.post(url, usuario, {
+        headers:{
+            'Content-Type': 'application/json',
+          }
+      } );
+}

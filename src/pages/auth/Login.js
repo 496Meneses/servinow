@@ -10,7 +10,7 @@
     
     import logo from '../../assets/images/logo.png';
     import {useAuth} from '../../components/UserContext' 
-    
+   
     
     
     export const Login = () => {
@@ -21,7 +21,6 @@
 
         const handleValidSubmit = (event, values) => {
 
-            console.log("Holasss")
             auth.login(userName, password);
             return <Redirect to='/ofertas' />
         }
