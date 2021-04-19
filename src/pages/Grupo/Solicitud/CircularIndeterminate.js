@@ -23,7 +23,7 @@ export default function CircularIndeterminate() {
       
       <CircularProgress />
       <br></br>
-      <Typography variant="caption">Cargando ...</Typography>
+      <Typography variant="h6">Cargando...</Typography>
     </div>
   );
 }

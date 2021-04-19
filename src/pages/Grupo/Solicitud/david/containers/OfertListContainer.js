@@ -25,10 +25,9 @@ const OfertCard = lazy(()=>import('../components/OfertCard'));
     },
     
   control: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     bottom: '5px',
-    position: 'absolute',
-    width: '81%',
+    width: '97%',
  
   },
 
@@ -43,7 +42,7 @@ const OfertCard = lazy(()=>import('../components/OfertCard'));
   },
 
   paper: {
-    padding: theme.spacing(154),
+    padding: theme.spacing(2),
     color: theme.palette.text.secondary,
 }, button: {
     margin: theme.spacing(1),
@@ -62,26 +61,24 @@ export const OfertListContainer = (props) => {
   const [listaOfertaFromApi, setListaOfertaFromApi] = useState([])
   const [cargando, setCargando] = useState(false)
   const classes = useStyles();
+  //let aux=false;
   const [pageNumber, setPageNumber] = useState(0)
   const postuladosPerPage = 6
   const pagesVisited = pageNumber * postuladosPerPage
   const pageCount = Math.ceil(listaOferta.length / postuladosPerPage)
   const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage).map((oferta,index) => (
          
+            
                 <Grid item xs={12} sm={6} md={4}>
-                       {/* <ToastContainer />
-                             {
-                              cargando ? <CircularIndeterminate /> :  */}
-                                  <Suspense fallback={<CircularIndeterminate/>}>
-                                    <OfertCard key={index} oferta={oferta}/>
-                                  </Suspense>
-                             {/* } */}   
+                    
+                    <OfertCard key={index} oferta={oferta}/>
+     
                 </Grid>
                 
   ))
   
   useEffect(() => {
- 
+    
     GetAllOferts().then((respuesta)=>{
       setListaOferta(respuesta.data)
       setListaOfertaFromApi(respuesta.data)
@@ -93,6 +90,7 @@ export const OfertListContainer = (props) => {
   // Inicio Lino
   useEffect(() => {
     setCargando(true)
+    
     let nuevaListaOfertas = []    
     listaOfertaFromApi.map((data)=>{
       if(data.descripcion.includes(props.msg)){
@@ -109,6 +107,7 @@ export const OfertListContainer = (props) => {
   //Inicio David
   useEffect(() => {
     setCargando(true)
+    
     let nuevaListaOfertas = []    
     listaOfertaFromApi.map((data)=>{
       if(data.estado.includes(props.msg2)){
@@ -128,22 +127,36 @@ export const OfertListContainer = (props) => {
   return (
       <div className={classes.root}>
         {/* <paper className={classes.paper}> */}
+        <Suspense fallback={<CircularIndeterminate/>}>
             <br></br>
-               <Typography color="textPrimary" variant="h5" align="center" color="primary">
+            <Paper className={classes.paper}>
+            <div>
+              {/* {aux = props.aux} */}
+							{(() =>{
+                
+								switch(props.auxiliar){
+								
+									case true:
+										return ""
+									break;
+										default:
+											return <Typography color="textPrimary" variant="h5" align="center" color="primary">
+                                 OFERTAS
+                             </Typography>
+										break;
+							    }																
+							})()}
+						</div> 
+               {/*  <Typography color="textPrimary" variant="h5" align="center" color="primary">
                   OFERTAS
-                </Typography> 
-                <br></br> 
+                </Typography> */}  
+            
                     <div className={classes.root}>  
-                  {/*     <ToastContainer />
-                            {
-                              cargando ? <CircularIndeterminate /> :
-                  */}
-                            
+              
+                        <paper className={classes.paper}>
                             <Grid container spacing={3}>
-                            
                                   {displayOferts}
                               <div className={classes.control}>
-                               {/*  <paper className={classes.paper}> */}
                                 <ReactPaginate className="algo"
                                   nextLabel={"Siguiente"}
                                   previousLabel={"Anterior"}
@@ -155,18 +168,18 @@ export const OfertListContainer = (props) => {
                                   disabledClassName={"pagDisabled"}
                                   activeClassName={"pagActiva"}
                                   />
-                                  {/* </paper> */}
                               </div>
 
                             </Grid>
-                            
-                           {/*  } */}
+                          </paper>
+                         
                     
                     </div>
+              </Paper>
                       <br></br>
                       <br></br>
                       <br></br> 
-         {/*  </paper> */}
+        </Suspense>
       </div>  
   
   )
