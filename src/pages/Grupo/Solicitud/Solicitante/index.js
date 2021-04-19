@@ -120,13 +120,13 @@ export default function CenteredGrid() {
                                             >
                                                 <option aria-label="None" value="" />
 
-                                                <option value={'DISPONIBLE'}>Disponibles</option>
+                                                <option value={10}>Disponibles</option>
                                                 
-                                                <option value={'EN PROCESO'}>En proceso</option>
+                                                <option value={20}>En proceso</option>
                                                 
-                                                <option value={'FINALIZADA'}>Finalizadas</option>
+                                                <option value={30}>Finalizadas</option>
                                                 
-                                                <option value={'CANCELADA'}>Canceladas</option>
+                                                <option value={40}>Canceladas</option>
                                                 
                                             </Select>
                                         </FormControl>
