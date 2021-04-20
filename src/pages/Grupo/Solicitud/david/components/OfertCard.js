@@ -1,5 +1,6 @@
 
 import React,{ useEffect,useState,Fragment } from 'react';
+import { deleteSolicitud } from '../../../services';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -14,202 +15,337 @@ import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import "../../../../../assets/css/style.css";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import {GetAllUsers} from '../../../services';
+import CircularIndeterminate from "../../CircularIndeterminate";
+import { ToastContainer } from "react-toastify";
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Menu from '@material-ui/core/Menu';
 
 const useStyles = makeStyles((theme) => ({
+	
 	root: {
-		display: 'flex',
-	},
-	cardMedia: {
-		paddingTop: "56.25%", //16:9
-		minHeight: "250px",
-		margin: "1.2em",
-		borderRadius: 10,
-		backgroundColor: '#ccc',		
-	  },
-	  
-	orange: {
-		color: theme.palette.getContrastText(deepOrange[500]),
-		backgroundColor: deepOrange[500],
-	},
-	purple: {
-		color: theme.palette.getContrastText(deepPurple[500]),
-		backgroundColor: deepPurple[500],
-	},
-	container: {
+        flexGrow: 1,
+    },
 
-		display: 'flex',
-		flexWrap: 'wrap',
-
-	},
-	textField: {
-		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1),
-		width: 200,
-	},
-
-	control: {
-		padding: theme.spacing(2),
-	},
-
-	title: {
-		color: 'black',
-	},
-
-	carta: {
-		height: 550,
-		width: 400,
-		contain: 'content',
-		/* backgroundColor: 'orange', */
-		//minWidth: "750px",
-		textAlign: "left",
+	card_media: {
+		 //16:9
+		minHeight: "200px",
 		margin: "1em",
-		padding: '0.5em',
+		borderRadius: 10,
+		backgroundColor: '#eeeeee',
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		textAlign: "center",		
+	  },
+
+	  card_media_verde: {
+		//16:9
+	   minHeight: "200px",
+	   margin: "1em",
+	   borderRadius: 10,
+	   backgroundColor: '#eeeeee',
+	   display: "flex",
+	   justifyContent: "space-between",
+	   alignItems: "center",
+	   textAlign: "center",		
+	 },
+
+	 card_media_naranja: {
+		//16:9
+	   minHeight: "200px",
+	   margin: "1em",
+	   borderRadius: 10,
+	   backgroundColor: '#eeeeee',
+	   display: "flex",
+	   justifyContent: "space-between",
+	   alignItems: "center",
+	   textAlign: "center",		
+	 },
+
+	 card_media_rojo: {
+		//16:9
+	   minHeight: "200px",
+	   margin: "1em",
+	   borderRadius: 10,
+	   backgroundColor: '#eeeeee',
+	   display: "flex",
+	   justifyContent: "space-between",
+	   alignItems: "center",
+	   textAlign: "center",		
+	 },
+
+	title1: {
+		color: '#00a152',
+		fontSize: 13,
 	},
 
-	carta_contenedor: {
-		height: 120,
-		width: 350,
-		margin: 20,
-		bottom: 10,	
+	title2: {
+		color: '#ffc400',
+		fontSize: 13,
 	},
+
+	title3: {
+		color: '#ff1744',
+		fontSize: 13,
+	},
+
+	title4: {
+		color: '#eeeeee',
+		fontSize: 13,
+	},
+
+	color_titulo: {
+		color: '#fff',	
+	},
+	carta_contenedor: {
+		height: 5,
+		width: '90%',
+		margin: "auto",		
+	},
+
+	carta_disponible: {
+		margin: 1,		
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		textAlign: "center",
+	},
+
+	titulo_oferta: {
+		position: "relative",
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		margin: "auto",	
+		marginBottom: "0em",
+		marginTop: "-0.5em",
+		marginRight: "-1.5em",
+		marginLeft: "-0.5em", 
+	},
+	
+	descripcion_oferta: {
+		margin: "auto",		
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+
+	valor_oferta: {
+				
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		marginBottom:"-1em",
+		marginTop: "5em"	
+	},
+
+	
 
 	carta_contenedor__boton: {
-		height: 100,
-		width: 300,
-		margin: 15,			
-	},
-
-	boton_eliminar: {
-		textAlign: "right"
+		margin: 15,	
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",	
 	},
 
 	carta_header: {
-		height: 65,
+		height: 75,
    		display: "flex",
+		justifyContent: "space-between",
 		width: "100%",
-	},
-
-	carta__descripcion: {
-		height: "100%",
-    	display: "flex",
-	},
-
-	cardContent: {
-	flexGrow: 1,
+		backgroundColor: "#3f51b5",
 	},
 	
 	card: {
-    height: "90%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
   }, 
+
+  paper: {
+    padding: theme.spacing(4),
+    color: theme.palette.text.secondary,
+}, button: {
+    margin: theme.spacing(1),
+},
+
+
 }));
 
-function OfertCard({ oferta, classes, to = "" }) {
+export default function OfertCard({ oferta }) {
 	/* const [listaUsuarios, setListaUsuarios] = useState([]) */
-	const sw = useStyles();
+	const classes = useStyles();
+	let aux=0;
+	const url = `/oferta/detalle/${oferta.id_oferta}`;
+	const [cargando, setCargando] = useState(false)
 	const [spacing, setSpacing] = React.useState(2);
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 
-/* 	useEffect(() => {
-
-		GetAllUsers(1).then((respuesta)=>{
-			setListaUsuarios(respuesta.data)
-			  console.log(respuesta)
-		
-		})
-	  }, [])
- */
 	const handleClose = () => {
+		//console.log(oferta)
 		setAnchorEl(null);
 	};
-	return (
-		<Card className={sw.card}>
+
+	const handleDelete = () => {
 		
-				<div className={classes.cardContent}>
-						<CardHeader
-							avatar={
-								<div>
-									<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
-								</div>
-							}
-							action={
-								<div>
-									<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-										<MoreVertIcon color='inherit' />
-									</IconButton>
-								</div>
-							}
+		console.log("Voy a borrar el id oferta: "+oferta.id_oferta)
+		deleteSolicitud(oferta.id_oferta).then(res => {
+			console.log(res);
+			console.log(res.data);
+			console.log("Funcionó")
+		  })
 
-							title={
-								<h5>
-									{oferta.titulo}
-								</h5>
-							}
+		
+		setAnchorEl(null);
+	};
 
-							className={sw.carta_header}
-						/>
+	
 
-				</div>
 
-			<div >
-			<CardActionArea>
-			<CardMedia 
-			className={sw.cardMedia} 
-			image={oferta.imagen} />
-			<div className={sw.carta_contenedor}>
-			 <Tooltip title="Estado de la oferta">
-					<Button color="primary" style={{ top: '30%', right: -245}}>
-						<Typography>{oferta.estado}</Typography>
-					</Button>
-				</Tooltip> 
-				{/* <Typography component="p" variant="h6"></Typography> */}
-				<h5>Descripción</h5>
-				<p>{oferta.descripcion}</p>
-			</div>
+//Pruebas inicio 
+
+/* eliminar=(dato)=>{
+	var opcion=cconfirm("Realmente desea eliminar el registro ");
+	if(opcion){
+		var contador=0;
+		var lista=this.state.oferta;
+			lista.map(())
+
+	}
+} */
+
+//Pruebas fin
+
+
+
+	return (
+		<div className={classes.root}>
+
+		{/* 	 <ToastContainer />
+                {
+                    cargando ? <CircularIndeterminate /> : */}
+						<paper className={classes.paper}>
+							<Card className={classes.card}>
+									<div>
+											<CardHeader backgroundColor="primary"
+												avatar={
+													<div>
+														<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
+													</div>
+												}
+												action={
+											
+													<div>
+														<Button className={classes.color_titulo} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+														<MoreVertIcon color='inherit' />
+														</Button>
+														<Menu
+															id="simple-menu"
+															anchorEl={anchorEl}
+															keepMounted
+															open={Boolean(anchorEl)}
+															onClose={handleClose}
+														>
+															<MenuItem onClick={handleClose}>Ver oferta</MenuItem>
+															<MenuItem onClick={handleClose}>Editar oferta</MenuItem>
+															<MenuItem onClick={handleDelete}>Eliminar oferta</MenuItem>
+														</Menu>
+													</div>
+												}
 			
-			</CardActionArea>
-			<div className={sw.carta_contenedor__boton}>
-			 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}
-							 Ver detalle
-				</Button>
-				 {/* <Tooltip title="Estado de la oferta">
-					<Button color="primary">
-						<Typography>{oferta.estado}</Typography>
-					</Button>
-				</Tooltip>  */}
-	{/* 
-				 <Button className={sw.boton_eliminar} color="primary">
-						<Typography>e</Typography>
-				</Button> */}
-				
-				
-			</div>
-			</div>
-		</Card>
+												title={
+													<div className={classes.titulo_oferta}>
+														<Typography className={classes.color_titulo}  variant="inherit">{oferta.titulo}</Typography>
+													</div>
+												}
+			
+												className={classes.carta_header}
+											/>
+			
+									</div>
+			
+								<div >
+								<CardActionArea>
 
+									<CardMedia className={classes.card_media} image={oferta.imagen} />
+										<div className={classes.carta_contenedor}>
+											
+											<div className={classes.carta_disponible}>
+											
+											 {/* <Grid item mx={12} sm={6} md={4}> */}
+												  
+												{/* <h5>Descripción</h5> */}
+												<Typography variant="subtitle1" align="justify">Descripción</Typography>
+													<Tooltip title="Estado de la oferta">
+														<div>
+														{(() =>{
+																switch(oferta.estado){
+																	case 'DISPONIBLE':
+																		
+																		return <Typography align="justify" className={classes.title1}>{oferta.estado}</Typography>
+																		break;
+																	case 'EN PROCESO':
+																		return <Typography align="justify" className={classes.title2}>{oferta.estado}</Typography>
+																		break;
+																	case 'FINALIZADA':
+																		return <Typography align="justify" className={classes.title3}>{oferta.estado}</Typography>
+																		break;
+																	case 'CANCELADA':
+																		return <Typography align="justify" className={classes.title4}>{oferta.estado}</Typography>
+																		break;
+																		default:
+																			return console.log('default');
+																			break;
+																	}																
+															})()}
+														</div> 
+					
+													</Tooltip>
+											 	{/* </Grid>  */}
+											</div>
+
+
+											{/* <Typography component="p" variant="h6"></Typography> 
+											<p>{oferta.descripcion}</p>*/}
+											<div className={classes.descripcion_oferta}>
+												<Typography variant="h7" align="justify">
+													{oferta.descripcion}
+												</Typography>
+											</div>
+										</div>
+										<br></br>
+										<div className={classes.carta_contenedor__boton}>
+											<div className={classes.valor_oferta}>
+												<Tooltip title="Valor sugerido por el solicitante 🎉">
+													<Typography align="justify" variant="h6">
+														$ {oferta.id_oferta} 
+													</Typography>
+												</Tooltip>
+											</div>
+										</div>
+								</CardActionArea>
+								<div className={classes.carta_contenedor__boton}>
+								{/* <Link to={url} className="btn btn-primary carta_boton">VER DETALLE</Link> */}
+								 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}					
+											Ver detalle
+									</Button>	 			
+								</div>
+								</div>
+							</Card>
+						</paper>
+				
+				{/* } */}
+					</div>
 	);
 }
 
-
-export default withStyles({
-	item: {
-		height: 550,
-		width: 600,
-		contain: 'content',
-		/* backgroundColor: 'orange', */
-		//minWidth: "750px",
-		textAlign: "left",
-		margin: "2em",
-		padding: '0.5em',
-
-
-	},
-	media: {
-		minHeight: "270px",
-		margin: "1em",
-	},
-})(OfertCard);
+/* 
+<Link to={url} className="btn btn-primary carta_boton">Ver detalle</Link> */

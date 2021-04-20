@@ -36,9 +36,44 @@ export const GetOfertasDisponibles = (idPrestador) => {
 
 }
 
+
+export const deleteSolicitud = (idOferta) =>{
+
+    const username = 'albert_vega55@outlook.com'
+    const password = 'pass'
+    
+    const url = `${URLAPI}ofertaService/deleteOfertaById/${idOferta}`;
+    return axios.delete(url,{
+        headers: {
+            'Authorization': 'Basic '+btoa(username+":"+password)
+             
+          }, 
+    })
+
+
+    /* axios.delete(URL, {
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          source: source
+        }
+      }); */
+   
+}
+
 //David
 export const GetAllOferts = (getTodasOfertas) => {
     const url = `${URLAPI}ofertaService/getTodasOfertas`;//=${getTodasOfertas}
+    return axios.get(url)
+
+}
+
+
+export const GetAllOfertsByRequestor = (idRequestor) => {
+    
+    const url = `${URLAPI}ofertaService/getOfertasSolicitadas?id_usuario=${idRequestor}`;//=
+    //const url = `${URLAPI}ofertaService/getTodasOfertas`;//=${getTodasOfertas}
     return axios.get(url)
 
 }
@@ -51,4 +86,17 @@ export const GetAllUsers = () =>{
 export const GetHabilidadUser = () =>{
     const url = `${URLAPI}usuarioService/getHabilidades?id_prestador=1`;
     return axios.get(url)
+}
+
+
+
+
+export const LoginService = (usuario) => {
+
+    const url = `${URLAPI}loginService/login`;
+    return axios.post(url, usuario, {
+        headers:{
+            'Content-Type': 'application/json',
+          }
+      } );
 }
