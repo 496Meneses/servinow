@@ -2,7 +2,7 @@
 import React,{ useEffect,useState,Fragment } from 'react';
 import { deleteSolicitud } from '../../../services';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid, Modal, TextField } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 //import 'fontsource-roboto';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,6 +23,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Menu from '@material-ui/core/Menu';
+import icondelete from '../images/icondelete.gif';
+
 
 const useStyles = makeStyles((theme) => ({
 	
@@ -116,6 +118,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	titulo_oferta: {
+		flexWrap: 'wrap',
 		position: "relative",
 		display: "flex",
 		justifyContent: "space-between",
@@ -173,13 +176,26 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
 },
 
+modal: {
+	position: 'absolute',
+	width: 400,
+	backgroundColor: 'white',
+	/* border: '2px solid #000',
+	borderColor: '#ab003c', */
+	boxShadow: theme.shadows[5],
+	padding: "16px 32px 24px",
+	top: '50%',
+	left: '50%',
+	transform: 'translate(-50%, -50%)',
+},
 
 }));
 
 export default function OfertCard({ oferta }) {
-	/* const [listaUsuarios, setListaUsuarios] = useState([]) */
+	
 	const classes = useStyles();
-	let aux=0;
+	const [modal, setModal]=useState(false);
+	var activarEstado=true;
 	const url = `/oferta/detalle/${oferta.id_oferta}`;
 	const [cargando, setCargando] = useState(false)
 	const [spacing, setSpacing] = React.useState(2);
@@ -200,34 +216,52 @@ export default function OfertCard({ oferta }) {
 		deleteSolicitud(oferta.id_oferta).then(res => {
 			console.log(res);
 			console.log(res.data);
-			console.log("Funcionó")
+			console.log("Funcionó");
+			setModal(!modal);
 		  })
 
 		
 		setAnchorEl(null);
 	};
 
-	
-
-
-//Pruebas inicio 
-
-/* eliminar=(dato)=>{
-	var opcion=cconfirm("Realmente desea eliminar el registro ");
-	if(opcion){
-		var contador=0;
-		var lista=this.state.oferta;
-			lista.map(())
-
+	const abrirCerrarModal =()=>{
+		setModal(!modal);
 	}
-} */
 
-//Pruebas fin
-
-
+	const body=(
+		<div className={classes.modal}>
+			<Grid container spacing={2}>
+			<Grid item xs={12} sm={8}>
+			<div align="center">
+				<Typography  variant="h6" color="primary">¿Eliminar oferta?</Typography>
+				<div>
+					<Avatar aria-label="recipe" src={oferta.imagen}></Avatar>
+				</div>
+				<Typography  variant="h7" noWrap="bool">{oferta.titulo}</Typography>
+			</div>
+			</Grid>
+			<Grid item xs={12} sm={4}>
+			<div align="center">
+				<img src={icondelete} width="60" height="85"></img>
+			</div>
+			</Grid>
+			</Grid>
+			<br/>
+			<div align="center">
+			<Button onClick={handleDelete} variant="contained" color="primary">SI</Button>{"  "}
+			<Button onClick={()=>abrirCerrarModal()}  variant="outlined" color="primary">NO</Button>
+			</div>
+		</div>
+	)
 
 	return (
 		<div className={classes.root}>
+
+		<Modal
+		open={modal}
+		onClose={abrirCerrarModal}>
+			{body}
+		</Modal>
 
 		{/* 	 <ToastContainer />
                 {
@@ -255,8 +289,9 @@ export default function OfertCard({ oferta }) {
 															onClose={handleClose}
 														>
 															<MenuItem onClick={handleClose}>Ver oferta</MenuItem>
-															<MenuItem onClick={handleClose}>Editar oferta</MenuItem>
-															<MenuItem onClick={handleDelete}>Eliminar oferta</MenuItem>
+															<MenuItem onClick={handleClose} disabled={activarEstado}>Editar oferta</MenuItem>
+															{/* <MenuItem onClick={handleDelete}>Eliminar oferta</MenuItem> */}
+															<MenuItem onClick={()=>abrirCerrarModal()} disabled={false}>Eliminar oferta</MenuItem>
 														</Menu>
 													</div>
 												}
@@ -288,8 +323,7 @@ export default function OfertCard({ oferta }) {
 														<div>
 														{(() =>{
 																switch(oferta.estado){
-																	case 'DISPONIBLE':
-																		
+																	case 'DISPONIBLE':		
 																		return <Typography align="justify" className={classes.title1}>{oferta.estado}</Typography>
 																		break;
 																	case 'EN PROCESO':
@@ -316,7 +350,7 @@ export default function OfertCard({ oferta }) {
 											{/* <Typography component="p" variant="h6"></Typography> 
 											<p>{oferta.descripcion}</p>*/}
 											<div className={classes.descripcion_oferta}>
-												<Typography variant="h7" align="justify">
+												<Typography variant="h7" align="justify"> {/*noWrap="bool"*/}
 													{oferta.descripcion}
 												</Typography>
 											</div>
@@ -346,6 +380,3 @@ export default function OfertCard({ oferta }) {
 					</div>
 	);
 }
-
-/* 
-<Link to={url} className="btn btn-primary carta_boton">Ver detalle</Link> */
