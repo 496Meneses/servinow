@@ -26,7 +26,7 @@ const MaterialUi = () => {
             <AppBar position="relative">
                 <Toolbar>
                     <PhotoCamera className={classes.icon} />
-                    <Typography variant="h7" style={{ color: "#ffffff" }}>
+                    <Typography variant="body1" style={{ color: "#ffffff" }}>
                         Photo Album
                     </Typography>
                 </Toolbar>
