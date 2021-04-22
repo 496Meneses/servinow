@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, lazy, Suspense } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { InputLabel } from "@material-ui/core";
 import {
@@ -67,6 +67,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
   },
 }));
+
+
 export const OfertListContainer = (props) => {
 
   var activarEstado = true;
@@ -92,36 +94,27 @@ export const OfertListContainer = (props) => {
   };
   const [listaOferta, setListaOferta] = useState([]);
 
+  /**
+   * 
+   * @param {Este parámetro es el id de la oferta que se va a eliminar} id_oferta_to_delete
+   *  Este método recive el id de la oferta que va a eliminar. 
+   *  Por medio de la función map() e indexOf() y utilizando el id de la oferta a eliminar se obtiene la posición
+   *  que ocupa en el arreglo de ofertas.
+   *  Por medio de la función splice se elimina la posición selecccionada; este metodo retorna una lista con los
+   *  elementos eliminados
+   *  Se utiliza el metodo filter, para realizar una resta entre la lista orginial y la lista de la oferta eliminada
+   *  Finalmente se actualizan las variables de estado.
+   */
   const eliminarOferta = (id_oferta_to_delete) => {
-    console.log(listaOferta)
-    //console.log("Position to delete: "+listaOferta.map((obj) => obj.id_oferta).indexOf(id_oferta_to_delete));
-    let arreglo = listaOferta
-    console.log(arreglo)
-    const position = arreglo.map((obj) => obj.id_oferta).indexOf(id_oferta_to_delete)
-    console.log("Position to delete: "+ position)
+    const position = listaOferta.map((obj) => obj.id_oferta).indexOf(id_oferta_to_delete)
     if (position > -1) {
-      let deleteItems = arreglo.splice(position, 1);
-      let difference = arreglo.filter(x => !deleteItems.includes(x));
-      setListaOferta(difference)    
-      setListaOfertaFromApi(difference)  
+      let listaOfertaEliminada = listaOferta.splice(position, 1);
+      let listaActualizadas = listaOferta.filter(x => !listaOfertaEliminada.includes(x));
+      setListaOferta(listaActualizadas)
+      setListaOfertaFromApi(listaActualizadas)
     }
-
-
-
-    /* const position = listaOferta.map((obj) => obj.id_oferta).indexOf(id_oferta_to_delete)
-    if (position > -1) {
-      setListaOferta(listaOferta.splice(position, 1));
-      //setListaOferta(listaOferta)
-    }
-    console.log("Here we go...");
-    console.log(listaOferta) */
-    
   }
 
-  
-
-  console.log("Obtuve " + props.estado);
-  
   const [listaOfertaFromApi, setListaOfertaFromApi] = useState([]);
   const [cargando, setCargando] = useState(false);
   const classes = useStyles();
@@ -133,84 +126,20 @@ export const OfertListContainer = (props) => {
     .slice(pagesVisited, pagesVisited + postuladosPerPage)
     .map((oferta, index) => (
       <Grid item xs={12} sm={6} md={4}>
-        <OfertCard key={index} oferta={oferta} auxiliar={activarEstado} handleUpdateListaOferta={eliminarOferta}/>
+        <OfertCard key={index} oferta={oferta} auxiliar={activarEstado} handleUpdateListaOferta={eliminarOferta} />
       </Grid>
     ));
 
 
-  const filterInPlace = (array, predicate) => {
-      let end = 0;
-  
-      for (let i = 0; i < array.length; i++) {
-          const obj = array[i];
-  
-          if (predicate(obj)) {
-              array[end++] = obj;
-          }
-      }
-  
-      array.length = end;
-
-      
-  };
-  
-  const toDelete = new Set(['abc', 'efg']);
-  
-  const arrayOfObjects = [{id: 'abc', name: 'oh'},
-                          {id: 'efg', name: 'em'},
-                          {id: 'hij', name: 'ge'}];
-  
-
-  
-    
-/*   const array = [2, 5, 9];
-
-console.log(array);
 
 
-const index = array.indexOf(5);
-if (index > -1) {
-  array.splice(index, 1);
-}
 
-// array = [2, 9]
-console.log(array); 
-                         */
-
-
-/* const myArray = [
-  {
-      'color':'red',
-      'name': 'redName'
-  },
-  {
-      'color':'blue',
-      'name': 'blueName'
-  },
-  {
-      'color':'green',
-      'name': 'greenName'
-      },
-  {
-      'color':'yellow',
-      'name': 'yellowName'
-  },
-];
-console.log("Position to delete: "+myArray.map((el) => el.color).indexOf('green'));
-
-const position = myArray.map((el) => el.color).indexOf('yellow')
-if (position > -1) {
-    myArray.splice(position, 1);
-}
-console.log(myArray) */
-
- 
   useEffect(() => {
 
 
     if (props.idRequestor == 0) {
       GetAllOferts().then((respuesta) => {
-        setListaOferta(respuesta.data)        
+        setListaOferta(respuesta.data)
         setListaOfertaFromApi(respuesta.data)
         console.log(respuesta)
 
@@ -219,11 +148,9 @@ console.log(myArray) */
     } else {
       GetAllOfertsByRequestor(props.idRequestor).then((respuesta) => {
         setListaOferta(respuesta.data)
-        
+
         setListaOfertaFromApi(respuesta.data)
         console.log(respuesta)
-
-        //eliminarOferta()
 
       })
 
@@ -279,7 +206,7 @@ console.log(myArray) */
   };
   return (
     <div className={classes.root}>
-      
+
       <Suspense fallback={<CircularIndeterminate />}>
         <br></br>
         <Paper className={classes.paper}>
@@ -315,7 +242,7 @@ console.log(myArray) */
               }
             })()}
             <br></br>
-            
+
             <Grid container spacing={2}>
               <Grid item xs={12} sm={8}>
                 <div className={classes.div}>
@@ -361,9 +288,6 @@ console.log(myArray) */
 
           <br></br>
           <div className={classes.root}>
-          <Button onClick={()=>eliminarOferta(263)} color="primary">263</Button>
-          <Button onClick={()=>eliminarOferta(274)} color="secondary">274</Button>
-          <Button onClick={()=>eliminarOferta(289)} color="secondary">289</Button>
             <Grid container spacing={3}>
               {displayOferts}
 

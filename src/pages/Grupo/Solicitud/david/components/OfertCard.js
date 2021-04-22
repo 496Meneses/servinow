@@ -214,15 +214,35 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 		
 		console.log("Voy a borrar el id oferta: "+oferta.id_oferta)
 		handleUpdateListaOferta(oferta.id_oferta)
-		setModal(!modal);
 		deleteSolicitud(oferta.id_oferta).then(res => {
-			console.log(res);
-			console.log(res.data);
-			console.log("Funcionó");
 			setModal(!modal);
 			handleUpdateListaOferta(oferta.id_oferta)
 			
-		  })
+		  }).catch((error) => {
+			// Error 😨
+			setModal(!modal);
+			setCargando(false)
+			if (error.response) {
+			  /*
+			   * The request was made and the server responded with a
+			   * status code that falls out of the range of 2xx
+			   */
+			  console.log("Error.Response: " + error.response.data);
+			  console.log("Error.Response: " + error.response.status);
+			  console.log("Error.Response: " + error.response.headers);
+			} else if (error.request) {
+			  /*
+			   * The request was made but no response was received, `error.request`
+			   * is an instance of XMLHttpRequest in the browser and an instance
+			   * of http.ClientRequest in Node.js
+			   */
+			  console.log("Error.Request: " + error.request);
+			} else {
+			  // Something happened in setting up the request and triggered an Error
+			  console.log("General Error: " + error.message);
+			}
+			console.log("Error.config: " + error.config);
+			});
 
 		
 		setAnchorEl(null);
