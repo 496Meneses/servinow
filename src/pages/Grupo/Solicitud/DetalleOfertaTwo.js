@@ -71,9 +71,8 @@ export default function DetalleOfertaTwo() {
 
   const { id } = useParams();
 
-
+  
   const classes = useStyles();
-
   const [idOferta, setIdOferta] = useState(id)
   const [idPrestador, setIdPrestador] = useState(2)
   const [solicitante, setSolicitante] = useState([])
@@ -83,7 +82,8 @@ export default function DetalleOfertaTwo() {
   const [oferta, setOferta] = useState([])
   const [estoyPostulado, setEstoyPostulado] = useState(false)
   const [cargando, setCargando] = useState(false)
-
+  const [fechaInicio, setFechaInicio] = useState("")
+  const [fechaFin, setFechaFin] = useState("")
 
   const postularmeOferta = async () => {
     setCargando(true)
@@ -193,6 +193,18 @@ export default function DetalleOfertaTwo() {
     const ofertaObtenida = await respuesta.data;
     setCargando(false)
     setOferta(ofertaObtenida)
+
+
+    
+    var date = new Date(ofertaObtenida.fecha_inicio);
+    setFechaInicio(date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+    var date = new Date(ofertaObtenida.fecha_fin);
+    setFechaFin(date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+
+
+
+
+
     setPostulados(ofertaObtenida.postulados)
     setEstoyPostulado(false)
     setSolicitante(ofertaObtenida.solicitante)
@@ -205,7 +217,7 @@ export default function DetalleOfertaTwo() {
 
       }
     })
-
+    
     console.log("Estoy postulado State: " + estoyPostulado)
 
 
@@ -237,6 +249,16 @@ export default function DetalleOfertaTwo() {
     obtenerDetalleOferta();
 
   }, [])
+
+
+  var formatter = new Intl.NumberFormat('en-ES', {
+    style: 'currency',
+    currency: 'COP',
+  
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  });
   return (
 
 
@@ -247,6 +269,7 @@ export default function DetalleOfertaTwo() {
       <ToastContainer />
       {
         cargando ? <CircularIndeterminate /> :
+
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Typography id="title" variant="h3" align="center" color="primary">
@@ -269,8 +292,8 @@ export default function DetalleOfertaTwo() {
                   </Typography>
                   <br></br>
                   <Typography gutterBottom variant="h4" color="secondary">
-                    {oferta.valor}
-              </Typography>
+                    {formatter.format(oferta.valor)}
+                  </Typography>
                 </CardContent>
                 <CardActions>
                   {
@@ -301,11 +324,12 @@ export default function DetalleOfertaTwo() {
                 <br></br>
                 <div >
                   <Alert severity="info" icon={<DateRangeIcon />}>
-                    Fecha Inicio: {String(convertTimeStamp(parseInt(oferta.fecha_inicio)))}
+                    Fecha Inicio: {fechaInicio}
+                   
                   </Alert>
                   <br></br>
                   <Alert severity="warning" icon={<DateRangeIcon />}>
-                    Fecha Fin: {String(convertTimeStamp(parseInt(oferta.fecha_fin)))}
+                    Fecha Fin: {fechaFin}
                   </Alert>
                 </div>
                 <br></br>
@@ -340,14 +364,14 @@ export default function DetalleOfertaTwo() {
                 <br></br>
                 <Divider />
                 <br></br>
-                <Typography variant="subtitle1">Info del contacto </Typography>
+                <Typography variant="subtitle1">Información del Soliciante </Typography>
                 {
                   console.log(solicitante)
                 }
                 <div className={classes.div}>
                   <Avatar
                     className={classes.large}
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Chloris_chloris_%28profile%29.jpg/1280px-Chloris_chloris_%28profile%29.jpg"
+                    src={solicitante.url_imagen}
                   //src={solicitante.url_imagen}
                   ></Avatar>
                 </div>

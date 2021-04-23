@@ -192,8 +192,8 @@ modal: {
 }));
 
 export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta}) {
-	console.log("here i have your auxiliar ")
-	console.log(auxiliar)
+	//console.log("here i have your auxiliar ")
+	//console.log(auxiliar)
 	const classes = useStyles();
 	const [modal, setModal]=useState(false);
 	var activarEstado=true;
@@ -293,7 +293,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 						<div className={classes.paper}>
 							<Card className={classes.card}>
 									<div>
-											<CardHeader backgroundColor="primary"
+											<CardHeader 
 												avatar={
 													<div>
 														<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
@@ -374,7 +374,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 											{/* <Typography component="p" variant="h6"></Typography> 
 											<p>{oferta.descripcion}</p>*/}
 											<div className={classes.descripcion_oferta}>
-												<Typography variant="h6" align="justify"> {/*noWrap="bool"*/}
+												<Typography variant="subtitle2" align="justify"> {/*noWrap="bool"*/}
 													{oferta.descripcion}
 												</Typography>
 											</div>
