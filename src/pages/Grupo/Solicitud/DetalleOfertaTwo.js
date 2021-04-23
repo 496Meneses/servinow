@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { postularseOferta, retirarseOferta } from '../../../pages/Grupo/services';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
@@ -92,7 +93,8 @@ export default function DetalleOfertaTwo() {
       "id_oferta": idOferta
     }
 
-    axios.post(`http://52.7.252.110:8082/ofertaService/postularAOferta`, request)
+    
+    postularseOferta(request)    
       .then((response) => {
         setCargando(false)
         // Success 🎉
@@ -148,7 +150,8 @@ export default function DetalleOfertaTwo() {
       "id_oferta": idOferta
     }
 
-    axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
+//    axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
+    retirarseOferta(request)
       .then((response) => {
         setCargando(false)
         // Success 🎉
@@ -254,10 +257,6 @@ export default function DetalleOfertaTwo() {
   var formatter = new Intl.NumberFormat('en-ES', {
     style: 'currency',
     currency: 'COP',
-  
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
   return (
 
@@ -296,18 +295,26 @@ export default function DetalleOfertaTwo() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  {
-                    estoyPostulado ?
+                  
+              {
+                estoyPostulado ?
 
-                      <Button size="small" color="secondary" onClick={() => retirarmeOferta()}>
-                        No es de mi interes
-                  </Button>
-                      :
-                      <Button size="small" color="primary" onClick={() => postularmeOferta()}>
-                        Postularme
-                  </Button>
-
-                  }
+                  <DialogComponent
+                    titulo={"ServiNow"}
+                    descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
+                    textoBoton={"Ya no quiero postularme"}
+                    colorBoton={"secondary"}
+                    variant={"text"}
+                    metodoAEjecutar={retirarmeOferta}></DialogComponent>
+                  :
+                  <DialogComponent
+                    titulo={"ServiNow"}
+                    descripcion={"¿Quieres postularte a esta oferta?"}
+                    textoBoton={"Postúlate!"}
+                    colorBoton={"primary"}
+                    variant={"text"}
+                    metodoAEjecutar={postularmeOferta}></DialogComponent>
+              }
                 </CardActions>
               </Card>
             </Grid>
@@ -393,6 +400,7 @@ export default function DetalleOfertaTwo() {
                     descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
                     textoBoton={"Ya no quiero postularme"}
                     colorBoton={"secondary"}
+                    variant={"contained"}
                     metodoAEjecutar={retirarmeOferta}></DialogComponent>
                   :
                   <DialogComponent
@@ -400,6 +408,7 @@ export default function DetalleOfertaTwo() {
                     descripcion={"¿Quieres postularte a esta oferta?"}
                     textoBoton={"Postúlate!"}
                     colorBoton={"primary"}
+                    variant={"contained"}
                     metodoAEjecutar={postularmeOferta}></DialogComponent>
               }
               {/*  <Typography variant="h1" align="center" color="primary">

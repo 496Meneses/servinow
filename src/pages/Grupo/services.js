@@ -53,16 +53,30 @@ export const deleteSolicitud = (idOferta) => {
 }
 
 
-export const postularseOferta = (idOferta) => {
+export const postularseOferta = (request) => {
 
     const username = 'albert_vega55@outlook.com'
     const password = 'pass'
 
-    const url = `${URLAPI}ofertaService/deleteOfertaById/${idOferta}`;
-    return axios.delete(url, {
+    const url = `${URLAPI}ofertaService/postularAOferta`;
+    return axios.post(url, request, {
         headers: {
             'Authorization': 'Basic ' + btoa(username + ":" + password)
+        },
+    })
 
+}
+
+
+export const retirarseOferta = (request) => {
+
+    const username = 'albert_vega55@outlook.com'
+    const password = 'pass'
+
+    const url = `${URLAPI}ofertaService/revocarPostulacion`;
+    return axios.post(url, request, {
+        headers: {
+            'Authorization': 'Basic ' + btoa(username + ":" + password)
         },
     })
 
