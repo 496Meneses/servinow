@@ -1,6 +1,8 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { InputLabel } from "@material-ui/core";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 import {
   GetOfertasDisponibles,
   GetAllOferts,
@@ -74,7 +76,7 @@ export const OfertListContainer = (props) => {
 
 
   var activarEstado = true;
-  if(props.auxiliar){
+  if (props.auxiliar) {
     activarEstado = false;
   }
 
@@ -85,7 +87,7 @@ export const OfertListContainer = (props) => {
   };
   //Cadena correspondiente al filtro "Estado"
   const [cadenaBusqueda2, setCadenaBusqueda2] = useState("");
-  
+
   const updateSearch2 = (e) => {
     setCadenaBusqueda2(e.target.value);
   };
@@ -109,6 +111,11 @@ export const OfertListContainer = (props) => {
       let listaActualizadas = listaOferta.filter(x => !listaOfertaEliminada.includes(x));
       setListaOferta(listaActualizadas)
       setListaOfertaFromApi(listaActualizadas)
+      toast("Se ha eliminado exitosamente!", {
+        type: 'success',
+        draggable: true
+      })
+
     }
   }
 
@@ -129,7 +136,9 @@ export const OfertListContainer = (props) => {
 
   useEffect(() => {
     setCargando(true)
-    if (props.idRequestor == 0) {
+    
+    console.log("Id Requestor: "+props.idRequestor)
+    if (props.idRequestor == null) {
       GetAllOferts().then((respuesta) => {
         setListaOferta(respuesta.data)
         setListaOfertaFromApi(respuesta.data)
@@ -175,7 +184,7 @@ export const OfertListContainer = (props) => {
   }, [cadenaBusqueda2]);
 
 
-   const changePage = ({ selected }) => {
+  const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
 
@@ -246,11 +255,11 @@ export const OfertListContainer = (props) => {
                   </Grid>
                 </Grid>
 
-                
+
                 <div className={classes.root}>
                   <Grid container spacing={3}>
                     {displayOferts}
-                   <div className={classes.control}>
+                    <div className={classes.control}>
                       <ReactPaginate
                         className="algo"
                         nextLabel={"Siguiente"}
@@ -266,7 +275,7 @@ export const OfertListContainer = (props) => {
                     </div>
                   </Grid>
                 </div>
-                
+
 
               </Paper>
               <br></br>
