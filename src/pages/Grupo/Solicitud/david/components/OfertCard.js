@@ -2,7 +2,7 @@
 import React,{ useEffect,useState,Fragment } from 'react';
 import { deleteSolicitud } from '../../../services';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid, Modal, TextField } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid, Modal, TextField , Paper} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 //import 'fontsource-roboto';
 import { makeStyles } from '@material-ui/core/styles';
@@ -191,12 +191,12 @@ modal: {
 
 }));
 
-export default function OfertCard({ oferta }) {
-	
+export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta}) {
+	//console.log("here i have your auxiliar ")
+	//console.log(auxiliar)
 	const classes = useStyles();
 	const [modal, setModal]=useState(false);
 	var activarEstado=true;
-	const url = `/oferta/detalle/${oferta.id_oferta}`;
 	const [cargando, setCargando] = useState(false)
 	const [spacing, setSpacing] = React.useState(2);
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -213,12 +213,36 @@ export default function OfertCard({ oferta }) {
 	const handleDelete = () => {
 		
 		console.log("Voy a borrar el id oferta: "+oferta.id_oferta)
+		handleUpdateListaOferta(oferta.id_oferta)
 		deleteSolicitud(oferta.id_oferta).then(res => {
-			console.log(res);
-			console.log(res.data);
-			console.log("Funcionó");
 			setModal(!modal);
-		  })
+			handleUpdateListaOferta(oferta.id_oferta)
+			
+		  }).catch((error) => {
+			// Error 😨
+			setModal(!modal);
+			setCargando(false)
+			if (error.response) {
+			  /*
+			   * The request was made and the server responded with a
+			   * status code that falls out of the range of 2xx
+			   */
+			  console.log("Error.Response: " + error.response.data);
+			  console.log("Error.Response: " + error.response.status);
+			  console.log("Error.Response: " + error.response.headers);
+			} else if (error.request) {
+			  /*
+			   * The request was made but no response was received, `error.request`
+			   * is an instance of XMLHttpRequest in the browser and an instance
+			   * of http.ClientRequest in Node.js
+			   */
+			  console.log("Error.Request: " + error.request);
+			} else {
+			  // Something happened in setting up the request and triggered an Error
+			  console.log("General Error: " + error.message);
+			}
+			console.log("Error.config: " + error.config);
+			});
 
 		
 		setAnchorEl(null);
@@ -237,12 +261,12 @@ export default function OfertCard({ oferta }) {
 				<div>
 					<Avatar aria-label="recipe" src={oferta.imagen}></Avatar>
 				</div>
-				<Typography  variant="h7" noWrap="bool">{oferta.titulo}</Typography>
+				<Typography  variant="h6" noWrap="bool">{oferta.titulo}</Typography>
 			</div>
 			</Grid>
 			<Grid item xs={12} sm={4}>
 			<div align="center">
-				<img src={icondelete} width="60" height="85"></img>
+				<img src={icondelete}  marginLeft="20" width="60" height="85"></img>
 			</div>
 			</Grid>
 			</Grid>
@@ -266,10 +290,10 @@ export default function OfertCard({ oferta }) {
 		{/* 	 <ToastContainer />
                 {
                     cargando ? <CircularIndeterminate /> : */}
-						<paper className={classes.paper}>
+						<div className={classes.paper}>
 							<Card className={classes.card}>
 									<div>
-											<CardHeader backgroundColor="primary"
+											<CardHeader 
 												avatar={
 													<div>
 														<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
@@ -350,7 +374,7 @@ export default function OfertCard({ oferta }) {
 											{/* <Typography component="p" variant="h6"></Typography> 
 											<p>{oferta.descripcion}</p>*/}
 											<div className={classes.descripcion_oferta}>
-												<Typography variant="h7" align="justify"> {/*noWrap="bool"*/}
+												<Typography variant="subtitle2" align="justify"> {/*noWrap="bool"*/}
 													{oferta.descripcion}
 												</Typography>
 											</div>
@@ -374,7 +398,7 @@ export default function OfertCard({ oferta }) {
 								</div>
 								</div>
 							</Card>
-						</paper>
+						</div>
 				
 				{/* } */}
 					</div>

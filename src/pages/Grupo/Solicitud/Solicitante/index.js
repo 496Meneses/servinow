@@ -7,12 +7,15 @@ import Search from "@material-ui/icons/Search";
 import { OfertListContainer } from "../david/containers/OfertListContainer";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
+import { ToastContainer } from "react-toastify";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -99,6 +102,7 @@ export default function CenteredGrid() {
 
   return (
     <div className={classes.root}>
+       <ToastContainer />
       {(aux = true)}
       <Grid item xs={12} sm={12}>
         <OfertListContainer
