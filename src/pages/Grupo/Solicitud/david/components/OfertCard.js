@@ -194,6 +194,7 @@ modal: {
 export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta}) {
 	//console.log("here i have your auxiliar ")
 	//console.log(auxiliar)
+	const url = `/oferta/detalle/${oferta.id_oferta}`
 	const classes = useStyles();
 	const [modal, setModal]=useState(false);
 	var activarEstado=true;
