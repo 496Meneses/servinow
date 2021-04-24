@@ -1,4 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
+import Habilidades from './../../../Usuarios/components/Habilidades';
 import { makeStyles } from "@material-ui/core/styles";
 import { InputLabel } from "@material-ui/core";
 import { toast } from "react-toastify";
@@ -189,102 +190,105 @@ export const OfertListContainer = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      {
-        cargando ? (<CircularIndeterminate />) :
-          (
-            <div>
-              {
-                props.auxiliar ?
-                  <Typography
-                    color="textPrimary"
-                    variant="h5"
-                    align="center"
-                    color="primary"
-                  >
-                    {" "}MIS OFERTAS
-                  </Typography>
-                  :
-                  <Typography
-                    color="textPrimary"
-                    variant="h5"
-                    align="center"
-                    color="primary"
-                  >
-                    OFERTAS
+    <>
+      <div className={classes.root}>
+        {
+          cargando ? (<CircularIndeterminate />) :
+            (
+              <div>
+                {
+                  props.auxiliar ?
+                    <Typography
+                      color="textPrimary"
+                      variant="h5"
+                      align="center"
+                      color="primary"
+                    >
+                      {" "}MIS OFERTAS
                     </Typography>
-              }
+                    :
+                    <Typography
+                      color="textPrimary"
+                      variant="h5"
+                      align="center"
+                      color="primary"
+                    >
+                      OFERTAS
+                      </Typography>
+                }
 
-              <Paper className={classes.paper}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={8}>
-                    <div className={classes.div}>
-                      <form className={classes.root} noValidate autoComplete="off">
-                        <TextField
-                          id="outlined-basic"
-                          label="Buscar"
-                          variant="outlined"
-                          style={{ width: "100%" }}
-                          value={cadenaBusqueda}
-                          onChange={updateSearch}
+                <Paper className={classes.paper}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={8}>
+                      <div className={classes.div}>
+                        <form className={classes.root} noValidate autoComplete="off">
+                          <TextField
+                            id="outlined-basic"
+                            label="Buscar"
+                            variant="outlined"
+                            style={{ width: "100%" }}
+                            value={cadenaBusqueda}
+                            onChange={updateSearch}
+                          />
+                        </form>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <div className={classes.div}>
+                        <FormControl variant="outlined" className={classes.root} disabled={activarEstado}>
+                          <InputLabel>Estado</InputLabel>
+                          <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={cadenaBusqueda2}
+                            onChange={updateSearch2}
+                            label="Age"
+                          >
+                            <MenuItem value="">
+                              <Typography color="primary">OFERTAS</Typography>
+                            </MenuItem>
+                            <MenuItem value="DISPONIBLE">DISPONIBLE</MenuItem>
+                            <MenuItem value="EN PROCESO">EN PROCESO</MenuItem>
+                            <MenuItem value="FINALIZADA">FINALIZADA</MenuItem>
+                            <MenuItem value="CANCELADA">CANCELADA</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                  </Grid>
+
+
+                  <div className={classes.root}>
+                    <Grid container spacing={3}>
+                      {displayOferts}
+                      <div className={classes.control}>
+                        <ReactPaginate
+                          className="algo"
+                          nextLabel={"Siguiente"}
+                          previousLabel={"Anterior"}
+                          pageCount={pageCount}
+                          onPageChange={changePage}
+                          containerClassName={"paginacionBtns"}
+                          previousLinkClassName={"antBtn"}
+                          nextLinkClassName={"sigBtn"}
+                          disabledClassName={"pagDisabled"}
+                          activeClassName={"pagActiva"}
                         />
-                      </form>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <div className={classes.div}>
-                      <FormControl variant="outlined" className={classes.root} disabled={activarEstado}>
-                        <InputLabel>Estado</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-outlined-label"
-                          id="demo-simple-select-outlined"
-                          value={cadenaBusqueda2}
-                          onChange={updateSearch2}
-                          label="Age"
-                        >
-                          <MenuItem value="">
-                            <Typography color="primary">OFERTAS</Typography>
-                          </MenuItem>
-                          <MenuItem value="DISPONIBLE">DISPONIBLE</MenuItem>
-                          <MenuItem value="EN PROCESO">EN PROCESO</MenuItem>
-                          <MenuItem value="FINALIZADA">FINALIZADA</MenuItem>
-                          <MenuItem value="CANCELADA">CANCELADA</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </Grid>
-                </Grid>
+                      </div>
+                    </Grid>
+                  </div>
 
 
-                <div className={classes.root}>
-                  <Grid container spacing={3}>
-                    {displayOferts}
-                    <div className={classes.control}>
-                      <ReactPaginate
-                        className="algo"
-                        nextLabel={"Siguiente"}
-                        previousLabel={"Anterior"}
-                        pageCount={pageCount}
-                        onPageChange={changePage}
-                        containerClassName={"paginacionBtns"}
-                        previousLinkClassName={"antBtn"}
-                        nextLinkClassName={"sigBtn"}
-                        disabledClassName={"pagDisabled"}
-                        activeClassName={"pagActiva"}
-                      />
-                    </div>
-                  </Grid>
-                </div>
-
-
-              </Paper>
-              <br></br>
-              <br></br>
-              <br></br>
-            </div>
-          )
-      }
-    </div>
+                </Paper>
+                <br></br>
+                <br></br>
+                <br></br>
+              </div>
+            )
+        }
+      <Habilidades />
+      </div>
+    </>
   );
 };
 export default OfertListContainer;
