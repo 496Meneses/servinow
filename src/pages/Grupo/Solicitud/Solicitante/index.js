@@ -107,6 +107,7 @@ export default function CenteredGrid() {
         ></OfertListContainer>
         {/* <OfertCard>auxiliar={aux}</OfertCard> */}
       </Grid>
+      
     </div>
   );
 }

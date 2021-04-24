@@ -367,10 +367,10 @@ export default function OfertCard({ oferta }) {
 										</div>
 								</CardActionArea>
 								<div className={classes.carta_contenedor__boton}>
-								{/* <Link to={url} className="btn btn-primary carta_boton">VER DETALLE</Link> */}
-								 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}					
+								 <Link to={url} className="btn btn-primary carta_boton">VER DETALLE</Link> 
+								{/*  <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} 					
 											Ver detalle
-									</Button>	 			
+									</Button>	 */} 			
 								</div>
 								</div>
 							</Card>
