@@ -1,15 +1,14 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import { Menu, X, Search, Settings, User, HelpCircle, Lock, LogOut } from 'react-feather';
+import { Menu, X, Settings, User} from 'react-feather';
 
 import { showRightSidebar } from '../redux/actions';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
 
 import logo from '../assets/images/logoServinow.svg';
-import profilePic from '../assets/images/users/avatar-3.jpg';
 import profileInvitado from '../assets/images/perfi.png';
 import { useAuth } from "./UserContext"
 
@@ -76,6 +75,7 @@ const Topbar = (props) => {
   const handleRightSideBar = () => {
     props.showRightSidebar();
   }
+
   const auth = useAuth();
 
 

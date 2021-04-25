@@ -7,26 +7,39 @@ export const CrearSolicitudService = (solicitud) => {
     return axios.post(url, solicitud, {
         headers:{
             'Content-Type': 'application/json',
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
           }
       } );
 }
 export const ConsultarCategoriaService = () => {
 
     const url = `${URLAPI}categoriaService/getCategorias`;
-    return axios.get(url)
+    return axios.get(url,{
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          
+    }})
 
 }
 
 export const ConsultarHabilidadesPorCategoriaService = (idCategoria) => {
 
+    
     const url = `${URLAPI}habilidadService/getHabilidades?id_categoria=${idCategoria}`;
-    return axios.get(url)
+    return axios.get(url, {
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          }})
 
 }
 
 export const ConsultarPostuladosPorOfertaService = (idOferta) => {
     const url = `${URLAPI}ofertaService/getDetalleOferta?id_oferta=${idOferta}`;
-    return axios.get(url)
+    return axios.get(url,{
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          
+    }})
 
 }
 
@@ -45,16 +58,21 @@ export const GetAllOferts = (getTodasOfertas) => {
 
 export const GetAllUsers = () =>{
     const url = `${URLAPI}usuarioService/getUsuarios`;
-    return axios.get(url)
+    return axios.get(url,{
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          
+    }})
 }
 
 export const GetHabilidadUser = () =>{
     const url = `${URLAPI}usuarioService/getHabilidades?id_prestador=1`;
-    return axios.get(url)
+    return axios.get(url,{
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          
+    }})
 }
-
-
-
 
 export const LoginService = (usuario) => {
 
