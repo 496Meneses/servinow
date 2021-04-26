@@ -266,7 +266,6 @@ body {
     grid-template-areas:
       "Titulo Titulo Titulo Titulo"
       "contenedor-header contenedor-datos contenedor-datos contenedor-datos"
-      "contenedor-header contenedor-datos contenedor-datos contenedor-datos"
       "contenedor-header contenedor-descripcion contenedor-descripcion contenedor-descripcion"
       "contenedor-header contenedor-habilidades contenedor-habilidades contenedor-habilidades"
       "contenedor-header contenedor-botones contenedor-botones contenedor-botones";

@@ -36,11 +36,12 @@ export const Perfil = () => {
     const [stateTelefono, setStateTelefono] = useState(usuarioLogeado.contacto)
     const [stateCorreo, setStateCorreo] = useState(usuarioLogeado.correo)
     const [openState, setOpenState] = useState(false)
-    
+    const [StateId, setSetStateId] = useState(usuarioLogeado.id_usuario)
     useEffect(() => {
         ObtenerDetalleUsuario(JSON.parse(localStorage.getItem("usuario")).id_usuario).then(
             (request) => {
                 setUsuarioLogeado({
+                    id_usuario: request.data.id_usuario,
                     nombres: request.data.nombres,
                     apellidos: request.data.apellidos,
                     documento: "FALTA DOCUMENTO",
@@ -56,6 +57,7 @@ export const Perfil = () => {
         )
     }, [])
     useEffect(() => {
+        setSetStateId(usuarioLogeado.id_usuario)
         setStateNombre(usuarioLogeado.nombres)
         setStateApellidos(usuarioLogeado.apellidos)
         setStateDireccion(usuarioLogeado.direccion)

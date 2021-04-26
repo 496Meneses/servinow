@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Habilidad({habilidad}) {
+export default function Habilidad({habilidad,CallbackDelete}) {
     const classes = useStyles();
     const [openDelete, setOpenDelete] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);
@@ -126,7 +126,7 @@ export default function Habilidad({habilidad}) {
                 </MenuItem>
                 <MenuItem onClick={handleCloseOptions}>
                     <Link underline="none" onClick={handleDeleteOpen}>Eliminar</Link>
-                    <DeleteHabilidad habilidad={habilidad} openDelete={openDelete} handleClose={handleClose}/>
+                    <DeleteHabilidad habilidad={habilidad} openDelete={openDelete} handleClose={handleClose} CallbackDelete={CallbackDelete}/>
                 </MenuItem>
                 <MenuItem onClick={handleCloseOptions}>
                     <Link underline="none" onClick={handleChangeState}>Desactivar/activar</Link>

@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const DeleteHabilidad = ({openDelete, handleClose, habilidad}) => {
+const DeleteHabilidad = ({openDelete, handleClose, habilidad,CallbackDelete}) => {
     const classes = useStyles();
     
     const handleDelete = () => {
@@ -82,8 +82,11 @@ const DeleteHabilidad = ({openDelete, handleClose, habilidad}) => {
         //pruebas**************************************************
 
 		console.log("Voy a borrar el id habilidad: "+habilidad.id_habilidad)
-		deleteHabilidades(habilidad.id_habilidad).then(res => {			
+		deleteHabilidades(habilidad.id_habilidad).then(res => {
+            console.log("HABILIDAD ELIMINADA")
+            CallbackDelete(habilidad.id_habilidad)			
 		  }).catch((error) => {
+            console.log("HABILIDAD NO ELIMINADA")
 			// Error 😨
 			if (error.response) {
 			  /*
@@ -106,8 +109,9 @@ const DeleteHabilidad = ({openDelete, handleClose, habilidad}) => {
 			}
 			console.log("Error.config: " + error.config);
 			});
-
+            
             handleClose();
+
 	};
     //**************************************************** */
     return (
