@@ -147,7 +147,7 @@ body {
     /* color: #3F51B5; */
   }
   
-  .paginacionBtns a{
+.paginacionBtns a{
     padding: 6px;
     margin: 1px;
     border-radius: 5px;
@@ -156,52 +156,53 @@ body {
     cursor: pointer;
   }
   
-  .paginacionBtns a:hover{
+.paginacionBtns a:hover{
     color: rgb(255, 255, 255);
     background-color: #3F51B5;
   }
   
-  .pagActiva a{
+.pagActiva a{
     color: rgb(255, 255, 255);
     background-color: #ffffff;
   }
 
-  .contenedorFormulario{
-      display: flex;
-      margin-bottom: 60px;
-      justify-content: center;
-      align-items: center;
+.formulario{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 10px 50px;
+    grid-template-areas:
+    "Datos Datos IMAGEN IMAGEN"
+    "Datos Datos IMAGEN IMAGEN"
+    "Botones Botones Botones Botones";
   }
 
-  .formulario{
-      margin-top: 20px;
-      padding-top: 10px;
-      background-color: #fff;
-      border-radius: 5px;
-      display: flex;
-      width: 100%;
-      justify-content: center;
-      flex-wrap: wrap;
-      flex-direction: column;
-      align-items: center;
-
-          
-    -webkit-box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57); 
-    box-shadow: 5px 4px 10px 0px rgba(0,0,0,0.57);
-
-  }
-  .form_section{
-      margin-top: 10px;
-      padding: 5px;
-      min-width: 300px;
-      
-  }
-.formulario input[type="datetime-local"] {
-    font-size: 12px;
+.Datos { 
+    
+    grid-area: Datos;
+    display: flex;
+    flex-direction: column;  
+ }
+ .Datos_categoriaYhabilidad{
+    margin-bottom: 20px;
+ }
+ .Datos_Fechayhora{
+    margin-bottom: 30px;
+    margin-left: auto;
+    width: 100%;
+ }
+ .formulario-propina{
+     margin-top: 50px;
+     width: 350px;
+     margin-left: 10px;
+ }
+.IMAGEN { grid-area: IMAGEN;
+    display: flex; 
+    flex-direction: column;
+    margin-top: 20px;
 }
-.formulario label{
-    font-size: 14px;
-}
+.Botones { grid-area: Botones; }
+
 /* cartaOfertas */
 .contenedor-carta{
     display: flex;
@@ -228,6 +229,7 @@ body {
     box-shadow: 3px 4px 21px -4px rgba(0,0,0,0.92);
     
 }
+
 .carta__imagen{
     width: 330px;
     height: 330px;
@@ -248,13 +250,9 @@ body {
     margin-top: 10px 0px 5px;
 }
 
-
 .carta_boton:hover{
     color:#fff;
 }
-
-
-
 /* PERFIL */
 
 /* TODO utilizar mejor grid AREAS*/
@@ -280,15 +278,12 @@ body {
     padding: 30px;
     background-color: #fff;
     }
-
 .contenedor-perfil h5{
     font-size: 20px;
 }
 .contenedor-perfil h3{
     font-size: 28px;
 }
-
-
 .Titulo { 
     grid-area: Titulo;
     
@@ -309,9 +304,10 @@ body {
     flex-direction: column;
 }
 .contenedor-imagen img{
+    border: 1px solid rgb(214, 214, 214);
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: 700px;
+    object-fit: scale-down;
 }
 
 /* CAMBIAR FOTO*/
@@ -349,13 +345,29 @@ body {
       color: rgb(0, 0, 0);
 }
 
+.imagenPrev{
+    height: 350px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 350px;
+    padding: 10px;
+}
+
+.imagenPrev__img{
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
+}
+.custom-file{
+    width: 360px;
+}
 /* end CAMBIAR FOTO*/
 /* DATOS */
+
 .contenedor-datos__titulo{
     display:flex;
     justify-content: center;
 }
-
 .contenedor-datos__titulo button{
     margin-left: 80px;
     border: none;
@@ -382,7 +394,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 .contenedor-datos-datos h5{
     display: inline-block;
     margin-left: 5px;
@@ -413,8 +424,6 @@ body {
     align-self: center;
 
 }
-
-
 .contenedor-habilidades h3{
     text-align: center;
 }
@@ -433,7 +442,6 @@ body {
     border-bottom: 1px solid black;
 
 }
-
 .contenedor-botones{
     min-height: 100px;
     display: flex;
@@ -454,10 +462,6 @@ body {
 }
 
 
-
-
-
-
 /* PERFIL RESPONSIVE */
 
 
@@ -470,8 +474,7 @@ body {
     }
 }
 
-
-@media screen and (max-width:1200px){
+@media screen and (max-width:1400px){
     .contenedor-descripcion__descripcion{
         width: 90%;
     }

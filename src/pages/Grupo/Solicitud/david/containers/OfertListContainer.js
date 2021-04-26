@@ -257,7 +257,6 @@ export const OfertListContainer = (props) => {
                     </Grid>
                   </Grid>
 
-
                   <div className={classes.root}>
                     <Grid container spacing={3}>
                       {displayOferts}

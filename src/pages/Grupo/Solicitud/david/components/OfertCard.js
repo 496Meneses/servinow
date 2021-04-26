@@ -24,8 +24,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Menu from '@material-ui/core/Menu';
 import icondelete from '../images/icondelete.gif';
-
-
 const useStyles = makeStyles((theme) => ({
 	
 	root: {
@@ -194,6 +192,7 @@ modal: {
 export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta}) {
 	//console.log("here i have your auxiliar ")
 	//console.log(auxiliar)
+	const url = `/oferta/detalle/${oferta.id_oferta}`
 	const classes = useStyles();
 	const [modal, setModal]=useState(false);
 	var activarEstado=true;
@@ -204,6 +203,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
+	const url = `/oferta/detalle/${oferta.id_oferta}`
 
 	const handleClose = () => {
 		//console.log(oferta)
@@ -267,6 +267,32 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 			<Grid item xs={12} sm={4}>
 			<div align="center">
 				<img src={icondelete}  marginLeft="20" width="60" height="85"></img>
+			<div >
+			<CardActionArea>
+			<CardMedia 
+			className={sw.cardMedia} 
+			image={oferta.imagen} />
+			<div className={sw.carta_contenedor}>
+			  <Tooltip title="Estado de la oferta">
+					<Button color="primary" style={{ top: '30%', right: -245}}>
+						<Typography>{oferta.estado}</Typography>
+					</Button>
+				</Tooltip> 
+				{/* <Typography component="p" variant="h6"></Typography> */}
+				<h5>Descripción</h5>
+				<p>{oferta.descripcion}</p>
+			</div>
+			
+			</CardActionArea>
+			<div className={sw.carta_contenedor__boton}>
+			<Link to={url} className="btn btn-primary carta_boton">Ver detalle</Link>
+
+				{/* <Tooltip title="Estado de la oferta">
+					<Button color="primary">
+						<Typography>{oferta.estado}</Typography>
+					</Button>
+				</Tooltip> */}  
+								
 			</div>
 			</Grid>
 			</Grid>
@@ -391,10 +417,10 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 										</div>
 								</CardActionArea>
 								<div className={classes.carta_contenedor__boton}>
-								{/* <Link to={url} className="btn btn-primary carta_boton">VER DETALLE</Link> */}
-								 <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} */}					
+								 <Link to={url} className="btn btn-primary carta_boton">VER DETALLE</Link> 
+								{/*  <Button className="carta_boton" variant="contained" color="primary" href={`/oferta/detalle/${oferta.id_oferta}`}> {/* onClick={() => {alert('pulsado')}} 					
 											Ver detalle
-									</Button>	 			
+									</Button>	 */} 			
 								</div>
 								</div>
 							</Card>
