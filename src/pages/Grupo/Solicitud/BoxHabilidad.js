@@ -15,10 +15,13 @@ export const Habilidades = ({idCategoria, callback}) => {
   
     const getIdHabilidad = name => {
       console.log(name);
-      let find = habilidades.find(habilidad => habilidad.nombre === name);
+      let find = habilidades.find(habilidad => habilidad.nombreHabilidad === name);
       if (find === undefined) {
+        console.log("HABILIDAD ENVIADA  NINGFUNA ")
       } else {
+        console.log("HABILIDAD ENVIADA  DASDASD----- ",find.id_habilidad)
         callback(find.id_habilidad);
+        
       }
     };
     return (

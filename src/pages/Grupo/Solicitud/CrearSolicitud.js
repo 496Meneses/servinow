@@ -39,12 +39,17 @@ export const CrearSolicitud = () => {
   const [imagenSeleccionada, setImagenSeleccionada] = useState("Seleccione una imagen")
   const [imagenPrev, setImagenPrev] = useState('https://www.redeszone.net/app/uploads-redeszone.net/2019/06/subir-archivos-sin-registro.jpg')
 
+
+
+  const changeHabilidad = (id) => {
+    setHabilidad(id)
+  }
   useEffect(() => {
     setTitulo("")
     setDescripcion("")
     setBarrio("")
     setCategoria("")
-    setHabilidad(1)
+    setHabilidad()
     setpropina("")
     setFechaInicio("")
     setFechaFin("")
@@ -107,11 +112,11 @@ export const CrearSolicitud = () => {
 
         } else {
           CrearSolicitudService({
-            "id_solicitante": 1, // TODO SOLICITANTE
+            "id_solicitante": JSON.parse(localStorage.getItem("usuario")).id_usuario, // TODO SOLICITANTE
             "descripcion": descripcion,
             "direccion": barrio,
-            "fecha_inicio": fechaInicio,    // "17/03/2021 21:10:30",
-            "fecha_fin": fechaFin, //"17/03/2021 22:10:30",
+            "fecha_inicio": fechaInicio, 
+            "fecha_fin": fechaFin, 
             "titulo": titulo,
             "id_habilidad": habilidad, // TODO HABILIDAD
             "valor": propina,
@@ -293,7 +298,7 @@ export const CrearSolicitud = () => {
               <div className='Datos_categoriaYhabilidad'>
                 <h6>Categoría de la solicitud</h6>
                 <BoxCategoria callback={setCategoria}></BoxCategoria>
-                <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
+                <Habilidades idCategoria={categoria} callback={changeHabilidad}></Habilidades>
               </div>
             </div>
 
