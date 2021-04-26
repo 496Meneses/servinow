@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Box, Typography, makeStyles, Button, Dialog, DialogActions, DialogContent, DialogContentText , DialogTitle } from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { deleteHabilidades } from '../../services';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -76,6 +77,39 @@ const useStyles = makeStyles((theme) => ({
 const DeleteHabilidad = ({openDelete, handleClose, habilidad}) => {
     const classes = useStyles();
     
+    const handleDelete = () => {
+		
+        //pruebas**************************************************
+
+		console.log("Voy a borrar el id habilidad: "+habilidad.id_habilidad)
+		deleteHabilidades(habilidad.id_habilidad).then(res => {			
+		  }).catch((error) => {
+			// Error 😨
+			if (error.response) {
+			  /*
+			   * The request was made and the server responded with a
+			   * status code that falls out of the range of 2xx
+			   */
+			  console.log("Error.Response: " + error.response.data);
+			  console.log("Error.Response: " + error.response.status);
+			  console.log("Error.Response: " + error.response.headers);
+			} else if (error.request) {
+			  /*
+			   * The request was made but no response was received, `error.request`
+			   * is an instance of XMLHttpRequest in the browser and an instance
+			   * of http.ClientRequest in Node.js
+			   */
+			  console.log("Error.Request: " + error.request);
+			} else {
+			  // Something happened in setting up the request and triggered an Error
+			  console.log("General Error: " + error.message);
+			}
+			console.log("Error.config: " + error.config);
+			});
+
+            handleClose();
+	};
+    //**************************************************** */
     return (
         <>
             {
@@ -113,7 +147,7 @@ const DeleteHabilidad = ({openDelete, handleClose, habilidad}) => {
                                 </DialogContent>
                                 <DialogActions>
                                     <Grid container p={5}  justify="space-between" alignItems="center">
-                                            <Button color="secondary" variant="contained" className={classes.button} style={{ margin: "auto 20px 10px 20px"}} autoFocus onClick={handleClose}>
+                                            <Button color="secondary" variant="contained" className={classes.button} style={{ margin: "auto 20px 10px 20px"}} autoFocus onClick={handleDelete}>
                                                 Sí, eliminar
                                             </Button>
                                             <Button onClick={handleClose} variant="outlined" color="secondary" autoFocus className={classes.button} style={{ margin: "auto 20px 10px 20px"}}>

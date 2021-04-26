@@ -43,7 +43,6 @@ const Routes = (props) => {
     
     const auth = useAuth();
     const getLayout = () => {
-            if(localStorage.getItem('usuario')) return HorizontalLayout
             let layoutCls = HorizontalLayout;
             return layoutCls
             

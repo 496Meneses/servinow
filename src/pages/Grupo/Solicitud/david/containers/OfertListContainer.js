@@ -11,10 +11,8 @@ import {
   ConsultarPostuladosPorOfertaService,
 } from "../../../services";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import List from "../components/OfertList";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-import Pagination from "../components/OfertPagination";
 import {
   Card,
   CardMedia,
@@ -216,10 +214,35 @@ export const OfertListContainer = (props) => {
                       OFERTAS
                       </Typography>
                 }
-
+                <br></br>
                 <Paper className={classes.paper}>
+                  <br></br>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={8}>
+                    {
+                      !props.auxiliar ?
+                      <Grid 
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                      >
+                         <Grid item xs={8}>
+                            <div className={classes.div}>
+                              <form className={classes.root} noValidate autoComplete="off">
+                                <TextField
+                                  id="outlined-basic"
+                                  label="Buscar"
+                                  variant="outlined"
+                                  style={{ width: "100%" }}
+                                  value={cadenaBusqueda}
+                                  onChange={updateSearch}
+                                />
+                              </form>
+                            </div>
+                          </Grid>
+                      </Grid>
+                      :
+                      <Grid item xs={12} sm={8}>
                       <div className={classes.div}>
                         <form className={classes.root} noValidate autoComplete="off">
                           <TextField
@@ -233,7 +256,11 @@ export const OfertListContainer = (props) => {
                         </form>
                       </div>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    }
+                    {
+                      !props.auxiliar ?
+                        <h1></h1>:
+                        <Grid item xs={12} sm={4}>
                       <div className={classes.div}>
                         <FormControl variant="outlined" className={classes.root} disabled={activarEstado}>
                           <InputLabel>Estado</InputLabel>
@@ -247,16 +274,26 @@ export const OfertListContainer = (props) => {
                             <MenuItem value="">
                               <Typography color="primary">OFERTAS</Typography>
                             </MenuItem>
-                            <MenuItem value="DISPONIBLE">DISPONIBLE</MenuItem>
-                            <MenuItem value="EN PROCESO">EN PROCESO</MenuItem>
-                            <MenuItem value="FINALIZADA">FINALIZADA</MenuItem>
-                            <MenuItem value="CANCELADA">CANCELADA</MenuItem>
+                            <MenuItem value="DISPONIBLE">
+                              <Typography color="primary">DISPONIBLE</Typography>
+                            </MenuItem>
+                            <MenuItem value="EN PROCESO">
+                              <Typography color="primary">EN PROCESO</Typography>
+                            </MenuItem>
+                            <MenuItem value="FINALIZADA">
+                              <Typography color="primary">FINALIZADA</Typography>
+                            </MenuItem>
+                            <MenuItem value="CANCELADA">
+                              <Typography color="primary">CANCELADA</Typography>
+                            </MenuItem>
                           </Select>
                         </FormControl>
                       </div>
                     </Grid>
+                    }
+                    
                   </Grid>
-
+                  
                   <div className={classes.root}>
                     <Grid container spacing={3}>
                       {displayOferts}
@@ -285,7 +322,7 @@ export const OfertListContainer = (props) => {
               </div>
             )
         }
-      <Habilidades />
+      <Habilidades id_prestador={props.idRequestor}/>
       </div>
     </>
   );

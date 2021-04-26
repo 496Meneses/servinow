@@ -34,7 +34,7 @@ export const BoxCategoria = ({ callback }) => {
           id="inputOption"
           {...params}
           label='Categoria'
-          variant="outlined"
+          variant="standard"
           required
         />
       )}

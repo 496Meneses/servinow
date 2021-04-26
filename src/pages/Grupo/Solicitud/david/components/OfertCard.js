@@ -2,9 +2,10 @@
 import React,{ useEffect,useState,Fragment } from 'react';
 import { deleteSolicitud } from '../../../services';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardMedia, CardContent, Typography, Button, Tooltip, Grid, Modal, TextField , Paper} from '@material-ui/core';
+import { Card, Box, DialogTitle, CardMedia, DialogContentText, DialogActions, DialogContent, CardContent, Typography, Button, Tooltip, Grid, Modal, TextField , Paper} from '@material-ui/core';
 import { Link } from 'react-router-dom';
-//import 'fontsource-roboto';
+import ClearIcon from '@material-ui/icons/Clear';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import Avatar from '@material-ui/core/Avatar';
@@ -23,7 +24,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Menu from '@material-ui/core/Menu';
-import icondelete from '../images/icondelete.gif';
+
 const useStyles = makeStyles((theme) => ({
 	
 	root: {
@@ -102,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 		color: '#fff',	
 	},
 	carta_contenedor: {
-		height: 5,
+		height: 10,
 		width: '90%',
 		margin: "auto",		
 	},
@@ -163,6 +164,7 @@ const useStyles = makeStyles((theme) => ({
 	
 	card: {
     height: "100%",
+	width: "auto",
     display: "flex",
     flexDirection: "column",
   }, 
@@ -170,22 +172,56 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(4),
     color: theme.palette.text.secondary,
-}, button: {
-    margin: theme.spacing(1),
+}, 
+
+button: {
+	padding: "5px 20px",
+	display: "flex",
+	marginBottom: "10px",
+	justifyContent: "space-between",
+	alignItems: "center",
+	textTransform: 'none',
+	fontSize: "12px",
+},
+
+dialogBox: {
+	maxWidth: "none",
+	margin: "auto -15px",
 },
 
 modal: {
+	maxWidth: "none",
+	margin: "auto -15px",
 	position: 'absolute',
-	width: 400,
-	backgroundColor: 'white',
-	/* border: '2px solid #000',
-	borderColor: '#ab003c', */
-	boxShadow: theme.shadows[5],
-	padding: "16px 32px 24px",
+	backgroundColor: 'white',	
+	padding: "5px 0px 5px",
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 },
+
+container: {
+	justifyContent: "center",
+},  
+
+x: {
+	display: "block",
+	position: "absolute",
+	top: 6,
+	right: 6,
+},
+
+title: {
+	display: "flex",
+	justifyContent: "center",
+},
+
+dialog: {
+	minWidth: "65%",
+	backgroundColor: "#f2f2f2",
+	margin: "auto 0",
+	padding: "auto 10px",
+}, 
 
 }));
 
@@ -203,15 +239,13 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
-	const url = `/oferta/detalle/${oferta.id_oferta}`
 
 	const handleClose = () => {
 		//console.log(oferta)
 		setAnchorEl(null);
 	};
 
-	const handleDelete = () => {
-		
+	const handleDelete = () => {		
 		console.log("Voy a borrar el id oferta: "+oferta.id_oferta)
 		handleUpdateListaOferta(oferta.id_oferta)
 		deleteSolicitud(oferta.id_oferta).then(res => {
@@ -242,9 +276,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 			  console.log("General Error: " + error.message);
 			}
 			console.log("Error.config: " + error.config);
-			});
-
-		
+			});		
 		setAnchorEl(null);
 	};
 
@@ -254,109 +286,108 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 
 	const body=(
 		<div className={classes.modal}>
-			<Grid container spacing={2}>
-			<Grid item xs={12} sm={8}>
-			<div align="center">
-				<Typography  variant="h6" color="primary">¿Eliminar oferta?</Typography>
-				<div>
-					<Avatar aria-label="recipe" src={oferta.imagen}></Avatar>
-				</div>
-				<Typography  variant="h6" noWrap="bool">{oferta.titulo}</Typography>
-			</div>
-			</Grid>
-			<Grid item xs={12} sm={4}>
-			<div align="center">
-				<img src={icondelete}  marginLeft="20" width="60" height="85"></img>
-			<div >
-			<CardActionArea>
-			<CardMedia 
-			className={sw.cardMedia} 
-			image={oferta.imagen} />
-			<div className={sw.carta_contenedor}>
-			  <Tooltip title="Estado de la oferta">
-					<Button color="primary" style={{ top: '30%', right: -245}}>
-						<Typography>{oferta.estado}</Typography>
-					</Button>
-				</Tooltip> 
-				{/* <Typography component="p" variant="h6"></Typography> */}
-				<h5>Descripción</h5>
-				<p>{oferta.descripcion}</p>
-			</div>
-			
-			</CardActionArea>
-			<div className={sw.carta_contenedor__boton}>
-			<Link to={url} className="btn btn-primary carta_boton">Ver detalle</Link>
 
-				{/* <Tooltip title="Estado de la oferta">
-					<Button color="primary">
-						<Typography>{oferta.estado}</Typography>
-					</Button>
-				</Tooltip> */}  
-								
-			</div>
-			</Grid>
-			</Grid>
-			<br/>
-			<div align="center">
-			<Button onClick={handleDelete} variant="contained" color="primary">SI</Button>{"  "}
-			<Button onClick={()=>abrirCerrarModal()}  variant="outlined" color="primary">NO</Button>
-			</div>
+			<Grid container minwidth="md" className={classes.container}>
+				<Grid item sm={12} md={12} xl={12}>
+					<Box className={classes.title}>
+						<DialogTitle id="responsive-dialog-title">
+							<Typography variant="h6" align="center" component="h1">
+								Eliminar Oferta
+							</Typography>
+						</DialogTitle>
+					</Box>
+					<div align="center">
+					<Box className={classes.x}>
+                        <ClearIcon style={{fontSize: "1.1em"}} onClick={()=>abrirCerrarModal()} cursor={"pointer"}/>
+                    </Box>
+					<DialogContent className={classes.dialog} >
+                        <DialogContentText >
+                            <Grid container direction="row" alignItems="center">
+                                <Grid item xs={12} md={12} xl={12} className={classes.iconCenter}>
+                                    <ErrorOutlineIcon style={{fontSize: "3em", margin: "10px 0"}}/>
+                                    	<Typography>
+                                            ¿Estás seguro que deseas eliminar <strong>{oferta.titulo}</strong> de tus ofertas?
+                                        </Typography>
+                                </Grid>
+                            </Grid>
+                        </DialogContentText>
+                	</DialogContent>
+					</div>
+
+					<DialogActions>
+                        <Grid container p={5}  justify="space-between" alignItems="center">
+                            <Button color="secondary" variant="contained" className={classes.button} style={{ margin: "auto 20px 10px 20px"}} autoFocus onClick={handleDelete}>
+                            	Sí, eliminar
+                            </Button>
+                            <Button onClick={()=>abrirCerrarModal()} variant="outlined" color="secondary" autoFocus className={classes.button} style={{ margin: "auto 20px 10px 20px"}}>
+                                No, cancelar
+                            </Button>
+                        </Grid>
+                    </DialogActions>
+		
+				</Grid>
+			</Grid>			
+
 		</div>
 	)
-
 	return (
 		<div className={classes.root}>
 
 		<Modal
 		open={modal}
-		onClose={abrirCerrarModal}>
-			{body}
+		onClose={abrirCerrarModal}
+		aria-labelledby="responsive-dialog-title"
+		className={classes.dialogBox}
+		>
+		{body}
 		</Modal>
-
-		{/* 	 <ToastContainer />
-                {
-                    cargando ? <CircularIndeterminate /> : */}
-						<div className={classes.paper}>
-							<Card className={classes.card}>
+			<div className={classes.paper}>
+				<Card className={classes.card}>
+					<div>
+						<CardHeader 
+							avatar={
+								<div>
+									<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
+								</div>
+									}
+									action={	
 									<div>
-											<CardHeader 
-												avatar={
-													<div>
-														<Avatar aria-label="recipe" src={oferta.solicitante.url_imagen}></Avatar>
-													</div>
-												}
-												action={
-											
-													<div>
-														<Button className={classes.color_titulo} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-														<MoreVertIcon color='inherit' />
-														</Button>
-														<Menu
-															id="simple-menu"
-															anchorEl={anchorEl}
-															keepMounted
-															open={Boolean(anchorEl)}
-															onClose={handleClose}
-														>
-															<MenuItem onClick={handleClose}>Ver oferta</MenuItem>
-															<MenuItem onClick={handleClose} disabled={activarEstado}>Editar oferta</MenuItem>
-															{/* <MenuItem onClick={handleDelete}>Eliminar oferta</MenuItem> */}
-															<MenuItem onClick={()=>abrirCerrarModal()} disabled={false}>Eliminar oferta</MenuItem>
-														</Menu>
-													</div>
-												}
-			
-												title={
-													<div className={classes.titulo_oferta}>
-														<Typography className={classes.color_titulo}  variant="inherit">{oferta.titulo}</Typography>
-													</div>
-												}
-			
-												className={classes.carta_header}
-											/>
-			
+									{
+										auxiliar ?
+											<h6></h6>:
+											<div>
+											<Button className={classes.color_titulo} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+												<MoreVertIcon color='inherit' />
+											</Button>
+											<Menu
+												id="simple-menu"	
+												anchorEl={anchorEl}
+												keepMounted
+												open={Boolean(anchorEl)}
+												onClose={handleClose}
+											>
+											<MenuItem onClick={handleClose} >
+												<Typography color="primary">Ver oferta</Typography>	
+											</MenuItem>
+											<MenuItem onClick={handleClose} disabled={false}>
+												<Typography color="primary">Editar oferta</Typography>
+											</MenuItem>
+											<MenuItem onClick={()=>abrirCerrarModal()} disabled={false}>
+												<Typography color="primary">Eliminar oferta</Typography>
+											</MenuItem>
+											</Menu>
+										</div>
+									}			
 									</div>
-			
+									}
+									title={
+										<div className={classes.titulo_oferta}>
+											<Typography className={classes.color_titulo}  variant="inherit">{oferta.titulo}</Typography>
+										</div>
+										}
+										className={classes.carta_header}
+										/>
+									</div>
 								<div >
 								<CardActionArea>
 
@@ -393,12 +424,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 														</div> 
 					
 													</Tooltip>
-											 	{/* </Grid>  */}
 											</div>
-
-
-											{/* <Typography component="p" variant="h6"></Typography> 
-											<p>{oferta.descripcion}</p>*/}
 											<div className={classes.descripcion_oferta}>
 												<Typography variant="subtitle2" align="justify"> {/*noWrap="bool"*/}
 													{oferta.descripcion}
@@ -425,8 +451,6 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 								</div>
 							</Card>
 						</div>
-				
-				{/* } */}
 					</div>
 	);
 }

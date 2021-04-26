@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Habilidades() {
+export default function Habilidades({id_prestador}) {
     const classes = useStyles();
     const [openAdd, setOpenAdd] = React.useState(false);
     const [habilidades, setHabilidades] = useState([]);
@@ -75,7 +75,7 @@ export default function Habilidades() {
 
     useEffect(() => {
         const fetchData = async () => {
-          const response = await axios("http://52.7.252.110:8082/usuarioService/getHabilidades?id_prestador=3");
+          const response = await axios(`http://52.7.252.110:8082/usuarioService/getHabilidades?id_prestador=${id_prestador}`);
           setHabilidades(response.data.habilidades)
           console.log(response.data.habilidades);
         };

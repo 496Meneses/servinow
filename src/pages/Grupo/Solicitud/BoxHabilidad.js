@@ -32,7 +32,7 @@ export const Habilidades = ({idCategoria, callback}) => {
             id="inputOptionHabilidades"
             {...params}
             label="Habilidad"
-            variant="outlined"
+            variant="standard"
             required
           />
         )}
