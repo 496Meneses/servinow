@@ -275,8 +275,6 @@ export const OfertListContainer = (props) => {
                     </div>
                   </Grid>
                 </div>
-
-
               </Paper>
               <br></br>
               <br></br>
