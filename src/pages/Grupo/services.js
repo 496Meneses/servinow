@@ -1,5 +1,7 @@
 import axios from 'axios';
 const URLAPI = 'http://52.7.252.110:8082/';
+const username = 'albert_vega55@outlook.com'
+const password = 'pass'
 
 export const CrearSolicitudService = (solicitud) => {
 
@@ -51,10 +53,6 @@ export const GetOfertasDisponibles = (idPrestador) => {
 
 
 export const deleteSolicitud = (idOferta) => {
-
-    const username = 'albert_vega55@outlook.com'
-    const password = 'pass'
-
     const url = `${URLAPI}ofertaService/deleteOfertaById/${idOferta}`;
     return axios.delete(url, {
         headers: {
@@ -68,8 +66,6 @@ export const deleteSolicitud = (idOferta) => {
 
 export const postularseOferta = (request) => {
 
-    const username = 'albert_vega55@outlook.com'
-    const password = 'pass'
 
     const url = `${URLAPI}ofertaService/postularAOferta`;
     return axios.post(url, request, {
@@ -83,8 +79,6 @@ export const postularseOferta = (request) => {
 
 export const retirarseOferta = (request) => {
 
-    const username = 'albert_vega55@outlook.com'
-    const password = 'pass'
 
     const url = `${URLAPI}ofertaService/revocarPostulacion`;
     return axios.post(url, request, {
@@ -150,6 +144,13 @@ export const EditarUsuarioService = (usuario) => {
     }})
 }
 
+export const getCategories = () => {
+    const url = `${URLAPI}categoriaService/getCategorias`;
+    return axios.get(url, {
+        headers: {
+            'Authorization': 'Basic ' + btoa(username + ":" + password)
+        },
+    })
 export const ObtenerDetalleUsuario = (idUsuario) =>{
     const url = `${URLAPI}usuarioService/getUsuarioDetalle/${idUsuario}`;
     return axios.get(url,{
