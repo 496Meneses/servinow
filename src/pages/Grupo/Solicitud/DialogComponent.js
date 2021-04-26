@@ -42,7 +42,7 @@ const DialogComponent = (props) => {
     return (
         <div className={classes.root}>
             <Fragment>
-                <Button variant="contained" color={props.colorBoton} onClick={handleClickOpen}>
+                <Button variant={props.variant} color={props.colorBoton} onClick={handleClickOpen}>
                     {props.textoBoton}
                 </Button>
                 {/*  <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{flex:1}}>

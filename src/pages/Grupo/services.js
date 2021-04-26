@@ -5,7 +5,7 @@ export const CrearSolicitudService = (solicitud) => {
 
     const url = `${URLAPI}ofertaService/crearOferta`;
     return axios.post(url, solicitud, {
-        headers:{
+        headers: {
             'Content-Type': 'application/json',
             'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
           }
@@ -49,6 +49,53 @@ export const GetOfertasDisponibles = (idPrestador) => {
 
 }
 
+
+export const deleteSolicitud = (idOferta) => {
+
+    const username = 'albert_vega55@outlook.com'
+    const password = 'pass'
+
+    const url = `${URLAPI}ofertaService/deleteOfertaById/${idOferta}`;
+    return axios.delete(url, {
+        headers: {
+            'Authorization': 'Basic ' + btoa(username + ":" + password)
+
+        },
+    })
+
+}
+
+
+export const postularseOferta = (request) => {
+
+    const username = 'albert_vega55@outlook.com'
+    const password = 'pass'
+
+    const url = `${URLAPI}ofertaService/postularAOferta`;
+    return axios.post(url, request, {
+        headers: {
+            'Authorization': 'Basic ' + btoa(username + ":" + password)
+        },
+    })
+
+}
+
+
+export const retirarseOferta = (request) => {
+
+    const username = 'albert_vega55@outlook.com'
+    const password = 'pass'
+
+    const url = `${URLAPI}ofertaService/revocarPostulacion`;
+    return axios.post(url, request, {
+        headers: {
+            'Authorization': 'Basic ' + btoa(username + ":" + password)
+        },
+    })
+
+}
+
+
 //David
 export const GetAllOferts = (getTodasOfertas) => {
     const url = `${URLAPI}ofertaService/getTodasOfertas`;//=${getTodasOfertas}
@@ -56,7 +103,16 @@ export const GetAllOferts = (getTodasOfertas) => {
 
 }
 
-export const GetAllUsers = () =>{
+
+export const GetAllOfertsByRequestor = (idRequestor) => {
+
+    const url = `${URLAPI}ofertaService/getOfertasSolicitadas?id_usuario=${idRequestor}`;//=
+    //const url = `${URLAPI}ofertaService/getTodasOfertas`;//=${getTodasOfertas}
+    return axios.get(url)
+
+}
+
+export const GetAllUsers = () => {
     const url = `${URLAPI}usuarioService/getUsuarios`;
     return axios.get(url,{
         headers:{
@@ -65,7 +121,7 @@ export const GetAllUsers = () =>{
     }})
 }
 
-export const GetHabilidadUser = () =>{
+export const GetHabilidadUser = () => {
     const url = `${URLAPI}usuarioService/getHabilidades?id_prestador=1`;
     return axios.get(url,{
         headers:{

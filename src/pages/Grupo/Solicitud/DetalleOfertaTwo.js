@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { postularseOferta, retirarseOferta } from '../../../pages/Grupo/services';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
@@ -71,9 +72,8 @@ export const DetalleOfertaTwo = () =>{
 
   const { id } = useParams();
 
-
+  
   const classes = useStyles();
-
   const [idOferta, setIdOferta] = useState(id)
   const [idPrestador, setIdPrestador] = useState(2)
   const [solicitante, setSolicitante] = useState([])
@@ -83,7 +83,8 @@ export const DetalleOfertaTwo = () =>{
   const [oferta, setOferta] = useState([])
   const [estoyPostulado, setEstoyPostulado] = useState(false)
   const [cargando, setCargando] = useState(false)
-
+  const [fechaInicio, setFechaInicio] = useState("")
+  const [fechaFin, setFechaFin] = useState("")
 
   const postularmeOferta = async () => {
     setCargando(true)
@@ -92,7 +93,8 @@ export const DetalleOfertaTwo = () =>{
       "id_oferta": idOferta
     }
 
-    axios.post(`http://52.7.252.110:8082/ofertaService/postularAOferta`, request)
+    
+    postularseOferta(request)    
       .then((response) => {
         setCargando(false)
         // Success 🎉
@@ -148,7 +150,8 @@ export const DetalleOfertaTwo = () =>{
       "id_oferta": idOferta
     }
 
-    axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
+//    axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
+    retirarseOferta(request)
       .then((response) => {
         setCargando(false)
         // Success 🎉
@@ -193,6 +196,18 @@ export const DetalleOfertaTwo = () =>{
     const ofertaObtenida = await respuesta.data;
     setCargando(false)
     setOferta(ofertaObtenida)
+
+
+    
+    var date = new Date(ofertaObtenida.fecha_inicio);
+    setFechaInicio(date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+    var date = new Date(ofertaObtenida.fecha_fin);
+    setFechaFin(date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+
+
+
+
+
     setPostulados(ofertaObtenida.postulados)
     setEstoyPostulado(false)
     setSolicitante(ofertaObtenida.solicitante)
@@ -205,7 +220,7 @@ export const DetalleOfertaTwo = () =>{
 
       }
     })
-
+    
     console.log("Estoy postulado State: " + estoyPostulado)
 
 
@@ -236,12 +251,19 @@ export const DetalleOfertaTwo = () =>{
   useEffect(() => {
     obtenerDetalleOferta();
   }, [])
+
+
+  var formatter = new Intl.NumberFormat('en-ES', {
+    style: 'currency',
+    currency: 'COP',
+  });
   return (
     <div className={classes.root}>
 
       <ToastContainer />
       {
         cargando ? <CircularIndeterminate /> :
+
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Typography id="title" variant="h3" align="center" color="primary">
@@ -264,22 +286,30 @@ export const DetalleOfertaTwo = () =>{
                   </Typography>
                   <br></br>
                   <Typography gutterBottom variant="h4" color="secondary">
-                    {oferta.valor}
-              </Typography>
+                    {formatter.format(oferta.valor)}
+                  </Typography>
                 </CardContent>
                 <CardActions>
-                  {
-                    estoyPostulado ?
+                  
+              {
+                estoyPostulado ?
 
-                      <Button size="small" color="secondary" onClick={() => retirarmeOferta()}>
-                        No es de mi interes
-                  </Button>
-                      :
-                      <Button size="small" color="primary" onClick={() => postularmeOferta()}>
-                        Postularme
-                  </Button>
-
-                  }
+                  <DialogComponent
+                    titulo={"ServiNow"}
+                    descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
+                    textoBoton={"Ya no quiero postularme"}
+                    colorBoton={"secondary"}
+                    variant={"text"}
+                    metodoAEjecutar={retirarmeOferta}></DialogComponent>
+                  :
+                  <DialogComponent
+                    titulo={"ServiNow"}
+                    descripcion={"¿Quieres postularte a esta oferta?"}
+                    textoBoton={"Postúlate!"}
+                    colorBoton={"primary"}
+                    variant={"text"}
+                    metodoAEjecutar={postularmeOferta}></DialogComponent>
+              }
                 </CardActions>
               </Card>
             </Grid>
@@ -296,11 +326,12 @@ export const DetalleOfertaTwo = () =>{
                 <br></br>
                 <div >
                   <Alert severity="info" icon={<DateRangeIcon />}>
-                    Fecha Inicio: {String(convertTimeStamp(parseInt(oferta.fecha_inicio)))}
+                    Fecha Inicio: {fechaInicio}
+                   
                   </Alert>
                   <br></br>
                   <Alert severity="warning" icon={<DateRangeIcon />}>
-                    Fecha Fin: {String(convertTimeStamp(parseInt(oferta.fecha_fin)))}
+                    Fecha Fin: {fechaFin}
                   </Alert>
                 </div>
                 <br></br>
@@ -335,14 +366,14 @@ export const DetalleOfertaTwo = () =>{
                 <br></br>
                 <Divider />
                 <br></br>
-                <Typography variant="subtitle1">Info del contacto </Typography>
+                <Typography variant="subtitle1">Información del Soliciante </Typography>
                 {
                   console.log(solicitante)
                 }
                 <div className={classes.div}>
                   <Avatar
                     className={classes.large}
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Chloris_chloris_%28profile%29.jpg/1280px-Chloris_chloris_%28profile%29.jpg"
+                    src={solicitante.url_imagen}
                   //src={solicitante.url_imagen}
                   ></Avatar>
                 </div>
@@ -364,6 +395,7 @@ export const DetalleOfertaTwo = () =>{
                     descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
                     textoBoton={"Ya no quiero postularme"}
                     colorBoton={"secondary"}
+                    variant={"contained"}
                     metodoAEjecutar={retirarmeOferta}></DialogComponent>
                   :
                   <DialogComponent
@@ -371,6 +403,7 @@ export const DetalleOfertaTwo = () =>{
                     descripcion={"¿Quieres postularte a esta oferta?"}
                     textoBoton={"Postúlate!"}
                     colorBoton={"primary"}
+                    variant={"contained"}
                     metodoAEjecutar={postularmeOferta}></DialogComponent>
               }
               {/*  <Typography variant="h1" align="center" color="primary">

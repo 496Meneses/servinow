@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import { getLoggedInUser } from '../../helpers/authUtils';
-
 import CrearSolicitud from '../Grupo/Solicitud/CrearSolicitud';
 import ListarOfertas from '../Grupo/Solicitud/ListarOfertas';
 import ListarSolicitudes from '../Grupo/Solicitud/ListarSolicitudes';
