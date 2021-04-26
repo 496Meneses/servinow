@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
 	card_media: {
-		 //16:9
+		
 		minHeight: "200px",
 		margin: "1em",
 		borderRadius: 10,
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 	  },
 
 	  card_media_verde: {
-		//16:9
+	
 	   minHeight: "200px",
 	   margin: "1em",
 	   borderRadius: 10,
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 	 },
 
 	 card_media_naranja: {
-		//16:9
+		
 	   minHeight: "200px",
 	   margin: "1em",
 	   borderRadius: 10,
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 	 },
 
 	 card_media_rojo: {
-		//16:9
+	
 	   minHeight: "200px",
 	   margin: "1em",
 	   borderRadius: 10,
