@@ -84,3 +84,21 @@ export const LoginService = (usuario) => {
           }
       } );
 }
+
+export const EditarUsuarioService = (usuario) => {
+    const url = `${URLAPI}usuarioService/actualizarUsuario`;
+    return axios.put(url,usuario,{
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          
+    }})
+}
+
+export const ObtenerDetalleUsuario = (idUsuario) =>{
+    const url = `${URLAPI}usuarioService/getUsuarioDetalle/${idUsuario}`;
+    return axios.get(url,{
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          
+    }})
+}
