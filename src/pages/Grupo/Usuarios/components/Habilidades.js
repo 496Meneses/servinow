@@ -9,10 +9,7 @@ import Habilidad from './Habilidad';
 const useStyles = makeStyles((theme) => ({
     root: {
       ...theme.typography.button,
-      backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(1),
-      margin: '20px auto',
-      textTransform: 'none',
+
     },
     formControl: {
         margin: "18px 0 0 0",
@@ -85,7 +82,6 @@ export default function Habilidades({id_prestador}) {
 
     return ( 
         <>
-            <Paper className={classes.root}>
                 <Grid container maxwidth="md" align="center" className={classes.container}>
                     <Grid item xs={12} sm={9} md={9}>
                         <Typography variant="h4" align="center" component="h1">
@@ -102,7 +98,6 @@ export default function Habilidades({id_prestador}) {
                         <AddHabilidad openAdd={openAdd} handleClose={handleClose}/>
                     </Grid>
                 </Grid>
-            </Paper>
         </>
      );
 }

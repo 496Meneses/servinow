@@ -9,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { EditarUsuarioService, ObtenerDetalleUsuario } from '../services';
+import  Habilidades  from '../Usuarios/components/Habilidades'
 import {
     Box,
     Button,
@@ -173,12 +174,7 @@ export const Perfil = () => {
 
             </div>
             <div className="contenedor-habilidades">
-                <h3><strong>Habilidades</strong></h3>
-                <div >
-                    <h5>Programadora CSS</h5>
-                    <h5>Grandes Habilidades en JS</h5>
-                    <h5>Usos buenos de frameworks como REACT, ANGULAR, CAKEPHP, FIREBASE</h5>
-                </div>
+              <Habilidades id_prestador={1}/>  
             </div>
 
 
@@ -304,7 +300,8 @@ export const Perfil = () => {
             </>
           )}
         </Formik>
-        
+
+      
       </Container>
     
     </div>
