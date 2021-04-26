@@ -160,3 +160,12 @@ export const retirarseOferta = (request) => {
     }})
 
 }
+
+export const agregarHabilidadService = (request) => {
+    const url = `${URLAPI}usuarioService/asignarHabilidad`;
+    return axios.post(url, request, {
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
+    }})
+
+}

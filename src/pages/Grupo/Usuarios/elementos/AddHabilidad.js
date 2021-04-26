@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FormControl, InputLabel, MenuItem, Select, Grid, Box, Typography, makeStyles, Button, Dialog, DialogActions, DialogContent, DialogContentText , DialogTitle } from "@material-ui/core";
+import { FormControl, Grid, Box, Typography, makeStyles, Button, Dialog, DialogActions, DialogContent, DialogContentText , DialogTitle } from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
+import { BoxCategoria } from './../../Solicitud/BoxCategoria';
+import { Habilidades } from './../../Solicitud/BoxHabilidad';
+import { agregarHabilidadService } from '../../services';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -11,15 +15,16 @@ const useStyles = makeStyles((theme) => ({
       textTransform: 'none',
     },
     formControl: {
-        margin: "10px auto",
+        margin: "auto",
         maxWidth: 600,
         width: "100%",
+        backgroundColor: "#F2F2F2"
     },
     container: {
         justifyContent: "center",
     },
     box: {
-        padding: '20px 5%',
+        padding: '-20px 5%',
         backgroundColor: "#F2F2F2",
         borderRadius: 10,
         display: "flex",
@@ -40,13 +45,11 @@ const useStyles = makeStyles((theme) => ({
     },
     dialog: {
         minWidth: "65%",
-        backgroundColor: "#f2f2f2",
-        margin: "0 0",
-        padding: "auto 10px",
+        backgroundColor: "#F2F2F2",
+        padding: "-20px 10px",
     },
     dialogBox: {
         maxWidth: "none",
-        margin: "auto -15px",
     },
     x: {
         display: "block",
@@ -68,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const AddHabilidad = ({openAdd, handleClose}) => {
+const AddHabilidad = ({openAdd, handleClose, id_prestador}) => {
     const classes = useStyles();
     /* const [openAdd, setopenAdd] = React.useState(false); */
 
@@ -87,16 +90,24 @@ const AddHabilidad = ({openAdd, handleClose}) => {
         setCategoria(event.target.value)
     };
     const handleChangeHab = (event) => {
-        setHabilidad(event.target.value)
+        setHabilidad(event)
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
+        console.log("hab: ", habilidad); 
+        console.log("cat: ", categoria); 
+        agregarHabilidadService(
+            {
+                "id_prestador": id_prestador,
+                "id_habilidad": habilidad
+            }
+        ).then(() =>{
+            console.log("se creo hab: "); 
+        }).catch(() =>{
+            console.log("no se creo hab: "); 
+        });
         event.preventDefault();
     }
-
-    /* useEffect(() => {
-        console.log(descripcion, categoria, habilidad); 
-    },)  */
     
     return ( 
         <Dialog
@@ -119,10 +130,12 @@ const AddHabilidad = ({openAdd, handleClose}) => {
                     </Box>
                     <form onSubmit={handleSubmit}>
                         <DialogContent className={classes.dialog} >
-                            <DialogContentText style={{marginBottom: 0}}>
+                            <DialogContentText>
                                 <FormControl className={classes.formControl}>
                                     <FormControl variant="outlined" className={classes.formControl}>
-                                        <InputLabel id="categoria" >Categoría</InputLabel>
+                                        <BoxCategoria callback={setCategoria}></BoxCategoria>
+                                        <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
+                                        {/* <InputLabel id="categoria" >Categoría</InputLabel>
                                         <Select
                                             labelId="categoria"
                                             id="categoria"
@@ -155,7 +168,7 @@ const AddHabilidad = ({openAdd, handleClose}) => {
                                             <MenuItem value={10}>Ten</MenuItem>
                                             <MenuItem value={20}>Twenty</MenuItem>
                                             <MenuItem value={30}>Thirty</MenuItem>
-                                        </Select>
+                                        </Select> */}
                                     </FormControl>
                                 </FormControl>
                             </DialogContentText>

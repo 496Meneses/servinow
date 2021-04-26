@@ -4,12 +4,15 @@ import AddIcon from '@material-ui/icons/Add';
 import AddHabilidad from '../elementos/AddHabilidad'
 import axios from 'axios'
 import Habilidad from './Habilidad';
-import { toast } from "react-toastify";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
       ...theme.typography.button,
-
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(1),
+      margin: '20px 0px',
+      textTransform: 'none',
     },
     formControl: {
         margin: "18px 0 0 0",
@@ -61,29 +64,10 @@ export default function Habilidades({id_prestador}) {
     const classes = useStyles();
     const [openAdd, setOpenAdd] = React.useState(false);
     const [habilidades, setHabilidades] = useState([]);
-    const [callbackDelete, setCallbackDelete] = useState(false)
-
-
-
-    const eliminarOferta = (idHabilidad) => {
-        const position = habilidades.map((obj) => obj.id_habilidad).indexOf(idHabilidad)
-        if (position > -1) {
-          let listaOfertaEliminada = habilidades.splice(position, 1);
-          let listaActualizadas = habilidades.filter(x => !listaOfertaEliminada.includes(x));
-          setHabilidades(listaActualizadas)
-          toast("Se ha eliminado exitosamente!", {
-            type: 'success',
-            draggable: true
-          })
-    
-        }
-      }
-
 
     const handleAddOpen = () => {
         setOpenAdd(true);
     };
-
     
     const handleClose = () => {
         setOpenAdd(false);
@@ -98,13 +82,10 @@ export default function Habilidades({id_prestador}) {
         fetchData();
       }, [])
 
-      useEffect(() => {
-          
-      }, [callbackDelete])
-
 
     return ( 
         <>
+            {/* <Paper className={classes.root}> */}
                 <Grid container maxwidth="md" align="center" className={classes.container}>
                     <Grid item xs={12} sm={9} md={9}>
                         <Typography variant="h4" align="center" component="h1">
@@ -112,15 +93,16 @@ export default function Habilidades({id_prestador}) {
                         </Typography>
                         <Box my={5, 2} style={{backgroundColor: "#f2f2f2"}} borderRadius="10px">
                             {
-                                habilidades.map((habilidad)=>( <Habilidad habilidad={habilidad} CallbackDelete={eliminarOferta}/> ))
+                                habilidades.map((habilidad)=>( <Habilidad habilidad={habilidad} /> ))
                             }
                         </Box>
                         <Button color="primary" variant="contained" className={classes.button} onClick={handleAddOpen} style={{marginBottom:"2rem"}}>
                             Agregar habilidad  <AddIcon className={classes.iconPlus}/>
                         </Button>
-                        <AddHabilidad openAdd={openAdd} handleClose={handleClose}/>
+                        <AddHabilidad openAdd={openAdd} handleClose={handleClose} id_prestador={id_prestador}/>
                     </Grid>
                 </Grid>
+            {/* </Paper> */}
         </>
      );
 }
