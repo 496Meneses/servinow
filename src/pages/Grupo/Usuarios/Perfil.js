@@ -33,7 +33,7 @@ export const Perfil = () => {
     const [stateNombre, setStateNombre] = useState(usuarioLogeado.nombres)
     const [stateApellidos, setStateApellidos] = useState(usuarioLogeado.apellidos)
     const [stateDireccion, setStateDireccion] = useState(usuarioLogeado.direccion)
-    const [stateTelefono, setStateTelefono] = useState(usuarioLogeado.contacto)
+    const [stateTelefono, setStateTelefono] = useState(usuarioLogeado.telefono)
     const [stateCorreo, setStateCorreo] = useState(usuarioLogeado.correo)
     const [openState, setOpenState] = useState(false)
     const [StateId, setSetStateId] = useState(usuarioLogeado.id_usuario)
@@ -50,7 +50,8 @@ export const Perfil = () => {
                     telefono: request.data.contacto,
                     direccion: request.data.direccion,
                     descripcion: request.data.presentacion,
-                    imagen: request.data.url_imagen
+                    imagen: request.data.url_imagen,
+                    activoComoPrestador: request.data.activoComoPrestador
                 })
 
             }
@@ -61,36 +62,43 @@ export const Perfil = () => {
         setStateNombre(usuarioLogeado.nombres)
         setStateApellidos(usuarioLogeado.apellidos)
         setStateDireccion(usuarioLogeado.direccion)
-        setStateTelefono(usuarioLogeado.contacto)
-        setStateCorreo(usuarioLogeado.correo)
+        setStateTelefono(usuarioLogeado.telefono)
+        setStateCorreo(usuarioLogeado.mail)
         
     }, [usuarioLogeado])
     const handleEdit = (e) => {
         e.preventDefault()
+        console.log("USUARIO A EDITAR ",usuarioLogeado.id_usuario)
+        console.log("USUARIO A EDITAR ",stateCorreo)
+        console.log("USUARIO A EDITAR ",stateNombre)
+        console.log("USUARIO A EDITAR ",stateApellidos)
+        console.log("USUARIO A EDITAR ",stateDireccion)
+        console.log("USUARIO A EDITAR ",usuarioLogeado.genero)
+
         EditarUsuarioService ({
-          "id_usuario": usuarioLogeado.id,
+          "id_usuario": usuarioLogeado.id_usuario,
           "correo": stateCorreo,
           "nombres": stateNombre,
           "apellidos": stateApellidos,
           "direccion": stateDireccion,
           "genero": usuarioLogeado.genero,
-          "activoComoPrestador": usuarioLogeado.ativoComoPrestador,
+          "activoComoPrestador": true,
           "contacto": stateTelefono,
-          "presentacion": usuarioLogeado.presentacion,
-          "url_imagen": usuarioLogeado.url_imagen,
+          "presentacion": usuarioLogeado.descripcion,
+          "url_imagen": usuarioLogeado.imagen,
         }).then(
           () => {
             setUsuarioLogeado({
-              "id_usuario": usuarioLogeado.id,
-              "correo": stateCorreo,
+              "id_usuario": usuarioLogeado.id_usuario,
+              "mail": stateCorreo,
               "nombres": stateNombre,
               "apellidos": stateApellidos,
               "direccion": stateDireccion,
               "genero": usuarioLogeado.genero,
-              "activoComoPrestador": usuarioLogeado.ativoComoPrestador,
-              "contacto": stateTelefono,
-              "presentacion": usuarioLogeado.presentacion,
-              "url_imagen": usuarioLogeado.url_imagen
+              "activoComoPrestador": true,
+              "telefono": stateTelefono,
+              "descripcion": usuarioLogeado.descripcion,
+              "url_imagen": usuarioLogeado.imagen
             })
             setOpenState(false)
           }
