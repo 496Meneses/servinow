@@ -38,7 +38,7 @@ export const CrearSolicitud = () => {
   const [Imagen, setImagen] = useState("")
   const [imagenSeleccionada, setImagenSeleccionada] = useState("Seleccione una imagen")
   const [imagenPrev, setImagenPrev] = useState('https://www.redeszone.net/app/uploads-redeszone.net/2019/06/subir-archivos-sin-registro.jpg')
-
+  const [HabilidadInfo, setHabilidadInfo] = useState()
 
 
   const changeHabilidad = (id) => {
@@ -298,7 +298,7 @@ export const CrearSolicitud = () => {
               <div className='Datos_categoriaYhabilidad'>
                 <h6>Categoría de la solicitud</h6>
                 <BoxCategoria callback={setCategoria}></BoxCategoria>
-                <Habilidades idCategoria={categoria} callback={changeHabilidad}></Habilidades>
+                <Habilidades idCategoria={categoria} callback={changeHabilidad} callbackAllInfo={setHabilidadInfo}></Habilidades>
               </div>
             </div>
 
