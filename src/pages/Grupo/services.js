@@ -167,5 +167,6 @@ export const agregarHabilidadService = (request) => {
         headers:{
             'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
     }})
-
 }
+
+

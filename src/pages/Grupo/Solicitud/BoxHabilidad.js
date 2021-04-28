@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import {ConsultarHabilidadesPorCategoriaService} from '../services'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InputAdornment from '@material-ui/core/InputAdornment';
-export const Habilidades = ({idCategoria, callback}) => {
+export const Habilidades = ({idCategoria, callback, callbackAllInfo}) => {
     const [habilidades, setHabilidades] = useState([]);
     useEffect(() => {
       console.log('buscando Habilidades ');
@@ -21,7 +21,7 @@ export const Habilidades = ({idCategoria, callback}) => {
       } else {
         console.log("HABILIDAD ENVIADA  DASDASD----- ",find.id_habilidad)
         callback(find.id_habilidad);
-        
+        callbackAllInfo(find);
       }
     };
     return (

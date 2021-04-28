@@ -71,41 +71,33 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const AddHabilidad = ({openAdd, handleClose, id_prestador}) => {
+const AddHabilidad = ({openAdd, handleClose, id_prestador, setListChange}) => {
     const classes = useStyles();
-    /* const [openAdd, setopenAdd] = React.useState(false); */
-
-    /* const handleClickopenAdd = () => {
-        setopenAdd(true);
-    }; 
-    
-    const handleClose = () => {
-        setopenAdd(false);
-    };*/
 
     const [categoria, setCategoria] = React.useState('');
     const [habilidad, setHabilidad] = React.useState('');
 
-    const handleChangeCat = (event) => {
-        setCategoria(event.target.value)
-    };
-    const handleChangeHab = (event) => {
-        setHabilidad(event)
-    };
-
     const handleSubmit = async (event) => {
+        let formatoHab = {
+            'id_habilidad' : habilidad.id_habilidad,
+            'nombreHabilidad' : habilidad.nombreHabilidad,
+            'nombreCategoria' : habilidad.nombreCategoria,
+            'activa' : true,
+        }
         console.log("hab: ", habilidad); 
         console.log("cat: ", categoria); 
         agregarHabilidadService(
             {
                 "id_prestador": id_prestador,
-                "id_habilidad": habilidad
+                "id_habilidad": habilidad.id_habilidad
             }
         ).then(() =>{
             console.log("se creo hab: "); 
         }).catch(() =>{
             console.log("no se creo hab: "); 
         });
+        handleClose();
+        setListChange(formatoHab);
         event.preventDefault();
     }
     
@@ -134,7 +126,7 @@ const AddHabilidad = ({openAdd, handleClose, id_prestador}) => {
                                 <FormControl className={classes.formControl}>
                                     <FormControl variant="outlined" className={classes.formControl}>
                                         <BoxCategoria callback={setCategoria}></BoxCategoria>
-                                        <Habilidades idCategoria={categoria} callback={setHabilidad}></Habilidades>
+                                        <Habilidades idCategoria={categoria} callback={setHabilidad} callbackAllInfo={setHabilidad}></Habilidades>
                                         {/* <InputLabel id="categoria" >Categoría</InputLabel>
                                         <Select
                                             labelId="categoria"
