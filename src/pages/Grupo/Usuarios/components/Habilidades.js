@@ -92,14 +92,14 @@ export default function Habilidades({id_prestador}) {
         const fetchData = async () => {
           const response = await axios(`http://52.7.252.110:8082/usuarioService/getHabilidades?id_prestador=${id_prestador}`);
           setHabilidades(response.data.habilidades)
-          console.log(response.data.habilidades);
         };
         fetchData();
     }, [])
 
     useEffect(() => {
-        console.log("kill", listChange);
-        setHabilidades([...habilidades, listChange])
+        let find = habilidades.find(auxHab => auxHab.nombreHabilidad === listChange.nombreHabilidad);
+        if (find !== undefined) console.log("Esta habilidad ya se encuentra en tus habilidades");
+        else setHabilidades([...habilidades, listChange])
     }, [listChange])
 
     return ( 
@@ -112,7 +112,7 @@ export default function Habilidades({id_prestador}) {
                         </Typography>
                         <Box my={5, 2} style={{backgroundColor: "#f2f2f2"}} borderRadius="10px">
                             {
-                                habilidades.map((habilidad)=>( <Habilidad habilidad={habilidad} CallbackDelete={eliminarOferta} /> ))
+                                habilidades.map((habilidad)=>( <Habilidad habilidad={habilidad} CallbackDelete={eliminarOferta} id_prestador={id_prestador} /> ))
                             }
                         </Box>
                         <Button color="primary" variant="contained" className={classes.button} onClick={handleAddOpen} style={{marginBottom:"2rem"}}>
