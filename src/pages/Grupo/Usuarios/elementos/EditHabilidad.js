@@ -145,12 +145,9 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
                                             label="Habilidad"
                                             className={classes.select}
                                         >
-                                            <MenuItem value="">
-                                                <em>Habilidad</em>
-                                            </MenuItem>
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
+                                            {
+                                                categorias.map((item)=>(<MenuItem key={item.id_categoria} value={item.nombre}>{item.nombre}</MenuItem>))
+                                            }
                                         </Select>
                                     </FormControl>
                                 </FormControl>
