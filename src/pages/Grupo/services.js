@@ -169,4 +169,9 @@ export const agregarHabilidadService = (request) => {
     }})
 }
 
+export const crearUsuarioService = (request) => {
+    const url = `${URLAPI}usuarioService/crearUsuario`;
+    return axios.post(url, request)
+}
+
 

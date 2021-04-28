@@ -21,7 +21,6 @@ const listaPostulados = React.lazy(() => import ('../pages/Grupo/Solicitud/Lista
 const listarSolicitudesSolicitante = React.lazy(() => import ('../pages/Grupo/Solicitud/Solicitante'));
 const verPerfilComponent = React.lazy(() => import ('../pages/Grupo/Usuarios/Perfil'));
 
-
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
     const auth = useAuth();
     return (
@@ -115,6 +114,14 @@ const verPerfil = {
     roles: ['Admin'],
     route: Route
 };
+const registrarse = {
+    path: '/Registrarse',
+    name: 'Registrarse',
+    icon: FeatherIcon.User,
+    component: Register,
+    roles: ['Admin'],
+    route: Route
+};
 
 const authRoutes = {
     path: '/account',
@@ -155,7 +162,8 @@ const allRoutes = [
     listarSolicitudes,
     verPerfil,
     authRoutes,
-    misSolicitudes
+    misSolicitudes,
+    registrarse
 ];
 const authProtectedRoutes = [ofertas,crearSolicitud,postulados, listarSolicitudes];
 //const authProtectedRoutes = [ofertas,crearSolicitud,misSolicitudes];

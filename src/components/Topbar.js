@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import { Menu, X, Settings, User} from 'react-feather';
+import { Menu, X, Settings, User, CornerUpRight} from 'react-feather';
 
 import { showRightSidebar } from '../redux/actions';
 import NotificationDropdown from './NotificationDropdown';
@@ -49,8 +49,8 @@ const ProfileMenus = [{
 },
 {
   label: 'Registrarse',
-  icon: Settings,
-  redirectTo: "/ofertas"
+  icon: CornerUpRight,
+  redirectTo: "/Registrarse"
 },
 ]
 const ProfileMenusUsuario = [{

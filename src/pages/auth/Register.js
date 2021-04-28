@@ -10,6 +10,7 @@ import { registerUser } from '../../redux/actions';
 import { isUserAuthenticated } from '../../helpers/authUtils';
 import Loader from '../../components/Loader';
 import logo from '../../assets/images/logo.png';
+import { crearUsuarioService } from '../Grupo/services';
 
 class Register extends Component {
     _isMounted = false;
@@ -34,7 +35,15 @@ class Register extends Component {
      * Handles the submit
      */
     handleValidSubmit = (event, values) => {
-        this.props.registerUser(values.fullname, values.email, values.password);
+        
+        crearUsuarioService({
+            "correo": values.email,
+            "nombres": values.fullname,
+            "genero":"M",
+            "password": values.password
+        }).then(
+            console.log("USUARIO REGISTRADO")
+        ).catch(console.log("USUARIO no REGISTRADO"))
     }
 
     /**
@@ -42,7 +51,7 @@ class Register extends Component {
      */
     renderRedirectToRoot = () => {
         const isAuthTokenValid = isUserAuthenticated();
-        if (isAuthTokenValid) {
+        if (!isAuthTokenValid) {
             return <Redirect to='/' />
         }
     }
@@ -50,20 +59,10 @@ class Register extends Component {
     /**
      * Redirect to confirm
      */
-    renderRedirectToConfirm = () => {
-        return <Redirect to='/account/confirm' />;
-    }
 
     render() {
-        const isAuthTokenValid = isUserAuthenticated();
         return (
             <React.Fragment>
-
-                {this.renderRedirectToRoot()}
-
-                {Object.keys(this.props.user || {}).length > 0 && this.renderRedirectToConfirm()}
-
-                {(this._isMounted || !isAuthTokenValid) && <div className="account-pages mt-5 mb-5">
                     <Container>
                         <Row className="justify-content-center">
                             <Col xl={10}>
@@ -76,13 +75,12 @@ class Register extends Component {
 
                                                 <div className="mx-auto mb-5">
                                                     <a href="/">
-                                                        <img src={logo} alt="" height="24" />
-                                                        <h3 className="d-inline align-middle ml-1 text-logo">Shreyu</h3>
+                                                        <h3 className="d-inline align-middle ml-1 text-logo">SERVINOW</h3>
                                                     </a>
                                                 </div>
 
-                                                <h6 className="h5 mb-0 mt-4">Welcome back!</h6>
-                                                <p className="text-muted mt-1 mb-4">Enter your email address and password to access admin panel.</p>
+                                                <h6 className="h5 mb-0 mt-4">Bienvenido!</h6>
+                                                <p className="text-muted mt-1 mb-4">Llene los datos para registrarse.</p>
 
 
                                                 {this.props.error && <Alert color="danger" isOpen={this.props.error ? true : false}>
@@ -91,14 +89,14 @@ class Register extends Component {
 
                                                 <AvForm onValidSubmit={this.handleValidSubmit} className="authentication-form">
                                                     <AvGroup className="">
-                                                        <Label for="fullname">Username</Label>
+                                                        <Label for="fullname">Nombre completo</Label>
                                                         <InputGroup>
                                                             <InputGroupAddon addonType="prepend">
                                                                 <span className="input-group-text">
                                                                     <User className="icon-dual" />
                                                                 </span>
                                                             </InputGroupAddon>
-                                                            <AvInput type="text" name="fullname" id="fullname" placeholder="Shreyu N" required />
+                                                            <AvInput type="text" name="fullname" id="fullname" placeholder="Nombres y apellidos" required />
                                                         </InputGroup>
 
                                                         <AvFeedback>This field is invalid</AvFeedback>
@@ -111,7 +109,7 @@ class Register extends Component {
                                                                     <Mail className="icon-dual" />
                                                                 </span>
                                                             </InputGroupAddon>
-                                                            <AvInput type="email" name="email" id="email" placeholder="hello@coderthemes.com" required />
+                                                            <AvInput type="email" name="email" id="email" placeholder="mail@unicauca.edu.co" required />
                                                         </InputGroup>
 
                                                         <AvFeedback>This field is invalid</AvFeedback>
@@ -119,36 +117,32 @@ class Register extends Component {
 
 
                                                     <AvGroup className="mb-3">
-                                                        <Label for="password">Password</Label>
+                                                        <Label for="password">Contraseña</Label>
+
                                                         <InputGroup>
                                                             <InputGroupAddon addonType="prepend">
                                                                 <span className="input-group-text">
                                                                     <Lock className="icon-dual" />
                                                                 </span>
                                                             </InputGroupAddon>
-                                                            <AvInput type="password" name="password" id="password" placeholder="Enter your password" required />
+                                                            <AvInput type="password" name="password" id="password" placeholder="Ingrese una contraseña" required />
                                                         </InputGroup>
+
                                                         <AvFeedback>This field is invalid</AvFeedback>
                                                     </AvGroup>
 
                                                     <AvGroup check className="mb-4">
-                                                        <CustomInput type="checkbox" id="terms" defaultChecked="true" className="pl-1" label="I accept Terms and Conditions" />
+                                                        <CustomInput type="checkbox" id="terms" defaultChecked="true" className="pl-1" label="Aceptar terminos y condiciones" />
                                                     </AvGroup>
 
                                                     <FormGroup className="form-group mb-0 text-center">
-                                                        <Button color="primary" className="btn-block">Sign Up</Button>
+                                                        <Button color="primary" className="btn-block">Registrarse</Button>
                                                     </FormGroup>
                                                 </AvForm>
                                             </Col>
 
                                             <Col md={6} className="d-none d-md-inline-block">
                                                 <div className="auth-page-sidebar">
-                                                    <div className="overlay"></div>
-                                                    <div className="auth-user-testimonial">
-                                                        <p className="font-size-24 font-weight-bold text-white mb-1">I simply love it!</p>
-                                                        <p className="lead">"It's a elegent templete. I love it very much!"</p>
-                                                        <p>- Admin User</p>
-                                                    </div>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -163,7 +157,6 @@ class Register extends Component {
                             </Col>
                         </Row>
                     </Container>
-                </div>}
             </React.Fragment>
         )
     }
