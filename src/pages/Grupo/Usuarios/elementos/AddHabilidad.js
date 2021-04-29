@@ -84,17 +84,15 @@ const AddHabilidad = ({openAdd, handleClose, id_prestador, setListChange}) => {
             'nombreCategoria' : habilidad.nombreCategoria,
             'activa' : true,
         }
-        console.log("hab: ", habilidad); 
-        console.log("cat: ", categoria); 
         agregarHabilidadService(
             {
                 "id_prestador": id_prestador,
                 "id_habilidad": habilidad.id_habilidad
             }
         ).then(() =>{
-            console.log("se creo hab: "); 
+            console.log("se creo hab"); 
         }).catch(() =>{
-            console.log("no se creo hab: "); 
+            console.log("no se creo hab"); 
         });
         handleClose();
         setListChange(formatoHab);
@@ -124,44 +122,8 @@ const AddHabilidad = ({openAdd, handleClose, id_prestador, setListChange}) => {
                         <DialogContent className={classes.dialog} >
                             <DialogContentText>
                                 <FormControl className={classes.formControl}>
-                                    <FormControl variant="outlined" className={classes.formControl}>
-                                        <BoxCategoria callback={setCategoria}></BoxCategoria>
-                                        <Habilidades idCategoria={categoria} callback={setHabilidad} callbackAllInfo={setHabilidad}></Habilidades>
-                                        {/* <InputLabel id="categoria" >Categoría</InputLabel>
-                                        <Select
-                                            labelId="categoria"
-                                            id="categoria"
-                                            value={categoria}
-                                            onChange={handleChangeCat}
-                                            label="Categoría"
-                                            className={classes.select}
-                                        >
-                                            <MenuItem value="">
-                                                <em>Categoría</em>
-                                            </MenuItem>
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    <FormControl variant="outlined" className={classes.formControl}>
-                                        <InputLabel id="habilidad" >Habilidad</InputLabel>
-                                        <Select
-                                            labelId="habilidad"
-                                            id="habilidad"
-                                            value={habilidad}
-                                            onChange={handleChangeHab}
-                                            label="Habilidad"
-                                            className={classes.select}
-                                        >
-                                            <MenuItem value="">
-                                                <em>Habilidad</em>
-                                            </MenuItem>
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
-                                        </Select> */}
-                                    </FormControl>
+                                    <BoxCategoria callback={setCategoria}></BoxCategoria>
+                                    <Habilidades idCategoria={categoria} callback={setHabilidad} callbackAllInfo={setHabilidad}></Habilidades>
                                 </FormControl>
                             </DialogContentText>
                         </DialogContent>

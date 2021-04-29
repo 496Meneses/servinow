@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Typography, makeStyles, Menu, MenuItem, Link} from "@material-ui/core";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteHabilidad from '../elementos/DeleteHabilidad'
 import EditHabilidad from '../elementos/EditHabilidad'
+import { activarHabService, desactivarHabService } from '../../services';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Habilidad({habilidad,CallbackDelete}) {
+export default function Habilidad({habilidad, CallbackDelete, id_prestador}) {
     const classes = useStyles();
     const [openDelete, setOpenDelete] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);
@@ -103,14 +104,41 @@ export default function Habilidad({habilidad,CallbackDelete}) {
     };
 
     const handleChangeState = () => {
+        if (!stateHab) {
+            activarHabService(
+                {
+                    "id_prestador": id_prestador,
+                    "id_habilidad": habilidad.id_habilidad
+                }
+            ).then(() =>{
+                console.log("se activó la hab"); 
+            }).catch(() =>{
+                console.log("no se activó la hab"); 
+            });
+        } else {
+            desactivarHabService(
+                {
+                    "id_prestador": id_prestador,
+                    "id_habilidad": habilidad.id_habilidad
+                }
+            ).then(() =>{
+                console.log("se desactivó la hab"); 
+            }).catch(() =>{
+                console.log("no se desactivó la hab"); 
+            });
+        }
         setStateHab(!stateHab);
     }
+
+    useEffect(() => {
+        setStateHab(habilidad.activa);
+    }, [habilidad])
     return (
-        <Box className={classes.box} key={habilidad.id_habilidad}>  
+        <Box className={classes.box} key={habilidad.id_habilidad}>
             {!stateHab ?
-                <Typography align="left" className={classes.tachado}>{habilidad.nombreHabilidad} ({habilidad.nombreCategoria})</Typography>
+                <Typography align="left" className={classes.tachado}>{habilidad.nombreHabilidad} ({habilidad.nombreCategoria}) {habilidad.id_habilidad}</Typography>
             : 
-                <Typography align="left">{habilidad.nombreHabilidad} ({habilidad.nombreCategoria})</Typography>
+                <Typography align="left">{habilidad.nombreHabilidad} ({habilidad.nombreCategoria}) {habilidad.id_habilidad}</Typography>
             }
             <MoreHorizIcon aria-controls="simple-menu" aria-haspopup="true" onClick={handleOptions} cursor={"pointer"} style={{marginLeft: "15px"}}/>
             <Menu

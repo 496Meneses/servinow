@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Grid, Box, Typography, makeStyles, Button, Dialog, DialogActions, DialogContent, DialogContentText , DialogTitle } from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
-import {getCategories} from '../services/services'
+import {ConsultarCategoriaService} from '../../services'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -79,6 +79,7 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
 
     const handleChangeCat = (event) => {
         setCategoria(event.target.value)
+
     };
     const handleChangeHab = (event) => {
         setHabilidad(event.target.value)
@@ -90,13 +91,22 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getCategories();
+            const response = await ConsultarCategoriaService();
             setCategorias(response.data);
-            /* console.log(response.data); */
         };
         fetchData();
     }, [])
-    
+
+    useEffect(() => {
+        getIdCategoria();
+        setHabilidad(parHabilidad.nombreHabilidad)
+    }, [categoria])
+
+    const getIdCategoria = async () => {
+        let catFind = await categorias.find(itemCat => itemCat.nombre === categoria);
+        if (catFind !== undefined) setHabilidades(catFind.habilidades);
+    }
+
     return ( 
         <Dialog
             open={openEdit}
@@ -129,6 +139,7 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
                                             onChange={handleChangeCat}
                                             label="Categoría"
                                             className={classes.select}
+                                            variant="standard"
                                         >
                                             {
                                                 categorias.map((item)=>(<MenuItem key={item.id_categoria} value={item.nombre}>{item.nombre}</MenuItem>))
@@ -144,9 +155,10 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
                                             onChange={handleChangeHab}
                                             label="Habilidad"
                                             className={classes.select}
+                                            variant="standard"
                                         >
                                             {
-                                                categorias.map((item)=>(<MenuItem key={item.id_categoria} value={item.nombre}>{item.nombre}</MenuItem>))
+                                                habilidades.map((item)=>(<MenuItem key={item.id_habilidad} value={item.nombreHabilidad}>{item.nombreHabilidad}</MenuItem>))
                                             }
                                         </Select>
                                     </FormControl>
@@ -155,7 +167,7 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
                         </DialogContent>
                         <DialogActions>
                             <Grid container p={5}  justify="space-between" alignItems="center">
-                                    <Button color="primary" variant="contained" className={classes.button} type="submit" style={{ margin: "auto 20px 10px 20px"}} autoFocus>
+                                    <Button color="primary" variant="contained" className={classes.button} onClick={getIdCategoria} type="submit" style={{ margin: "auto 20px 10px 20px"}} autoFocus>
                                         Editar
                                     </Button>
                                     <Button onClick={handleClose} variant="outlined" color="primary" autoFocus className={classes.button} style={{ margin: "auto 20px 10px 20px"}}>
