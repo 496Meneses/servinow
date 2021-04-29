@@ -5,7 +5,8 @@ import AddHabilidad from '../elementos/AddHabilidad'
 import axios from 'axios'
 import Habilidad from './Habilidad';
 import { toast } from "react-toastify";
-
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -81,7 +82,7 @@ export default function Habilidades({id_prestador}) {
           let listaOfertaEliminada = habilidades.splice(position, 1);
           let listaActualizadas = habilidades.filter(x => !listaOfertaEliminada.includes(x));
           setHabilidades(listaActualizadas)
-          toast("Se ha eliminado exitosamente!", {
+          toast("Se ha eliminado exitosamente! Gracias amigo", {
             type: 'success',
             draggable: true
           })
@@ -105,6 +106,7 @@ export default function Habilidades({id_prestador}) {
     return ( 
         <>
             {/* <Paper className={classes.root}> */}
+            <ToastContainer></ToastContainer>
                 <Grid container maxwidth="md" align="center" className={classes.container}>
                     <Grid item xs={12} sm={9} md={9}>
                         <Typography variant="h4" align="center" component="h1">
