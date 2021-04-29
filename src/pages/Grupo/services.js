@@ -168,7 +168,6 @@ export const agregarHabilidadService = (request) => {
             'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
     }})
 }
-
 export const activarHabService = (request) =>{
     const url = `${URLAPI}usuarioService/activarHabilidadDePrestador`;
     return axios.post(url, request, {
@@ -176,6 +175,13 @@ export const activarHabService = (request) =>{
             'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
     }})
 }
+
+export const crearUsuarioService = (request) => {
+    const url = `${URLAPI}usuarioService/crearUsuario`;
+    return axios.post(url, request)
+}
+
+
 
 export const desactivarHabService = (request) =>{
     const url = `${URLAPI}usuarioService/desactivarHabilidadDePrestador`;
