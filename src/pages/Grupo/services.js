@@ -190,3 +190,12 @@ export const desactivarHabService = (request) =>{
             'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
     }})
 }
+
+
+export const editarHabService = (request) =>{
+    const url = `${URLAPI}usuarioService/cambiarHabilidad`;
+    return axios.post(url, request, {
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
+    }})
+}

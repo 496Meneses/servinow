@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Grid, Box, Typography, makeStyles, Button, Dialog, DialogActions, DialogContent, DialogContentText , DialogTitle } from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
-import {ConsultarCategoriaService} from '../../services'
+import {ConsultarCategoriaService, editarHabService} from '../../services'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
+const EditHabilidad = ({openEdit, handleClose, parHabilidad, id_prestador, callBackEdit}) => {
     const classes = useStyles();
 
     const [categoria, setCategoria] = React.useState(parHabilidad.nombreCategoria);
@@ -86,6 +86,21 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
     };
 
     const handleSubmit = (event) => {
+        let id_hab = getIdHabilidad();
+        console.log("prest: ", id_prestador, " old hab: ", parHabilidad.id_habilidad, " new hab: ", id_hab);
+        editarHabService({
+            "id_prestador": id_prestador,
+            "id_habilidad_vieja": parHabilidad.id_habilidad,
+            "id_habilidad_nueva": id_hab
+        })
+        .then(() => {
+            console.log("se editó");
+        })
+        .catch(() => {
+            console.log("no se editó");
+        })
+        callBackEdit(true);
+        handleClose();
         event.preventDefault();
     }
 
@@ -106,6 +121,13 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
         let catFind = await categorias.find(itemCat => itemCat.nombre === categoria);
         if (catFind !== undefined) setHabilidades(catFind.habilidades);
     }
+
+    const getIdHabilidad = () => {
+        let id_hab = -1;
+        let habFind = habilidades.find(itemHab => itemHab.nombreHabilidad === habilidad);
+        if (habFind !== undefined) id_hab = habFind.id_habilidad;
+        return id_hab;
+    }  
 
     return ( 
         <Dialog
@@ -167,7 +189,7 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad}) => {
                         </DialogContent>
                         <DialogActions>
                             <Grid container p={5}  justify="space-between" alignItems="center">
-                                    <Button color="primary" variant="contained" className={classes.button} onClick={getIdCategoria} type="submit" style={{ margin: "auto 20px 10px 20px"}} autoFocus>
+                                    <Button color="primary" variant="contained" className={classes.button} onClick={handleSubmit} type="submit" style={{ margin: "auto 20px 10px 20px"}} autoFocus>
                                         Editar
                                     </Button>
                                     <Button onClick={handleClose} variant="outlined" color="primary" autoFocus className={classes.button} style={{ margin: "auto 20px 10px 20px"}}>

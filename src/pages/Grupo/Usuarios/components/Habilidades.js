@@ -5,8 +5,10 @@ import AddHabilidad from '../elementos/AddHabilidad'
 import axios from 'axios'
 import Habilidad from './Habilidad';
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
+/* import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify"; */
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,6 +69,7 @@ export default function Habilidades({id_prestador}) {
     const [openAdd, setOpenAdd] = React.useState(false);
     const [habilidades, setHabilidades] = useState([]);
     const [listChange, setListChange] = useState(false);
+    const [callBackEdit, setCallBackEdit] = useState(false);
 
     const handleAddOpen = () => {
         setOpenAdd(true);
@@ -81,11 +84,11 @@ export default function Habilidades({id_prestador}) {
         if (position > -1) {
           let listaOfertaEliminada = habilidades.splice(position, 1);
           let listaActualizadas = habilidades.filter(x => !listaOfertaEliminada.includes(x));
-          setHabilidades(listaActualizadas)
           toast("Se ha eliminado exitosamente! Gracias amigo", {
             type: 'success',
             draggable: true
           })
+          setHabilidades(listaActualizadas)
         }
     }
 
@@ -103,6 +106,12 @@ export default function Habilidades({id_prestador}) {
         else setHabilidades([...habilidades, listChange])
     }, [listChange])
 
+    useEffect(() => {
+        if (callBackEdit) console.log("callback edit en true");
+        else console.log("callback edit en false");
+        setCallBackEdit(true);
+    }, [callBackEdit])
+
     return ( 
         <>
             {/* <Paper className={classes.root}> */}
@@ -114,7 +123,7 @@ export default function Habilidades({id_prestador}) {
                         </Typography>
                         <Box my={5, 2} style={{backgroundColor: "#f2f2f2"}} borderRadius="10px">
                             {
-                                habilidades.map((habilidad)=>( <Habilidad habilidad={habilidad} CallbackDelete={eliminarOferta} id_prestador={id_prestador} /> ))
+                                habilidades.map((habilidad)=>( <Habilidad habilidad={habilidad} CallbackDelete={eliminarOferta} callBackEdit={setCallBackEdit} id_prestador={id_prestador} /> ))
                             }
                         </Box>
                         <Button color="primary" variant="contained" className={classes.button} onClick={handleAddOpen} style={{marginBottom:"2rem"}}>

@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const DeleteHabilidad = ({openDelete, handleClose, habilidad,CallbackDelete}) => {
+const DeleteHabilidad = ({openDelete, handleClose, habilidad, CallbackDelete}) => {
     const classes = useStyles();
     
     const handleDelete = () => {

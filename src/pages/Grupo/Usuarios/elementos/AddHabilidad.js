@@ -94,8 +94,8 @@ const AddHabilidad = ({openAdd, handleClose, id_prestador, setListChange}) => {
         }).catch(() =>{
             console.log("no se creo hab"); 
         });
-        handleClose();
         setListChange(formatoHab);
+        handleClose();
         event.preventDefault();
     }
     
