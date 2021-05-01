@@ -87,19 +87,20 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad, id_prestador, callB
 
     const handleSubmit = (event) => {
         let id_hab = getIdHabilidad();
-        console.log("prest: ", id_prestador, " old hab: ", parHabilidad.id_habilidad, " new hab: ", id_hab);
         editarHabService({
             "id_prestador": id_prestador,
             "id_habilidad_vieja": parHabilidad.id_habilidad,
             "id_habilidad_nueva": id_hab
         })
-        .then(() => {
-            console.log("se editó");
+        .then((request) => {
+            callBackEdit({
+                data: request.data.habilidades[0],
+                id_habilidad: parHabilidad.id_habilidad
+            });
         })
         .catch(() => {
             console.log("no se editó");
         })
-        callBackEdit(true);
         handleClose();
         event.preventDefault();
     }

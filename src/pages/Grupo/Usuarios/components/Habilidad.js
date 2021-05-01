@@ -136,9 +136,9 @@ export default function Habilidad({habilidad, CallbackDelete, callBackEdit, id_p
     return (
         <Box className={classes.box} key={habilidad.id_habilidad}>
             {!stateHab ?
-                <Typography align="left" className={classes.tachado}>{habilidad.nombreHabilidad} ({habilidad.nombreCategoria}) {habilidad.id_habilidad}</Typography>
+                <Typography align="left" className={classes.tachado}>({habilidad.id_habilidad}) {habilidad.nombreHabilidad} ({habilidad.nombreCategoria})</Typography>
             : 
-                <Typography align="left">{habilidad.nombreHabilidad} ({habilidad.nombreCategoria}) {habilidad.id_habilidad}</Typography>
+                <Typography align="left">({habilidad.id_habilidad}) {habilidad.nombreHabilidad} ({habilidad.nombreCategoria})</Typography>
             }
             <MoreHorizIcon aria-controls="simple-menu" aria-haspopup="true" onClick={handleOptions} cursor={"pointer"} style={{marginLeft: "15px"}}/>
             <Menu
