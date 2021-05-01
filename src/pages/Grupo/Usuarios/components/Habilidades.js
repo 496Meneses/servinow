@@ -107,14 +107,10 @@ export default function Habilidades({id_prestador}) {
     }, [listChange])
 
     useEffect(() => {
-        setHabilidades(habilidades.map((item) => {
-            if(item.id_habilidad === callBackEdit.id_habilidad) {
-                console.log("item -> ", item);
-                console.log(callBackEdit.id_habilidad, ": data -> ", callBackEdit.data);
-                return callBackEdit.data;
-            }
-            return item;
-        }))
+        console.log(callBackEdit.id_habilidad, ": data -> ", callBackEdit.data);
+        console.log("hab -> ", habilidades);
+        
+        //setHabilidades(callBackEdit.data);
     }, [callBackEdit])
 
     return ( 

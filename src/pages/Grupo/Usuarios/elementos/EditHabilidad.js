@@ -93,8 +93,9 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad, id_prestador, callB
             "id_habilidad_nueva": id_hab
         })
         .then((request) => {
+            console.log("submit: ", request.data)
             callBackEdit({
-                data: request.data.habilidades[0],
+                data: request.data.habilidades,
                 id_habilidad: parHabilidad.id_habilidad
             });
         })
