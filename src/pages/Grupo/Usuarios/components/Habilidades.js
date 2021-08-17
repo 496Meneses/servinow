@@ -94,7 +94,7 @@ export default function Habilidades({id_prestador}) {
 
     useEffect(() => {
         const fetchData = async () => {
-          const response = await axios(`http://52.7.252.110:8082/usuarioService/getHabilidades?id_prestador=${id_prestador}`);
+          const response = await axios(`http://54.234.20.23:8082/usuarioService/getHabilidades?id_prestador=${id_prestador}`);
           setHabilidades(response.data.habilidades)
         };
         fetchData();

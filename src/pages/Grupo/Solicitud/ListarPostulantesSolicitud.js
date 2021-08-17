@@ -60,7 +60,7 @@ export const ListarPostulantesSolicitud = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await axios("http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=1");
+      const response = await axios("http://54.234.20.23:8082/ofertaService/getDetalleOferta?id_oferta=1");
       setOfertas(response.data);
       setPostulados(response.data.postulados)
       setIsLoading(false);

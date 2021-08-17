@@ -150,7 +150,7 @@ export default function DetalleOfertaTwo() {
       "id_oferta": idOferta
     }
 
-//    axios.post(`http://52.7.252.110:8082/ofertaService/revocarPostulacion`, request)
+//    axios.post(`http://54.234.20.23:8082/ofertaService/revocarPostulacion`, request)
     retirarseOferta(request)
       .then((response) => {
         setCargando(false)
@@ -192,7 +192,7 @@ export default function DetalleOfertaTwo() {
 
   const obtenerDetalleOferta = async () => {
     setCargando(true)
-    const respuesta = await axios.get(`http://52.7.252.110:8082/ofertaService/getDetalleOferta?id_oferta=${id}`);
+    const respuesta = await axios.get(`http://54.234.20.23:8082/ofertaService/getDetalleOferta?id_oferta=${id}`);
     const ofertaObtenida = await respuesta.data;
     setCargando(false)
     setOferta(ofertaObtenida)

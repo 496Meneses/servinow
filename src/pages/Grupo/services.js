@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URLAPI = 'http://52.7.252.110:8082/';
+const URLAPI = 'http://54.234.20.23:8082/';
 
 export const CrearSolicitudService = (solicitud) => {
 
