@@ -199,3 +199,13 @@ export const editarHabService = (request) =>{
             'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
     }})
 }
+
+
+export const finalizarOfertaService = (request) =>{
+    const url = `${URLAPI}ofertaService/terminarSolicitud`;
+    return axios.post(url, request, {
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion')) 
+    }})
+}
+  

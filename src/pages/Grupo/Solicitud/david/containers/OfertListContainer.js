@@ -322,7 +322,6 @@ export const OfertListContainer = (props) => {
               </div>
             )
         }
-      <Habilidades id_prestador={props.idRequestor}/>
       </div>
     </>
   );
