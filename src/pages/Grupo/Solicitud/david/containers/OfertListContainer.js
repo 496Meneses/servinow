@@ -1,3 +1,4 @@
+//aqui retomando
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import Habilidades from './../../../Usuarios/components/Habilidades';
 import { makeStyles } from "@material-ui/core/styles";
@@ -272,7 +273,7 @@ export const OfertListContainer = (props) => {
                             label="Age"
                           >
                             <MenuItem value="">
-                              <Typography color="primary">OFERTAS</Typography>
+                              <Typography color="primary">OFERTASS</Typography>
                             </MenuItem>
                             <MenuItem value="DISPONIBLE">
                               <Typography color="primary">DISPONIBLE</Typography>
