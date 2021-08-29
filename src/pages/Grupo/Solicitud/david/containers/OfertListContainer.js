@@ -273,7 +273,7 @@ export const OfertListContainer = (props) => {
                             label="Age"
                           >
                             <MenuItem value="">
-                              <Typography color="primary">OFERTASS</Typography>
+                              <Typography color="primary">OFERTAS</Typography>
                             </MenuItem>
                             <MenuItem value="DISPONIBLE">
                               <Typography color="primary">DISPONIBLE</Typography>

@@ -292,7 +292,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 					<Box className={classes.title}>
 						<DialogTitle id="responsive-dialog-title">
 							<Typography variant="h6" align="center" component="h1">
-								Eliminar Oferta
+								Eliminar Ofertaa
 							</Typography>
 						</DialogTitle>
 					</Box>
