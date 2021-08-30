@@ -64,9 +64,9 @@ class HorizontalLayout extends Component {
                             </Container>
                         </div>
 
-                        <Suspense fallback={loading()}>
+                        {/* <Suspense fallback={loading()}>
                             <Footer />
-                        </Suspense>
+                        </Suspense> */}
                     </div>
                 </div>
 

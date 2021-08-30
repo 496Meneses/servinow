@@ -10,8 +10,8 @@ class Footer extends Component {
             <footer className="footer">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-12">
-                            2021 Proyecto de clase
+                        <div className="col-12 mt-6">
+                            2021 Proyecto de clases
                         </div>
                     </div>
                 </div>

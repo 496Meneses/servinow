@@ -16,6 +16,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import { ToastContainer } from "react-toastify";
+import {useAuth} from '../../../../components/UserContext'
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -67,10 +68,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CenteredGrid() {
   const classes = useStyles();
-  
-  const auth= useAuth();
+  const auth = useAuth();
   const [idRequestor, setIdRequestor] = useState(auth.user.id_usuario);
-  
+
 
   let aux = false;
   const [cadenaBusqueda, setCadenaBusqueda] = useState("");
