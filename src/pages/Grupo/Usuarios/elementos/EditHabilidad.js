@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Grid, Box, Typography, makeStyles, Button, Dialog, DialogActions, DialogContent, DialogContentText , DialogTitle } from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
@@ -71,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
 
 const EditHabilidad = ({openEdit, handleClose, parHabilidad, id_prestador, callBackEdit}) => {
     const classes = useStyles();
-
     const [categoria, setCategoria] = React.useState(parHabilidad.nombreCategoria);
     const [habilidad, setHabilidad] = React.useState(parHabilidad.nombreHabilidad);
     const [categorias, setCategorias] = React.useState([]);
@@ -79,12 +79,10 @@ const EditHabilidad = ({openEdit, handleClose, parHabilidad, id_prestador, callB
 
     const handleChangeCat = (event) => {
         setCategoria(event.target.value)
-
     };
     const handleChangeHab = (event) => {
         setHabilidad(event.target.value)
     };
-
     const handleSubmit = (event) => {
         let id_hab = getIdHabilidad();
         editarHabService({

@@ -1,6 +1,6 @@
 
 import React,{ useEffect,useState,Fragment } from 'react';
-import { deleteSolicitud } from '../../../services';
+import { deleteSolicitud, GetOfertasDisponibles } from '../../../services';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, Box, DialogTitle, CardMedia, DialogContentText, DialogActions, DialogContent, CardContent, Typography, Button, Tooltip, Grid, Modal, TextField , Paper} from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -223,6 +223,14 @@ dialog: {
 	padding: "auto 10px",
 }, 
 
+c: {
+	padding: "1em",
+},
+
+i: {
+	float: "left",
+}
+
 }));
 
 export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta}) {
@@ -231,6 +239,10 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 	const url = `/oferta/detalle/${oferta.id_oferta}`
 	const classes = useStyles();
 	const [modal, setModal]=useState(false);
+	
+	//const [modal2, setModal2]=useState(false);//Test
+	var auxEdit = 0;
+
 	var activarEstado=true;
 	const [cargando, setCargando] = useState(false)
 	const [spacing, setSpacing] = React.useState(2);
@@ -250,11 +262,17 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 		handleUpdateListaOferta(oferta.id_oferta)
 		deleteSolicitud(oferta.id_oferta).then(res => {
 			setModal(!modal);
+
+			//setModal2(!modal2);//test
+			
 			handleUpdateListaOferta(oferta.id_oferta)
 			
 		  }).catch((error) => {
 			// Error 😨
 			setModal(!modal);
+
+			//setModal2(!modal2);//test
+
 			setCargando(false)
 			if (error.response) {
 			  /*
@@ -280,8 +298,14 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 		setAnchorEl(null);
 	};
 
+	//************************************************************/
 	const abrirCerrarModal =()=>{
 		setModal(!modal);
+	}
+
+	const abrirCerrarModal2 =()=>{
+		setModal(!modal);
+		//auxEdit = 1;
 	}
 
 	const body=(
@@ -317,7 +341,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 					<DialogActions>
                         <Grid container p={5}  justify="space-between" alignItems="center">
                             <Button color="secondary" variant="contained" className={classes.button} style={{ margin: "auto 20px 10px 20px"}} autoFocus onClick={handleDelete}>
-                            	Sí, eliminar
+                            	Sí, eliminar 
                             </Button>
                             <Button onClick={()=>abrirCerrarModal()} variant="outlined" color="secondary" autoFocus className={classes.button} style={{ margin: "auto 20px 10px 20px"}}>
                                 No, cancelar
@@ -330,17 +354,112 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 
 		</div>
 	)
+
+	//*******************************PUREBA***********************************/
+	const body2=(
+		<div className={classes.modal}>
+
+			<Grid container minwidth="md" className={classes.container}>
+				<Grid item sm={12} md={12} xl={12}>
+					<Box className={classes.title}>
+						<DialogTitle id="responsive-dialog-title">
+							<Typography variant="h6" align="center" component="h1">
+								Editar Oferta
+							</Typography>
+						</DialogTitle>
+					</Box>
+					<div>
+					<Box className={classes.x}>
+                        <ClearIcon style={{fontSize: "1.1em"}} onClick={()=>abrirCerrarModal()} cursor={"pointer"}/>
+                    </Box>
+					<DialogContent className={classes.dialog} >
+                        <DialogContentText >
+                            <Grid container direction="row" alignItems="center">
+                                <Grid item xs={14} md={14} xl={14} className={classes.iconCenter}>
+									<form className={classes.root} noValidate autoComplete="off">
+										<TextField id="outlined-basic" label="Titulo" variant="outlined"/>&nbsp;
+										<TextField id="outlined-basic" label="Estado" variant="outlined"/>
+										<br></br><br></br>
+										<textarea aria-label="minimum height" minRows={5} placeholder="Descripción" />
+										<br></br><br></br>
+										<div className={classes.c}>
+											<div className={classes.i}>
+												<Grid item xs={10}>
+													<h6>Fecha y hora Inicial</h6>
+													<TextField
+														fullWidth
+														name="fechaFin"
+														type="datetime-local"
+														required
+														variant="outlined"
+														onChange={
+															e => {
+															//handleChange(e);
+															//handleChangeInput(e);
+															}
+														}
+													/>
+													<h6>Fecha y hora Fin</h6>
+													<TextField
+														fullWidth
+														name="fechaFin"
+														type="datetime-local"
+														required
+														variant="outlined"
+														onChange={
+															e => {
+															//handleChange(e);
+															//handleChangeInput(e);
+															}
+														}
+													/>
+												</Grid>
+											</div>
+											<div className={classes.i}>
+												<textarea aria-label="minimum height" minRows={5} placeholder="Descripción" />
+											</div>
+										</div>
+										<div>
+											<TextField id="outlined-basic" label="Dirección" variant="outlined"/>
+										</div>
+									</form>
+                                </Grid>
+                            </Grid>
+                        </DialogContentText>
+                	</DialogContent>
+					</div>
+
+					<DialogActions>
+                        <Grid container p={5}  justify="space-between" alignItems="center">
+                            <Button color="primary" variant="contained" className={classes.button} style={{ margin: "auto 20px 10px 20px"}} autoFocus onClick={handleDelete}>
+                            	Guardar Cambios 
+                            </Button>
+                            <Button onClick={()=>abrirCerrarModal()} variant="outlined" color="primary" autoFocus className={classes.button} style={{ margin: "auto 20px 10px 20px"}}>
+                                Descartar Cambios
+                            </Button>
+                        </Grid>
+                    </DialogActions>
+		
+				</Grid>
+			</Grid>			
+
+		</div>
+	)
+	//****************************Fin prueba**********************************/
 	return (
 		<div className={classes.root}>
-
+ 
 		<Modal
 		open={modal}
 		onClose={abrirCerrarModal}
 		aria-labelledby="responsive-dialog-title"
 		className={classes.dialogBox}
 		>
+			
 		{body}
 		</Modal>
+
+
 			<div className={classes.paper}>
 				<Card className={classes.card}>
 					<div>
@@ -369,7 +488,7 @@ export default function OfertCard({ oferta , auxiliar, handleUpdateListaOferta})
 											<MenuItem onClick={handleClose} >
 												<Typography color="primary">Ver oferta</Typography>	
 											</MenuItem>
-											<MenuItem onClick={handleClose} disabled={false}>
+											<MenuItem onClick={()=>abrirCerrarModal2()} disabled={false}>
 												<Typography color="primary">Editar oferta</Typography>
 											</MenuItem>
 											<MenuItem onClick={()=>abrirCerrarModal()} disabled={false}>

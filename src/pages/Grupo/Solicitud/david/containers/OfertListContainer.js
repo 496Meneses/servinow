@@ -1,3 +1,4 @@
+//aqui retomando
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import Habilidades from './../../../Usuarios/components/Habilidades';
 import { makeStyles } from "@material-ui/core/styles";
