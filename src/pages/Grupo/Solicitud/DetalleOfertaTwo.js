@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { postularseOferta, retirarseOferta } from '../../../pages/Grupo/services';
+import { postularseOferta, retirarseOferta, finalizarOfertaService } from '../../../pages/Grupo/services';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
@@ -9,7 +9,7 @@ import axios from "axios";
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { toast } from "react-toastify";
 import DialogComponent from "./DialogComponent";
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import CircularIndeterminate from "./CircularIndeterminate";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
@@ -28,7 +28,7 @@ import {
   Divider,
   Container
 } from "@material-ui/core";
-import { ContactSupportOutlined } from "@material-ui/icons";
+import { ContactSupportOutlined, Title } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,25 +71,33 @@ const useStyles = makeStyles((theme) => ({
 export default function DetalleOfertaTwo() {
 
   const { id } = useParams();
+  let history = useHistory();
 
   
   const classes = useStyles();
   const [idOferta, setIdOferta] = useState(id)
-  const [idPrestador, setIdPrestador] = useState(2)
+  const [idPrestador, setIdPrestador] = useState(JSON.parse(localStorage.getItem("usuario")).id_usuario)
   const [solicitante, setSolicitante] = useState([])
   const [postulados, setPostulados] = useState([])
   const [imagen, setImagen] = useState("1")
   const [objHabilidad, setHabilidad] = useState([])
   const [oferta, setOferta] = useState([])
   const [estoyPostulado, setEstoyPostulado] = useState(false)
+  const [estoyAceptado, setEstoyAceptado] = useState(false)
   const [cargando, setCargando] = useState(false)
   const [fechaInicio, setFechaInicio] = useState("")
   const [fechaFin, setFechaFin] = useState("")
 
+  useEffect(() => {
+    obtenerDetalleOferta();
+    console.log("oferta: ", oferta)
+    /* setIdPrestador(JSON.parse(localStorage.getItem("usuario")).id_usuario) */
+  }, [])
+
   const postularmeOferta = async () => {
     setCargando(true)
     const request = {
-      "id_prestador": 2,
+      "id_prestador": idPrestador,
       "id_oferta": idOferta
     }
 
@@ -144,12 +152,12 @@ export default function DetalleOfertaTwo() {
 
 
   const retirarmeOferta = async () => {
+    
     setCargando(true)
     const request = {
-      "id_prestador": 2,
+      "id_prestador": idPrestador,
       "id_oferta": idOferta
     }
-
 //    axios.post(`http://54.234.20.23:8082/ofertaService/revocarPostulacion`, request)
     retirarseOferta(request)
       .then((response) => {
@@ -189,6 +197,56 @@ export default function DetalleOfertaTwo() {
         obtenerDetalleOferta()
       });
   }
+  const finalizarOferta = async () => {
+    setCargando(true)
+    const request = {
+      "id_prestador": idPrestador,
+      "id_oferta": idOferta
+    }
+    
+    finalizarOfertaService(request)
+      .then((response) => {
+        console.log("finalizar oferta: ", response);
+        setCargando(false)
+        toast("¡La oferta ha finalizado con éxito!", {
+          type: 'success',
+          draggable: true
+        })
+        retirarmeOferta()
+        history.push("/ofertas");
+      })
+      .catch((error) => {
+        setCargando(false)
+        if (error.response) {
+          /*
+           * The request was made and the server responded with a
+           * status code that falls out of the range of 2xx
+           */
+          console.log("Error.Response: " + error.response.data);
+          console.log("Error.Response: " + error.response.status);
+          console.log("Error.Response: " + error.response.headers);
+          if (error.response.status == 500) {
+            toast("Todavía no se ha aceptado tu postulación a esta oferta", {
+              type: 'error',
+              draggable: true
+            })
+          }
+        } else if (error.request) {
+          /*
+           * The request was made but no response was received, `error.request`
+           * is an instance of XMLHttpRequest in the browser and an instance
+           * of http.ClientRequest in Node.js
+           */
+          console.log("Error.Request: " + error.request);
+        } else {
+          // Something happened in setting up the request and triggered an Error
+          console.log("General Error: " + error.message);
+        }
+        console.log("Error.config: " + error.config);
+        obtenerDetalleOferta()
+      });
+  }
+
 
   const obtenerDetalleOferta = async () => {
     setCargando(true)
@@ -220,6 +278,9 @@ export default function DetalleOfertaTwo() {
 
       }
     })
+    if(estoyPostulado && ofertaObtenida.prestador.prestador.id_usuario == idPrestador) {
+      setEstoyAceptado(true);
+    }
     
     console.log("Estoy postulado State: " + estoyPostulado)
 
@@ -247,11 +308,6 @@ export default function DetalleOfertaTwo() {
     //console.log(date)
     return date
   }
-
-  useEffect(() => {
-    obtenerDetalleOferta();
-
-  }, [])
 
 
   var formatter = new Intl.NumberFormat('en-ES', {
@@ -293,27 +349,29 @@ export default function DetalleOfertaTwo() {
                   <Typography gutterBottom variant="h4" color="secondary">
                     {formatter.format(oferta.valor)}
                   </Typography>
+                  <Typography variant="h6">Estado: {oferta.estado}</Typography>
                 </CardContent>
                 <CardActions>
                   
               {
-                estoyPostulado ?
-
-                  <DialogComponent
-                    titulo={"ServiNow"}
-                    descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
-                    textoBoton={"Ya no quiero postularme"}
-                    colorBoton={"secondary"}
-                    variant={"text"}
-                    metodoAEjecutar={retirarmeOferta}></DialogComponent>
-                  :
-                  <DialogComponent
-                    titulo={"ServiNow"}
-                    descripcion={"¿Quieres postularte a esta oferta?"}
-                    textoBoton={"Postúlate!"}
-                    colorBoton={"primary"}
-                    variant={"text"}
-                    metodoAEjecutar={postularmeOferta}></DialogComponent>
+                oferta.estado == 'DISPONIBLE' ?
+                  estoyPostulado ?
+                    <DialogComponent
+                      titulo={"ServiNow"}
+                      descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
+                      textoBoton={"Ya no quiero postularme"}
+                      colorBoton={"secondary"}
+                      variant={"text"}
+                      metodoAEjecutar={retirarmeOferta}></DialogComponent>
+                    :
+                    <DialogComponent
+                      titulo={"ServiNow"}
+                      descripcion={"¿Quieres postularte a esta oferta?"}
+                      textoBoton={"Postúlate!"}
+                      colorBoton={"primary"}
+                      variant={"text"}
+                      metodoAEjecutar={postularmeOferta}></DialogComponent>
+                  : null
               }
                 </CardActions>
               </Card>
@@ -379,7 +437,7 @@ export default function DetalleOfertaTwo() {
                   <Avatar
                     className={classes.large}
                     src={solicitante.url_imagen}
-                  //src={solicitante.url_imagen}
+                  //src={solicitante.url_imagen}&& oferta.estado != 'EN PROCESO'
                   ></Avatar>
                 </div>
 
@@ -390,44 +448,42 @@ export default function DetalleOfertaTwo() {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={3}></Grid>
-            <Grid item xs={12} sm={6} align="center">
-
+            <Grid item xs={12} sm={6} align="center" mb="6">
               {
-                estoyPostulado ?
-
-                  <DialogComponent
-                    titulo={"ServiNow"}
-                    descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
-                    textoBoton={"Ya no quiero postularme"}
-                    colorBoton={"secondary"}
-                    variant={"contained"}
-                    metodoAEjecutar={retirarmeOferta}></DialogComponent>
-                  :
-                  <DialogComponent
-                    titulo={"ServiNow"}
-                    descripcion={"¿Quieres postularte a esta oferta?"}
-                    textoBoton={"Postúlate!"}
-                    colorBoton={"primary"}
-                    variant={"contained"}
-                    metodoAEjecutar={postularmeOferta}></DialogComponent>
+                oferta.estado == 'DISPONIBLE' ?
+                  estoyPostulado ?
+                    <DialogComponent
+                      titulo={"ServiNow"}
+                      descripcion={"¿Quieres retirar tu postulación de esta oferta?"}
+                      textoBoton={"Ya no quiero postularme"}
+                      colorBoton={"secondary"}
+                      variant={"contained"}
+                      metodoAEjecutar={retirarmeOferta}></DialogComponent>
+                    :
+                    <DialogComponent
+                      titulo={"ServiNow"}
+                      descripcion={"¿Quieres postularte a esta oferta?"}
+                      textoBoton={"Postúlate!"}
+                      colorBoton={"primary"}
+                      variant={"contained"}
+                      metodoAEjecutar={postularmeOferta}></DialogComponent>
+                  : null
               }
-              {/*  <Typography variant="h1" align="center" color="primary">
-            Space
-          </Typography> */}
-              <br></br>
-              <br></br>
-              <br></br>
-
+              {
+                estoyPostulado && estoyAceptado ?
+                  <DialogComponent
+                    titulo={"ServiNow"}
+                    descripcion={"¿Quieres cambiar el estado de esta oferta a Finalizada?"}
+                    textoBoton={"Finalizar"}
+                    colorBoton={"primary"}
+                    variant={"outlined"}
+                    metodoAEjecutar={finalizarOferta}></DialogComponent>
+                  :
+                  null
+              }
             </Grid>
-            <Grid item xs={12} sm={3}></Grid>
           </Grid>
-
-
       }
-
-
-
-
     </div>
 
 

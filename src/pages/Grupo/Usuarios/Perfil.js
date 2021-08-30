@@ -282,7 +282,7 @@ export const Perfil = () => {
         </div>
       </div>
       <div className="contenedor-habilidades">
-        <Habilidades id_prestador={1} />
+        {typeof usuarioLogeado.id_usuario != 'undefined' ? <Habilidades id_prestador={usuarioLogeado.id_usuario} /> : null}
       </div>
 
       {/* DIALOG EDITAR */}
