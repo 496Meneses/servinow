@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import {useAuth} from '../../../../components/UserContext'; 
 /* import OfertCard from '../david/components/OfertCard'; */
 
 const useStyles = makeStyles((theme) => ({
@@ -66,8 +67,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CenteredGrid() {
   const classes = useStyles();
-
-  const [idRequestor, setIdRequestor] = useState(1);
+  
+  const auth= useAuth();
+  const [idRequestor, setIdRequestor] = useState(auth.user.id_usuario);
+  
 
   let aux = false;
   const [cadenaBusqueda, setCadenaBusqueda] = useState("");
