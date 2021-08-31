@@ -13,6 +13,7 @@ import { useParams, useHistory } from "react-router-dom"
 import CircularIndeterminate from "./CircularIndeterminate";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import {useAuth} from '../../../components/UserContext'
 import {
   Typography,
   Chip,
@@ -69,14 +70,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DetalleOfertaTwo() {
-
+  const auth = useAuth();
   const { id } = useParams();
   let history = useHistory();
 
   
   const classes = useStyles();
   const [idOferta, setIdOferta] = useState(id)
-  const [idPrestador, setIdPrestador] = useState(JSON.parse(localStorage.getItem("usuario")).id_usuario)
+  const [idPrestador, setIdPrestador] = useState(auth.user.id_usuario)
   const [solicitante, setSolicitante] = useState([])
   const [postulados, setPostulados] = useState([])
   const [imagen, setImagen] = useState("1")
@@ -265,7 +266,7 @@ export default function DetalleOfertaTwo() {
 
 
 
-
+    
     setPostulados(ofertaObtenida.postulados)
     setEstoyPostulado(false)
     setSolicitante(ofertaObtenida.solicitante)
@@ -278,9 +279,13 @@ export default function DetalleOfertaTwo() {
 
       }
     })
-    if(estoyPostulado && ofertaObtenida.prestador.prestador.id_usuario == idPrestador) {
-      setEstoyAceptado(true);
+    if(ofertaObtenida.solicitante.id_usuario != idPrestador) {
+      if(estoyPostulado && ofertaObtenida.prestador.prestador.id_usuario == idPrestador) {
+        setEstoyAceptado(true);
+      }
     }
+
+
     
     console.log("Estoy postulado State: " + estoyPostulado)
 
@@ -354,7 +359,7 @@ export default function DetalleOfertaTwo() {
                 <CardActions>
                   
               {
-                oferta.estado == 'DISPONIBLE' ?
+                oferta.estado == 'DISPONIBLE' && oferta.solicitante.id_usuario != idPrestador?
                   estoyPostulado ?
                     <DialogComponent
                       titulo={"ServiNow"}
@@ -450,7 +455,7 @@ export default function DetalleOfertaTwo() {
             <Grid item xs={12} sm={3}></Grid>
             <Grid item xs={12} sm={6} align="center" mb="6">
               {
-                oferta.estado == 'DISPONIBLE' ?
+                oferta.estado == 'DISPONIBLE' && oferta.solicitante.id_usuario != idPrestador?
                   estoyPostulado ?
                     <DialogComponent
                       titulo={"ServiNow"}
