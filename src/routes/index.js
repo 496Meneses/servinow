@@ -43,7 +43,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 const rootRoute = {
     path: '/',
     exact: true,
-    component: () => <Redirect to="/home" />,
+    component: () => <Redirect to="/ofertas" />,
     route: PrivateRoute
 };
 

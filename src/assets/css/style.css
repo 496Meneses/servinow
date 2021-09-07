@@ -181,7 +181,7 @@ body {
     
     grid-area: Datos;
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
  }
  .Datos_categoriaYhabilidad{
     margin-bottom: 20px;
@@ -249,7 +249,10 @@ body {
 .carta_contenedor__boton{
     margin-top: 10px 0px 5px;
 }
-
+.botonCrearSolicitud{
+    font-size: 17px;
+    width: 30%;
+}
 .carta_boton:hover{
     color:#fff;
 }
@@ -344,12 +347,38 @@ body {
       color: rgb(0, 0, 0);
 }
 
+.contenedorImagenCol{
+
+    display: flex;
+    border-radius: 10px;
+    background-color: rgb(180, 206, 230);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-direction: "column";
+    justify-content: space-around;
+    align-items: center;
+    
+
+}
+.contenedorImagenCol2{
+
+    border-radius: 10px;
+    background-color: rgb(180, 206, 230);
+    margin: 10px;
+    padding: 40px;
+    align-items: center;
+    
+
+}
+
 .imagenPrev{
+   
     height: 350px;
     margin-bottom: 20px;
     margin-top: 20px;
     width: 350px;
     padding: 10px;
+    flex-direction: "column";
 }
 
 .imagenPrev__img{
@@ -618,6 +647,7 @@ body {
         font-size: 20px
 
     }
+
     
     .contenedor-header{
         display: flex;

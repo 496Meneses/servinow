@@ -5,10 +5,11 @@ import classNames from 'classnames';
 import MetisMenu from 'metismenujs/dist/metismenujs';
 
 import { initMenu, changeActiveMenuFromLocation } from '../redux/actions';
+import { useAuth } from './UserContext';
 
 
 const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activatedMenuItemIds }) => {
-
+    
     const Icon = item.icon || null;
     return (
         <li className={classNames('side-nav-item', { 'mm-active': activatedMenuItemIds.indexOf(item.id) >= 0 })}>
@@ -33,6 +34,7 @@ const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activat
                     return (
                         <React.Fragment key={i}>
                             {child.children ? (
+                              
                                 <MenuItemWithChildren
                                     item={child}
                                     linkClassNames=""
@@ -40,6 +42,7 @@ const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activat
                                     subMenuClassNames="side-nav-third-level"
                                 />
                             ) : (
+                                    
                                     <MenuItem
                                         item={child}
                                         className={classNames({ active: activatedMenuItemIds.indexOf(child.id) >= 0 })}
@@ -55,12 +58,41 @@ const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activat
 };
 
 const MenuItem = ({ item, className, linkClassName }) => {
-    return (
-        <li className={classNames('side-nav-item', className)}>
-            <MenuItemLink item={item} className={linkClassName} />
-        </li>
-    );
-};
+    
+    
+    const auth = useAuth();
+    if(auth.user === null){
+        
+        if(item.name === "Ofertas"){
+            
+            return (
+                <li className={classNames('side-nav-item', className)}>
+                    <MenuItemLink item={item} className={linkClassName} />
+                </li>
+            );
+            
+
+        }
+        else{
+            return (
+                <>
+
+                </>
+            );
+        }
+    }else {
+        return (
+        
+            <li className={classNames('side-nav-item', className)}>
+                <MenuItemLink item={item} className={linkClassName} />
+            </li>
+        );
+
+    }
+
+
+}
+;
 
 const MenuItemLink = ({ item, className }) => {
     const Icon = item.icon || null;
