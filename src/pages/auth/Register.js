@@ -11,14 +11,13 @@ import { isUserAuthenticated } from '../../helpers/authUtils';
 import Loader from '../../components/Loader';
 import logo from '../../assets/images/logo.png';
 import { crearUsuarioService } from '../Grupo/services';
+import { AlertView } from '../../components/Alert';
 
 class Register extends Component {
     _isMounted = false;
 
     constructor(props) {
         super(props);
-
-        this.handleValidSubmit = this.handleValidSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -43,6 +42,7 @@ class Register extends Component {
             "password": values.password
         }).then(
             console.log("USUARIO REGISTRADO")
+
         ).catch(console.log("USUARIO no REGISTRADO"))
     }
 

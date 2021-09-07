@@ -255,7 +255,6 @@ export const Perfil = () => {
         <div className="contenedor-datos-datos">
           <div className="contenedor-datos-datos-1">
             <h5><strong>Nombre(s) y apellido(s):   </strong> </h5>
-            <h5><strong>Documento: </strong> </h5>
             <h5><strong>Genero: </strong> </h5>
             <h5><strong>E-mail: </strong></h5>
             <h5><strong>Teléfono: </strong> </h5>
@@ -263,7 +262,6 @@ export const Perfil = () => {
           </div>
           <div className="contenedor-datos-datos-2">
             <h5>{usuarioLogeado.nombres} {usuarioLogeado.apellidos}</h5>
-            <h5>{usuarioLogeado.documento}</h5>
             <h5>{usuarioLogeado.genero}</h5>
             <h5> {usuarioLogeado.mail} </h5>
             <h5>{usuarioLogeado.telefono}</h5>

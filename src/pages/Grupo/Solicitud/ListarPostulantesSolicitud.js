@@ -11,7 +11,8 @@ import { ConsultarPostuladosPorOfertaService } from "../services"
 import CardPostulante from './Juancho/CardPostulante'
 import ReactPaginate from 'react-paginate'
 import './../../../assets/css/style.css'
-
+import { useAuth } from "../../../components/UserContext"
+import { AlertView } from '../../../components/Alert';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -46,38 +47,162 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 export const ListarPostulantesSolicitud = () => {
+
+
+  const [open, setOpen] = useState(false)
+  const [typeAlert, setTypeAlert] = useState('success')
+  const [message, setMessage] = useState('')
+
 
   const classes = useStyles();
   const [ofertas, setOfertas] = useState({})
-  const [postulados, setPostulados] = useState([])
+  const [postulados, setPostulados] = useState([{
+    "usuarioYHabilidades": {
+        "prestador": {
+            "id_usuario": 2,
+            "nombres": "Nombre2",
+            "apellidos": "",
+            "genero": "M",
+            "activoComoPrestador": false,
+            "url_imagen": null
+        },
+        "habilidades": [
+            {
+                "id_habilidad": 2,
+                "nombreHabilidad": "corte de pelo",
+                "nombreCategoria": "Belleza"
+            }
+        ]
+    }
+}])
+
   const [isLoading, setIsLoading] = useState(false)
   const [pageNumber, setPageNumber] = useState(0)
   const postuladosPerPage = 3
   const pagesVisited = pageNumber * postuladosPerPage
   const pageCount = Math.ceil(postulados.length / postuladosPerPage)
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const response = await axios("http://54.234.20.23:8082/ofertaService/getDetalleOferta?id_oferta=1");
-      setOfertas(response.data);
-      setPostulados(response.data.postulados)
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [])
+  const [solicitudes, setSolicitudes] = useState([])
+  const auth = useAuth();
 
+  useEffect(() => {
+    obtenerMisSolicitudes()
+    // obtenerDetalleMisSolicitudes();
+  }, [])
+  useEffect(() => {
+    console.log("efecto solicitud,", solicitudes)
+  },[solicitudes])
+
+  const AceptarSolicitud = (e,solicitud) => {
+    setOpen(false)
+    e.preventDefault();
+    const fetchData = () => {
+      setIsLoading(true);
+      axios.post(`http://54.234.20.23:8082/ofertaService/aceptarPostulacion`,solicitud, {
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          }
+      } ).then( () => {
+        setOpen(true)
+        setTypeAlert('success')
+        setMessage('Postulante Aceptado')
+      }).catch ( ()=> {
+        setOpen(true)
+        setTypeAlert('error')
+        setMessage('Postulante no fue aceptado')
+      });
+    }
+    fetchData();
+  }
+  const RechazarSolicitud = (e,solicitud) => {
+    setOpen(false)
+    e.preventDefault();
+    const fetchData = () => {
+      setIsLoading(true);
+      axios.post(`http://54.234.20.23:8082/ofertaService/revocarPostulacion`,solicitud, {
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          }
+      } ).then( () => {
+        setOpen(true)
+        setTypeAlert('success')
+        setMessage('Postulante Rechazado')
+      }).catch ( ()=> {
+        setOpen(true)
+        setTypeAlert('error')
+        setMessage('Postulante no fue rechazado')
+      });
+    }
+    fetchData();
+  }
+
+  const obtenerMisSolicitudes = () => {
+      const fetchData = async () =>{
+        setIsLoading(true);
+        const response = await axios (`http://54.234.20.23:8082/ofertaService/getOfertasSolicitadas?id_usuario=${auth.user.id_usuario}`)
+        if(response !=null){
+          // obtenerDetalleMisSolicitudes(response.data) 
+          setSolicitudes(response.data)
+        }
+        
+        setIsLoading(false);
+
+
+      }
+      fetchData();
+  }
+  const obtenerDetalleMisSolicitudes = (ofertas) =>{
+
+    const fetchData = async () =>{
+      setIsLoading(true);
+      if (ofertas == null){
+
+      }
+      else {
+         let sol = []
+         ofertas.map( async (oferta) =>{
+           if (oferta!=null){
+             console.log("ID OFERTA ", oferta.id_oferta)
+             const response = await axios (`http://54.234.20.23:8082/ofertaService/getDetalleOferta?id_oferta=${oferta.id_oferta}`)
+             if (response != null){
+              if (response.data.postulados.length > 0){
+                  sol.push(response.data)
+                  console.log(sol)
+                  setSolicitudes([response.data,...solicitudes])
+                  console.log("ENTRO")
+               }
+            }
+           }
+
+
+
+         })
+      }
+
+     setIsLoading(false);
+    }
+    fetchData();
+  }
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
   {/* <CardPostulante postulado={postulado} habilidades={postulados.usuarioYHabilidades.habilidades} key={index} /> */}
     
 
-  const displayPostulados = postulados.slice(pagesVisited, pagesVisited + postuladosPerPage).map((postulado, index) => {
-    {console.log(postulado)}
+  const displayPostulados = solicitudes.slice(pagesVisited, pagesVisited + postuladosPerPage).map((solicitud, index) => {
+    
+
     return (
-      <Paper className={classes.paper}>
+
+      console.log("SOLICITUD DEL RENDERIZADO ",solicitudes),
+      solicitud.postulados.map( (postulado)=> {
+
+        return (
+        <Paper className={classes.paper} key={solicitud.id_oferta + postulado.usuarioYHabilidades.prestador.id_prestador}>
         <Grid container spacing={4} style={{width:'100%', margin: '0 auto'}}>
           
           <Grid item xs={12} sm={3} md={3} >
@@ -105,32 +230,53 @@ export const ListarPostulantesSolicitud = () => {
             <Typography variant="h6" align="left">
               Habilidades:
             </Typography>
-            {postulado.usuarioYHabilidades.habilidades.map((habilidad, index)=>(
-              <List aria-label="secondary mailbox folders">
-                <ListItem style={{margin: "-20px 0"}}>
-                  <ListItemText primary={habilidad.nombreHabilidad} />
-                </ListItem>
-              </List>
+            {//postulado.usuarioYHabilidades.habilidades.map((habilidad, index)=>(
+             // (habilidad!=null) ? (
+             //   <List aria-label="secondary mailbox folders" key={parseInt(postulado.usuarioYHabilidades.prestador.id_usuario) + parseInt(solicitud.id_oferta)}>
+             //   <ListItem style={{margin: "-20px 0"}}>
+             //     <ListItemText primary={habilidad.nombreHabilidad} />
+             //   </ListItem>
+             // </List>
+             // ): (
+             //   <p>No tiene habilidades registradas</p>
+             // )
+
 /*               <Typography key={index} variant="p" align="center">
                 {habilidad.nombreCategoria}
               </Typography> */
-            ))}
+            //))
+          }
             <Divider/>
             <Box className={classes.box}>
               <Button
                 variant="contained"
                 color="primary"
                 style={{ marginRight: "10px" }}
+                onClick = { (e) => AceptarSolicitud(e,
+                {    "id_oferta": solicitud.id_oferta,
+                "id_solicitante": solicitud.solicitante.id_usuario,
+                "id_prestador":   postulado.usuarioYHabilidades.prestador.id_usuario})}
+                
               >
                 Aceptar
               </Button>
-              <Button variant="contained" color="secondary">
+              <Button variant="contained" color="secondary"
+                onClick = { (e) => RechazarSolicitud(e,
+                  {    "id_oferta": solicitud.id_oferta,
+                  "id_solicitante": solicitud.solicitante.id_usuario,
+                  "id_prestador":   postulado.usuarioYHabilidades.prestador.id_usuario})}
+              
+              >
                 Rechazar
               </Button>
             </Box>
           </Grid>
-        </Grid>
+        </Grid> 
       </Paper>
+        )
+        })
+      
+
     )
   })
 
@@ -151,8 +297,11 @@ export const ListarPostulantesSolicitud = () => {
         disabledClassName={"pagDisabled"}
         activeClassName={"pagActiva"}
       />
+
+    <AlertView open={open} typeAlert={typeAlert} message={message} />
     </div>
   )
 }
 
 export default ListarPostulantesSolicitud
+

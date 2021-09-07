@@ -1,15 +1,10 @@
-import React, { useEffect, useState, lazy, Suspense } from "react";
-import Habilidades from './../../../Usuarios/components/Habilidades';
+import React, { useEffect, useState, lazy } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { InputLabel } from "@material-ui/core";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
-import {
-  GetOfertasDisponibles,
-  GetAllOferts,
-  GetAllOfertsByRequestor,
-  ConsultarPostuladosPorOfertaService,
-} from "../../../services";
+import { Input, Row, Col } from "reactstrap";
+import "react-toastify/dist/ReactToastify.css";
+import { GetAllOferts, GetAllOfertsByRequestor } from "../../../services";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
@@ -39,9 +34,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   control: {
-    padding: theme.spacing(1),
-    bottom: "5px",
-    width: "97%",
+
+  },
+  controlPagina: {
+
   },
 
   card: {
@@ -52,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
   contenedor_paginacion: {
     flexDirection: "row",
+    marginTop: "30px"
   },
 
   paper: {
@@ -67,13 +64,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
+  InputPrincipal: {
+    height: 50,
+    fontSize: 15,
+    marginTop: 20,
+    
+  },
+  ContenedorInputPrincipal: {
+    height: "100px",
+    width: "100%",
+  },
 }));
 
-
 export const OfertListContainer = (props) => {
-
-
-
   var activarEstado = true;
   if (props.auxiliar) {
     activarEstado = false;
@@ -93,9 +96,9 @@ export const OfertListContainer = (props) => {
   const [listaOferta, setListaOferta] = useState([]);
 
   /**
-   * 
+   *
    * @param {Este parámetro es el id de la oferta que se va a eliminar} id_oferta_to_delete
-   *  Este método recive el id de la oferta que va a eliminar. 
+   *  Este método recive el id de la oferta que va a eliminar.
    *  Por medio de la función map() e indexOf() y utilizando el id de la oferta a eliminar se obtiene la posición
    *  que ocupa en el arreglo de ofertas.
    *  Por medio de la función splice se elimina la posición selecccionada; este metodo retorna una lista con los
@@ -104,53 +107,61 @@ export const OfertListContainer = (props) => {
    *  Finalmente se actualizan las variables de estado.
    */
   const eliminarOferta = (id_oferta_to_delete) => {
-    const position = listaOferta.map((obj) => obj.id_oferta).indexOf(id_oferta_to_delete)
+    const position = listaOferta
+      .map((obj) => obj.id_oferta)
+      .indexOf(id_oferta_to_delete);
     if (position > -1) {
       let listaOfertaEliminada = listaOferta.splice(position, 1);
-      let listaActualizadas = listaOferta.filter(x => !listaOfertaEliminada.includes(x));
-      setListaOferta(listaActualizadas)
-      setListaOfertaFromApi(listaActualizadas)
+      let listaActualizadas = listaOferta.filter(
+        (x) => !listaOfertaEliminada.includes(x)
+      );
+      setListaOferta(listaActualizadas);
+      setListaOfertaFromApi(listaActualizadas);
       toast("Se ha eliminado exitosamente!", {
-        type: 'success',
-        draggable: true
-      })
-
+        type: "success",
+        draggable: true,
+      });
     }
-  }
+  };
 
   const [listaOfertaFromApi, setListaOfertaFromApi] = useState([]);
   const [cargando, setCargando] = useState(false);
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0);
-  const postuladosPerPage = 6;
+  const postuladosPerPage = 3;
   const pagesVisited = pageNumber * postuladosPerPage;
   const pageCount = Math.ceil(listaOferta.length / postuladosPerPage);
-  const displayOferts = listaOferta.slice(pagesVisited, pagesVisited + postuladosPerPage)
+  const displayOferts = listaOferta
+    .slice(pagesVisited, pagesVisited + postuladosPerPage)
     .map((oferta, index) => (
-      <Grid key={index} item xs={12} sm={6} md={4}>
-        <OfertCard key={index} oferta={oferta} auxiliar={activarEstado} handleUpdateListaOferta={eliminarOferta} />
-      </Grid>
+      <Col className={classes.contenedor_paginacion} key={index} item xs={12} sm={12} md={6} lg={4} >
+        <OfertCard
+          key={index}
+          oferta={oferta}
+          auxiliar={activarEstado}
+          handleUpdateListaOferta={eliminarOferta}
+        />
+      </Col>
     ));
 
-
   useEffect(() => {
-    setCargando(true)
-    
-    console.log("Id Requestor: "+props.idRequestor)
+    setCargando(true);
+
+    console.log("Id Requestor: " + props.idRequestor);
     if (props.idRequestor == null) {
       GetAllOferts().then((respuesta) => {
-        setListaOferta(respuesta.data)
-        setListaOfertaFromApi(respuesta.data)
-        setCargando(false)
-        console.log(respuesta)
-      })
+        setListaOferta(respuesta.data);
+        setListaOfertaFromApi(respuesta.data);
+        setCargando(false);
+        console.log(respuesta);
+      });
     } else {
       GetAllOfertsByRequestor(props.idRequestor).then((respuesta) => {
-        setListaOferta(respuesta.data)
-        setListaOfertaFromApi(respuesta.data)
-        setCargando(false)
-        console.log(respuesta)
-      })
+        setListaOferta(respuesta.data);
+        setListaOfertaFromApi(respuesta.data);
+        setCargando(false);
+        console.log(respuesta);
+      });
     }
   }, []);
 
@@ -165,7 +176,7 @@ export const OfertListContainer = (props) => {
     });
     console.log(nuevaListaOfertas);
     setListaOferta(nuevaListaOfertas);
-    setCargando(false)
+    setCargando(false);
   }, [cadenaBusqueda]);
 
   //Useeffect para realizar la busqueda por estado
@@ -179,9 +190,8 @@ export const OfertListContainer = (props) => {
     });
     console.log(nuevaListaOfertas);
     setListaOferta(nuevaListaOfertas);
-    setCargando(false)
+    setCargando(false);
   }, [cadenaBusqueda2]);
-
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -189,139 +199,132 @@ export const OfertListContainer = (props) => {
 
   return (
     <>
-      <div className={classes.root}>
-        {
-          cargando ? (<CircularIndeterminate />) :
-            (
-              <div>
-                {
-                  props.auxiliar ?
-                    <Typography
-                      color="textPrimary"
-                      variant="h5"
-                      align="center"
-                      color="primary"
-                    >
-                      {" "}MIS OFERTAS
-                    </Typography>
-                    :
-                    <Typography
-                      color="textPrimary"
-                      variant="h5"
-                      align="center"
-                      color="primary"
-                    >
-                      OFERTAS
-                      </Typography>
-                }
-                <br></br>
-                <Paper className={classes.paper}>
-                  <br></br>
-                  <Grid container spacing={2}>
-                    {
-                      !props.auxiliar ?
-                      <Grid 
-                      container
-                      direction="row"
-                      justify="center"
-                      alignItems="center"
-                      >
-                         <Grid item xs={8}>
-                            <div className={classes.div}>
-                              <form className={classes.root} noValidate autoComplete="off">
-                                <TextField
-                                  id="outlined-basic"
-                                  label="Buscar"
-                                  variant="outlined"
-                                  style={{ width: "100%" }}
-                                  value={cadenaBusqueda}
-                                  onChange={updateSearch}
-                                />
-                              </form>
-                            </div>
-                          </Grid>
-                      </Grid>
-                      :
-                      <Grid item xs={12} sm={8}>
+      <div>
+        {cargando ? (
+          <CircularIndeterminate />
+        ) : (
+          <div>
+            {props.auxiliar ? (
+              <Typography
+                color="textPrimary"
+                variant="h5"
+                align="center"
+                color="primary"
+              >
+                {" "}
+                MIS OFERTAS
+              </Typography>
+            ) : (
+              <></>
+            )}
+            <br></br>
+            <Paper className={classes.paper}>
+              <br></br>
+              <Grid>
+                {!props.auxiliar ? (
+                  <Row className={classes.ContenedorInputPrincipal}>
+                    <Col sm="12">
+                      <h3>
+                        <b>Ofertas disponibles</b>
+                      </h3>
+                    </Col>
+
+                    <Col sm="12" md={6} lg="4">
                       <div className={classes.div}>
-                        <form className={classes.root} noValidate autoComplete="off">
-                          <TextField
-                            id="outlined-basic"
-                            label="Buscar"
-                            variant="outlined"
-                            style={{ width: "100%" }}
-                            value={cadenaBusqueda}
-                            onChange={updateSearch}
-                          />
+                        <form
+                          className={classes.root}
+                          noValidate
+                          autoComplete="off"
+                        >
+                          <div>
+                            <Input
+                              className={classes.InputPrincipal}
+                              id="outlined-basic"
+                              value={cadenaBusqueda}
+                              onChange={updateSearch}
+                              placeholder="Buscar oferta"
+                            ></Input>
+                          </div>
                         </form>
                       </div>
-                    </Grid>
-                    }
-                    {
-                      !props.auxiliar ?
-                        <h1></h1>:
-                        <Grid item xs={12} sm={4}>
-                      <div className={classes.div}>
-                        <FormControl variant="outlined" className={classes.root} disabled={activarEstado}>
-                          <InputLabel>Estado</InputLabel>
-                          <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={cadenaBusqueda2}
-                            onChange={updateSearch2}
-                            label="Age"
-                          >
-                            <MenuItem value="">
-                              <Typography color="primary">OFERTAS</Typography>
-                            </MenuItem>
-                            <MenuItem value="DISPONIBLE">
-                              <Typography color="primary">DISPONIBLE</Typography>
-                            </MenuItem>
-                            <MenuItem value="EN PROCESO">
-                              <Typography color="primary">EN PROCESO</Typography>
-                            </MenuItem>
-                            <MenuItem value="FINALIZADA">
-                              <Typography color="primary">FINALIZADA</Typography>
-                            </MenuItem>
-                            <MenuItem value="CANCELADA">
-                              <Typography color="primary">CANCELADA</Typography>
-                            </MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                    </Grid>
-                    }
-                    
+                    </Col>
+                  </Row>
+                ) : (
+                  <form noValidate autoComplete="off">
+                    <Input
+                      className={classes.InputPrincipal}
+                      id="outlined-basic"
+                      value={cadenaBusqueda}
+                      onChange={updateSearch}
+                      placeholder="Buscar"
+                    ></Input>
+                  </form>
+                )}
+                {!props.auxiliar ? (
+                  <h1></h1>
+                ) : (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <div className={classes.div}>
+                      <FormControl
+                        variant="outlined"
+                        className={classes.root}
+                        disabled={activarEstado}
+                      >
+                        <InputLabel>Estado</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          value={cadenaBusqueda2}
+                          onChange={updateSearch2}
+                          label="Age"
+                        >
+                          <MenuItem value="">
+                            <Typography color="primary">OFERTAS</Typography>
+                          </MenuItem>
+                          <MenuItem value="DISPONIBLE">
+                            <Typography color="primary">DISPONIBLE</Typography>
+                          </MenuItem>
+                          <MenuItem value="EN PROCESO">
+                            <Typography color="primary">EN PROCESO</Typography>
+                          </MenuItem>
+                          <MenuItem value="FINALIZADA">
+                            <Typography color="primary">FINALIZADA</Typography>
+                          </MenuItem>
+                          <MenuItem value="CANCELADA">
+                            <Typography color="primary">CANCELADA</Typography>
+                          </MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
                   </Grid>
-                  
-                  <div className={classes.root}>
-                    <Grid container spacing={3}>
-                      {displayOferts}
-                      <div className={classes.control}>
-                        <ReactPaginate
-                          className="algo"
-                          nextLabel={"Siguiente"}
-                          previousLabel={"Anterior"}
-                          pageCount={pageCount}
-                          onPageChange={changePage}
-                          containerClassName={"paginacionBtns"}
-                          previousLinkClassName={"antBtn"}
-                          nextLinkClassName={"sigBtn"}
-                          disabledClassName={"pagDisabled"}
-                          activeClassName={"pagActiva"}
-                        />
-                      </div>
-                    </Grid>
-                  </div>
-
-
-                </Paper>
-                <br></br>
-                <br></br>
-                <br></br>
-              </div>
-            )
-        }
+                )}
+              </Grid>
+                <Row>
+                  {displayOferts}
+                  <Col className={classes.control} sm={12}>
+                    
+                      <ReactPaginate
+                        className={classes.controlPagina}
+                        nextLabel={"Siguiente"}
+                        previousLabel={"Anterior"}
+                        pageCount={pageCount}
+                        onPageChange={changePage}
+                        containerClassName={"paginacionBtns"}
+                        previousLinkClassName={"antBtn"}
+                        nextLinkClassName={"sigBtn"}
+                        disabledClassName={"pagDisabled"}
+                        activeClassName={"pagActiva"}
+                      />
+                
+                  </Col>
+                </Row>
+              
+            </Paper>
+            <br></br>
+            <br></br>
+            <br></br>
+          </div>
+        )}
       </div>
     </>
   );
