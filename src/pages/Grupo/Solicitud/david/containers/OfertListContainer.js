@@ -246,7 +246,7 @@ export const OfertListContainer = (props) => {
                   <b>Mis Ofertas</b>
                   </h3>
                   <div className='contenedorMisOfertasChange'>
-                  <form noValidate autoComplete="off">
+                  <form className='formularioContenedorBusqueda' noValidate autoComplete="off">
                         <div>
                             <Input
                               className='inputPrincipalCC'
