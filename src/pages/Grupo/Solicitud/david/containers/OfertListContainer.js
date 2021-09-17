@@ -124,8 +124,10 @@ export const OfertListContainer = (props) => {
     }
   };
 
+  
   const [listaOfertaFromApi, setListaOfertaFromApi] = useState([]);
   const [cargando, setCargando] = useState(false);
+  const [editarOfertaT, setEditarOfertaT] = useState(false)
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(0);
   const postuladosPerPage = 3;
@@ -140,6 +142,8 @@ export const OfertListContainer = (props) => {
           oferta={oferta}
           auxiliar={activarEstado}
           handleUpdateListaOferta={eliminarOferta}
+          listaOferta={listaOferta}
+          editarOferta={editarOfertaT}
         />
       </Col>
     ));
@@ -163,7 +167,7 @@ export const OfertListContainer = (props) => {
         console.log(respuesta);
       });
     }
-  }, []);
+  }, [editarOfertaT]);
 
   //Useeffect para realizar la busqueda por descrpción
   useEffect(() => {
@@ -204,19 +208,6 @@ export const OfertListContainer = (props) => {
           <CircularIndeterminate />
         ) : (
           <div>
-            {props.auxiliar ? (
-              <Typography
-                color="textPrimary"
-                variant="h5"
-                align="center"
-                color="primary"
-              >
-                {" "}
-                MIS OFERTAS
-              </Typography>
-            ) : (
-              <></>
-            )}
             <br></br>
             <Paper className={classes.paper}>
               <br></br>
@@ -250,19 +241,22 @@ export const OfertListContainer = (props) => {
                     </Col>
                   </Row>
                 ) : (
+                  <>
+                  <h3>
+                  <b>Mis Ofertas</b>
+                  </h3>
+                  <div className='contenedorMisOfertasChange'>
                   <form noValidate autoComplete="off">
-                    <Input
-                      className={classes.InputPrincipal}
-                      id="outlined-basic"
-                      value={cadenaBusqueda}
-                      onChange={updateSearch}
-                      placeholder="Buscar"
-                    ></Input>
+                        <div>
+                            <Input
+                              className='inputPrincipalCC'
+                              id="outlined-basic"
+                              value={cadenaBusqueda}
+                              onChange={updateSearch}
+                              placeholder="Buscar oferta"
+                            ></Input>
+                        </div>
                   </form>
-                )}
-                {!props.auxiliar ? (
-                  <h1></h1>
-                ) : (
                   <Grid item xs={12} sm={6} md={4}>
                     <div className={classes.div}>
                       <FormControl
@@ -297,7 +291,11 @@ export const OfertListContainer = (props) => {
                       </FormControl>
                     </div>
                   </Grid>
+                  </div>
+
+                  </>
                 )}
+
               </Grid>
                 <Row>
                   {displayOferts}

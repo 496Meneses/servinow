@@ -79,9 +79,6 @@ const Topbar = (props) => {
   const auth = useAuth();
 
 
-  useEffect(() => {
-    console.log("USUARIOOOOOO", auth.user)
-  }, [auth.user])
   return (
     <React.Fragment>
       <div className="navbar navbar-expand flex-column flex-md-row navbar-custom">
@@ -117,7 +114,7 @@ const Topbar = (props) => {
 
                 (auth.user) ? (
                   <>
-                    <NotificationDropdown notifications={Notifications} />
+                    {/* <NotificationDropdown notifications={Notifications} /> */}
                     <ProfileDropdown profilePic={auth.user.url_imagen} menuItems={ProfileMenusUsuario} username={auth.user.nombres} description="Usuario" />
                   </>
                 ) :

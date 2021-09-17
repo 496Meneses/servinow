@@ -14,6 +14,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import { AlertView } from "../../../components/Alert";
 import PaymentIcon from "@material-ui/icons/Payment";
 import { Col, Input, Row,Button} from "reactstrap";
+import { VerPerfil } from "../Usuarios/VerPerfil";
+import { ListarPostulantes } from "./Solicitante/ListarPostulantes";
 
 
 const useStyles= makeStyles( {
@@ -23,6 +25,30 @@ const useStyles= makeStyles( {
     marginTop: 30,
   }
 })
+
+
+const datosPerfil = {
+
+  "id_usuario": 3,
+  "correo": "fernando-go@outlook.com",
+  "nombres": "Daniel Fernando",
+  "apellidos": "Gomez Ortiz",
+  "direccion": "nueva direccion 3",
+  "genero": "M",
+  "activoComoPrestador": true,
+  "contacto": "3168759551",
+  "url_imagen": "data:image",
+  "presentacion": "nueva presentacion"
+
+
+}
+
+
+
+
+
+
+
 
 export const CrearSolicitud = () => {
 
@@ -217,6 +243,7 @@ export const CrearSolicitud = () => {
                 />
 
                 <textArea
+                  className='textAreaSolicitud'
                   placeholder="Descripcion"
                   label="Titulo"
                   name="titulo"

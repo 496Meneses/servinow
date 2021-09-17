@@ -13,8 +13,6 @@ import ReactPaginate from 'react-paginate'
 import './../../../assets/css/style.css'
 import { useAuth } from "../../../components/UserContext"
 import { AlertView } from '../../../components/Alert';
-import { VerPerfil} from '../../Grupo/Usuarios/VerPerfil';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -90,7 +88,7 @@ export const ListarPostulantesSolicitud = () => {
   const auth = useAuth();
 
   useEffect(() => {
-    obtenerMisSolicitudes()
+    //obtenerMisSolicitudes()
     // obtenerDetalleMisSolicitudes();
   }, [])
   useEffect(() => {
@@ -143,151 +141,164 @@ export const ListarPostulantesSolicitud = () => {
   }
 
   const obtenerMisSolicitudes = () => {
-
       const fetchData = async () =>{
-
         setIsLoading(true);
         const response = await axios (`http://54.234.20.23:8082/ofertaService/getOfertasSolicitadas?id_usuario=${auth.user.id_usuario}`)
-        if(response.data){
+        if(response !=null){
+          // obtenerDetalleMisSolicitudes(response.data) 
           setSolicitudes(response.data)
         }
+        
         setIsLoading(false);
 
 
       }
       fetchData();
   }
+  const obtenerDetalleMisSolicitudes = (ofertas) =>{
+
+    const fetchData = async () =>{
+      setIsLoading(true);
+      if (ofertas == null){
+
+      }
+      else {
+         let sol = []
+         ofertas.map( async (oferta) =>{
+           if (oferta!=null){
+             console.log("ID OFERTA ", oferta.id_oferta)
+             const response = await axios (`http://54.234.20.23:8082/ofertaService/getDetalleOferta?id_oferta=${oferta.id_oferta}`)
+             if (response != null){
+              if (response.data.postulados.length > 0){
+                  sol.push(response.data)
+                  console.log(sol)
+                  setSolicitudes([response.data,...solicitudes])
+                  console.log("ENTRO")
+               }
+            }
+           }
+
+
+
+         })
+      }
+
+     setIsLoading(false);
+    }
+    fetchData();
+  }
   const changePage = ({selected}) => {
     setPageNumber(selected)
   }
   {/* <CardPostulante postulado={postulado} habilidades={postulados.usuarioYHabilidades.habilidades} key={index} /> */}
     
+
   const displayPostulados = solicitudes.slice(pagesVisited, pagesVisited + postuladosPerPage).map((solicitud, index) => {
+    
 
-    if (solicitud.postulaciones!=null){
-      return (
+    return (
 
-        console.log("SOLICITUD DEL RENDERIZADO ",solicitud),
-        solicitud.postulaciones.map( (postulado)=> {
-  
-          return (
-          <Paper className={classes.paper} key={solicitud.id_oferta + postulado.usuarioYHabilidades.prestador.id_prestador}>
-          <Grid container spacing={4} style={{width:'100%', margin: '0 auto'}}>
-            
-            <Grid item xs={12} sm={3} md={3} >
-              <Box className={classes.div}>
-                <Avatar
-                  className={classes.large}
-                  src={postulado.usuarioYHabilidades.prestador.url_imagen}
-                  />
-              </Box>
-              {/* <Link 
-                component="button"
-                variant="body2"
-                onClick={() => {
-                  console.info("var perfil.");
-                }}
+      console.log("SOLICITUD DEL RENDERIZADO ",solicitudes),
+      solicitud.postulados.map( (postulado)=> {
+
+        return (
+        <Paper className={classes.paper} key={solicitud.id_oferta + postulado.usuarioYHabilidades.prestador.id_prestador}>
+        <Grid container spacing={4} style={{width:'100%', margin: '0 auto'}}>
+          
+          <Grid item xs={12} sm={3} md={3} >
+            <Box className={classes.div}>
+              <Avatar
+                className={classes.large}
+                src={postulado.usuarioYHabilidades.prestador.url_imagen}
+                />
+            </Box>
+            <Link 
+              component="button"
+              variant="body2"
+              onClick={() => {
+                console.info("var perfil.");
+              }}
+            >
+              Ver Perfil
+            </Link>
+          </Grid>
+          <Grid item xs={12} sm={9} md={9} >
+            <Typography variant="h5" align="left" color="primary">
+              {postulado.usuarioYHabilidades.prestador.nombres} {postulado.usuarioYHabilidades.prestador.apellidos} 
+            </Typography>
+            <Divider/>
+            <Typography variant="h6" align="left">
+              Habilidades:
+            </Typography>
+            {//postulado.usuarioYHabilidades.habilidades.map((habilidad, index)=>(
+             // (habilidad!=null) ? (
+             //   <List aria-label="secondary mailbox folders" key={parseInt(postulado.usuarioYHabilidades.prestador.id_usuario) + parseInt(solicitud.id_oferta)}>
+             //   <ListItem style={{margin: "-20px 0"}}>
+             //     <ListItemText primary={habilidad.nombreHabilidad} />
+             //   </ListItem>
+             // </List>
+             // ): (
+             //   <p>No tiene habilidades registradas</p>
+             // )
+
+/*               <Typography key={index} variant="p" align="center">
+                {habilidad.nombreCategoria}
+              </Typography> */
+            //))
+          }
+            <Divider/>
+            <Box className={classes.box}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginRight: "10px" }}
+                onClick = { (e) => AceptarSolicitud(e,
+                {    "id_oferta": solicitud.id_oferta,
+                "id_solicitante": solicitud.solicitante.id_usuario,
+                "id_prestador":   postulado.usuarioYHabilidades.prestador.id_usuario})}
+                
               >
-                Ver Perfil
-              </Link> */}
-                  <VerPerfil idUsuario={postulado.usuarioYHabilidades.prestador.id_usuario}></VerPerfil>
-            </Grid>
-            <Grid item xs={12} sm={9} md={9} >
-              <Typography variant="h5" align="left" color="primary">
-                {postulado.usuarioYHabilidades.prestador.nombres} {postulado.usuarioYHabilidades.prestador.apellidos} 
-              </Typography>
-              {/* <Divider/> */}
-              {/* <Typography variant="h6" align="left">
-                Habilidades:
-              </Typography> */}
-              {//postulado.usuarioYHabilidades.habilidades.map((habilidad, index)=>(
-               // (habilidad!=null) ? (
-               //   <List aria-label="secondary mailbox folders" key={parseInt(postulado.usuarioYHabilidades.prestador.id_usuario) + parseInt(solicitud.id_oferta)}>
-               //   <ListItem style={{margin: "-20px 0"}}>
-               //     <ListItemText primary={habilidad.nombreHabilidad} />
-               //   </ListItem>
-               // </List>
-               // ): (
-               //   <p>No tiene habilidades registradas</p>
-               // )
-  
-  /*               <Typography key={index} variant="p" align="center">
-                  {habilidad.nombreCategoria}
-                </Typography> */
-              //))
-            }
-              {/* <Divider/> */}
-              <Box className={classes.box}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ marginRight: "10px" }}
-                  onClick = { (e) => AceptarSolicitud(e,
+                Aceptar
+              </Button>
+              <Button variant="contained" color="secondary"
+                onClick = { (e) => RechazarSolicitud(e,
                   {    "id_oferta": solicitud.id_oferta,
                   "id_solicitante": solicitud.solicitante.id_usuario,
                   "id_prestador":   postulado.usuarioYHabilidades.prestador.id_usuario})}
-                  
-                >
-                  Aceptar
-                </Button>
-                <Button variant="contained" color="secondary"
-                  onClick = { (e) => RechazarSolicitud(e,
-                    {    "id_oferta": solicitud.id_oferta,
-                    "id_solicitante": solicitud.solicitante.id_usuario,
-                    "id_prestador":   postulado.usuarioYHabilidades.prestador.id_usuario})}
-                
-                >
-                  Rechazar
-                </Button>
-              </Box>
-            </Grid>
-          </Grid> 
-        </Paper>
-          )
-          })
-        
-  
-      )
+              
+              >
+                Rechazar
+              </Button>
+            </Box>
+          </Grid>
+        </Grid> 
+      </Paper>
+        )
+        })
+      
 
-    }
-
+    )
   })
 
   return (
     <div className={classes.root} key={postulados.id_oferta}>
-      
-
-      {solicitudes.postulaciones!= null ? 
-        ( <>
-              <Typography color="textPrimary" variant="h5" align="center" color="primary" className={classes.title}>
-                Prestadores postulados a tu oferta {ofertas.descripcion}
-              </Typography>
-            {displayPostulados}
-            <ReactPaginate
-            nextLabel={"Siguiente"}
-            previousLabel={"Anterior"}
-            pageCount={pageCount}
-            onPageChange={changePage}
-            containerClassName={"paginacionBtns"}
-            previousLinkClassName={"antBtn"}
-            nextLinkClassName={"sigBtn"}
-            disabledClassName={"pagDisabled"}
-            activeClassName={"pagActiva"}
-          />
-
-          </>
-          )
-        
-        :
-        ( <p>No hay postulados en ninguna de tus solicitudes</p>)
-    
-      }
-
-      
-
+      <Typography color="textPrimary" variant="h5" align="center" color="primary" className={classes.title}>
+        Prestadores postulados a tu oferta {ofertas.descripcion}
+      </Typography>
+      {displayPostulados}
+      <ReactPaginate
+        nextLabel={"Siguiente"}
+        previousLabel={"Anterior"}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"paginacionBtns"}
+        previousLinkClassName={"antBtn"}
+        nextLinkClassName={"sigBtn"}
+        disabledClassName={"pagDisabled"}
+        activeClassName={"pagActiva"}
+      />
 
     <AlertView open={open} typeAlert={typeAlert} message={message} />
-
     </div>
   )
 }
