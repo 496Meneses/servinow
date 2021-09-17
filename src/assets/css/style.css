@@ -377,14 +377,15 @@ body {
 .contenedorMisOfertasChange{
     display: flex;
     flex-wrap: wrap;
-
     align-items: center;
 
 }
 .inputPrincipalCC{
     height: 55px;
     width: 400px;
-    margin: 20px;
+}
+.formularioContenedorBusqueda{
+    margin-right: 20px;
 }
 
 .imagenPrev{
