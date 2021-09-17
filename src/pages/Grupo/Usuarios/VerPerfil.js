@@ -12,6 +12,9 @@ export const VerPerfil = ({idUsuario}) => {
     const [correo, setCorreo] = useState('')
     const [presentacion, setPresentacion] = useState('')
     const [datosPerfil, setDatosPerfil] = useState()
+    const [contacto, setContacto] = useState()
+    const [direccion, setDireccion] = useState()
+    const [Img, setImg] = useState()
 
     const [stateDialog, setStateDialog] = useState(false)
     const handleClose = (e)=> {
@@ -23,27 +26,30 @@ export const VerPerfil = ({idUsuario}) => {
         e.preventDefault();
         setStateDialog(!stateDialog)
     }
-
-
     useEffect(() => {
-        
         axios.get(`http://54.234.20.23:8082/usuarioService/getUsuarioDetalle/${idUsuario}`,{
                     headers:{
                         'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
                     }
         }).then((res) =>  {
-            alert(res)
-            setNombres(nombres)
-            setPresentacion(presentacion)
+
+            setNombres(res.data.nombres)
+            setApellidos(res.data.apellidos)
+            setPresentacion(res.data.presentacion)
+            setCorreo(res.data.correo)
+            setContacto(res.data.contacto)
+            setDireccion(res.data.direccion)
+            setImg(res.data.url_imagen)
+            
         })
 
     
 
-    }, [])
+    }, [nombres])
     return (
 
         <>
-            <Button onClick={changeState}>Abrir</Button>
+            <Button className='botonVerPerfil' onClick={changeState}>Abrir</Button>
 
 
 
@@ -61,7 +67,7 @@ export const VerPerfil = ({idUsuario}) => {
                     
                     <div className='contenedor-imagen_perfil'>
                         
-                        <img className='imagen-perfil' src='https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg' 
+                        <img className='imagen-perfil' src={Img} 
                             alt={nombres}>
                         </img>
                     </div>
@@ -70,6 +76,10 @@ export const VerPerfil = ({idUsuario}) => {
                         <h2>{nombres}</h2>
                         <hr/>
                         <DialogContentText>{presentacion}</DialogContentText>
+                        <DialogContentText>Contacto</DialogContentText>
+                        <DialogContentText>Correo: {correo}</DialogContentText>
+                        <DialogContentText>Teléfono: {contacto}</DialogContentText>
+                        <DialogContentText>Teléfono: {direccion}</DialogContentText>
                         <DialogContentText>
                             Habilidades
                         </DialogContentText>

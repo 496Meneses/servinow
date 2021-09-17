@@ -351,7 +351,6 @@ body {
 
     display: flex;
     border-radius: 10px;
-    background-color: rgb(180, 206, 230);
     margin-top: 20px;
     margin-bottom: 20px;
     flex-direction: "column";
@@ -363,12 +362,29 @@ body {
 .contenedorImagenCol2{
 
     border-radius: 10px;
-    background-color: rgb(180, 206, 230);
     margin: 10px;
     padding: 40px;
     align-items: center;
     
 
+}
+.textAreaSolicitud{
+    width: 100%;
+    height: 100px;
+    resize: none;
+    margin-top: 10px;
+}
+.contenedorMisOfertasChange{
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+
+}
+.inputPrincipalCC{
+    height: 55px;
+    width: 400px;
+    margin: 20px;
 }
 
 .imagenPrev{
@@ -512,7 +528,32 @@ body {
 
 /*  Aceptar postulado*/
 
+.botonVerPerfil{
+    background: none;
+    color: black;
+    border: none;
 
+}
+
+.botonVerPerfil:hover{
+    background: none;
+    color: blue;
+    border: none;
+    
+}
+
+.botonVerPerfil:focus{
+    background: none;
+    color: blue;
+    border: none;
+    
+}
+.botonVerPerfil:active{
+    background: none;
+    color: blue;
+    border: none;
+    
+}
 
 
 
@@ -660,6 +701,11 @@ body {
 }
 @media screen and (max-width:610px){
 
+    .inputPrincipalCC{
+        height: 55px;
+        width: 100%;
+        margin: 20px;
+    }
     .contenedor-perfil{
         display: flex;
         flex-direction: column;

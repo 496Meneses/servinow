@@ -48,6 +48,8 @@ import {
   CardSubtitle,
   Button,
 } from "reactstrap";
+import axios from "axios";
+import { EditarOfertaDialog } from "./EditarOfertaDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -291,6 +293,8 @@ export default function OfertCard({
   oferta,
   auxiliar,
   handleUpdateListaOferta,
+  listaOferta,
+  editarOferta
 }) {
   //console.log("here i have your auxiliar ")
   //console.log(auxiliar)
@@ -302,6 +306,11 @@ export default function OfertCard({
   const [spacing, setSpacing] = React.useState(2);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+
+
+  const [openEditar, setOpenEditar] = useState(false)
+
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -310,6 +319,32 @@ export default function OfertCard({
     //console.log(oferta)
     setAnchorEl(null);
   };
+
+
+
+  const handleOpenEditar = () =>{
+    setOpenEditar(!openEditar)
+
+    console.log("LISTA OFERTA....",listaOferta.indexOf(oferta))
+
+    // const res = axios.put('http://54.234.20.23:8082/ofertaService/editarOferta',{
+
+    //   "id_oferta":"244",
+    //   "titulo":"corte de cabello estilo Beckam",
+    //   "descripcion":"Necesito un corte de cabello al estilo Beckam, para mi hijo de 15 años, se dan excelentes propinas",
+    //   "valor":"20000",    
+    //   "direccion":"Cra 5 # 16-98",
+    //   "estado":"EN PROCESO",
+    //   "fecha_inicio":"17/03/2021 21:10:30",
+    //   "fecha_fin":"17/03/2021 22:10:30",
+    //   "url_imagen":"https://2.bp.blogspot.com/-Ep-dLtkKrfo/UDhUBUDpTqI/AAAAAAAADFA/EyIBb4Rm7L4/s1600/corte+de+cabello+de+hombre+estilo+david+beckham+cabello+corto.jpg"
+
+    // })    
+
+  }
+
+
+
 
   const handleDelete = () => {
     console.log("Voy a borrar el id oferta: " + oferta.id_oferta);
@@ -459,7 +494,7 @@ export default function OfertCard({
                   <MenuItem onClick={handleClose}>
                     <Typography color="primary">Ver oferta</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleClose} disabled={false}>
+                  <MenuItem onClick={handleOpenEditar} disabled={false}>
                     <Typography color="primary">Editar oferta</Typography>
                   </MenuItem>
                   <MenuItem onClick={() => abrirCerrarModal()} disabled={false}>
@@ -531,6 +566,7 @@ export default function OfertCard({
           </CardBody>
         </Card>
       </div>
+      <EditarOfertaDialog openEditar={openEditar} setOpenEditar={setOpenEditar} oferta={oferta} editarOferta={editarOferta} />
     </div>
   );
 }

@@ -243,6 +243,7 @@ export const CrearSolicitud = () => {
                 />
 
                 <textArea
+                  className='textAreaSolicitud'
                   placeholder="Descripcion"
                   label="Titulo"
                   name="titulo"
@@ -364,13 +365,6 @@ export const CrearSolicitud = () => {
         )}
       </Formik>
       <AlertView open={open} typeAlert={typeAlert} message={message} />
-
-    <VerPerfil datosPerfil={datosPerfil}></VerPerfil>
-
-
-    <ListarPostulantes/>
-
-
     </div>
   );
 };

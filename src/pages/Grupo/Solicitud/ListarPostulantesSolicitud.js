@@ -145,50 +145,17 @@ export const ListarPostulantesSolicitud = () => {
   const obtenerMisSolicitudes = () => {
 
       const fetchData = async () =>{
-        alert(auth.user.id_usuario)
+
         setIsLoading(true);
         const response = await axios (`http://54.234.20.23:8082/ofertaService/getOfertasSolicitadas?id_usuario=${auth.user.id_usuario}`)
-        if(response !=null){
-          obtenerDetalleMisSolicitudes(response.data) 
-          
+        if(response.data){
+          setSolicitudes(response.data)
         }
-        
         setIsLoading(false);
 
 
       }
       fetchData();
-  }
-  const obtenerDetalleMisSolicitudes = (ofertas) =>{
-
-    const fetchData = async () =>{
-      setIsLoading(true);
-      if (ofertas == null){
-
-      }
-      else {
-         let sol = []
-         ofertas.map( async (oferta) =>{
-           if (oferta!=null){
-             console.log("ID OFERTA ", oferta.id_oferta)
-             const response = await axios (`http://54.234.20.23:8082/ofertaService/getDetalleOferta?id_oferta=${oferta.id_oferta}`)
-             if (response != null){
-              if (response.data.postulados.length > 0){
-                  sol.push(response.data)
-                  setSolicitudes([response.data,...solicitudes])
-                  console.log("ENTRO")
-               }
-            }
-           }
-
-
-
-         })
-      }
-
-     setIsLoading(false);
-    }
-    fetchData();
   }
   const changePage = ({selected}) => {
     setPageNumber(selected)
@@ -197,11 +164,11 @@ export const ListarPostulantesSolicitud = () => {
     
   const displayPostulados = solicitudes.slice(pagesVisited, pagesVisited + postuladosPerPage).map((solicitud, index) => {
 
-    if (solicitud.postulados!=null){
+    if (solicitud.postulaciones!=null){
       return (
 
         console.log("SOLICITUD DEL RENDERIZADO ",solicitud),
-        solicitud.postulados.map( (postulado)=> {
+        solicitud.postulaciones.map( (postulado)=> {
   
           return (
           <Paper className={classes.paper} key={solicitud.id_oferta + postulado.usuarioYHabilidades.prestador.id_prestador}>
@@ -223,16 +190,16 @@ export const ListarPostulantesSolicitud = () => {
               >
                 Ver Perfil
               </Link> */}
-                  <VerPerfil idSolicitud={postulado.usuarioYHabilidades.prestador.id_prestador}></VerPerfil>
+                  <VerPerfil idUsuario={postulado.usuarioYHabilidades.prestador.id_usuario}></VerPerfil>
             </Grid>
             <Grid item xs={12} sm={9} md={9} >
               <Typography variant="h5" align="left" color="primary">
                 {postulado.usuarioYHabilidades.prestador.nombres} {postulado.usuarioYHabilidades.prestador.apellidos} 
               </Typography>
-              <Divider/>
-              <Typography variant="h6" align="left">
+              {/* <Divider/> */}
+              {/* <Typography variant="h6" align="left">
                 Habilidades:
-              </Typography>
+              </Typography> */}
               {//postulado.usuarioYHabilidades.habilidades.map((habilidad, index)=>(
                // (habilidad!=null) ? (
                //   <List aria-label="secondary mailbox folders" key={parseInt(postulado.usuarioYHabilidades.prestador.id_usuario) + parseInt(solicitud.id_oferta)}>
@@ -249,7 +216,7 @@ export const ListarPostulantesSolicitud = () => {
                 </Typography> */
               //))
             }
-              <Divider/>
+              {/* <Divider/> */}
               <Box className={classes.box}>
                 <Button
                   variant="contained"
@@ -288,13 +255,13 @@ export const ListarPostulantesSolicitud = () => {
 
   return (
     <div className={classes.root} key={postulados.id_oferta}>
-      <Typography color="textPrimary" variant="h5" align="center" color="primary" className={classes.title}>
-        Prestadores postulados a tu oferta {ofertas.descripcion}
-      </Typography>
+      
 
-      {solicitudes!= null ? 
+      {solicitudes.postulaciones!= null ? 
         ( <>
-            
+              <Typography color="textPrimary" variant="h5" align="center" color="primary" className={classes.title}>
+                Prestadores postulados a tu oferta {ofertas.descripcion}
+              </Typography>
             {displayPostulados}
             <ReactPaginate
             nextLabel={"Siguiente"}
@@ -312,7 +279,7 @@ export const ListarPostulantesSolicitud = () => {
           )
         
         :
-        ( <h2>No hay postulados en ninguna de tus solicitudes</h2>)
+        ( <p>No hay postulados en ninguna de tus solicitudes</p>)
     
       }
 
