@@ -49,6 +49,7 @@ export const VerPerfil = ({idUsuario}) => {
     return (
 
         <>
+
             <Button className='botonVerPerfil' onClick={changeState}>Abrir</Button>
 
 
@@ -71,8 +72,11 @@ export const VerPerfil = ({idUsuario}) => {
                             alt={nombres}>
                         </img>
                     </div>
-                    
-                    <div className='dialog-perfil_datos'>
+
+                    {(apellidos==="")? (
+                        <DialogContentText><b>Este usuario aun no completa los detalles de su perfil</b></DialogContentText>
+                    ):(
+                        <div className='dialog-perfil_datos'>
                         <h2>{nombres}</h2>
                         <hr/>
                         <DialogContentText><b>Presentacion:</b> {presentacion}</DialogContentText>
@@ -85,6 +89,9 @@ export const VerPerfil = ({idUsuario}) => {
                         </DialogContentText>
 
                     </div>
+                    )}
+                    
+
 
                 </DialogContent>
                 

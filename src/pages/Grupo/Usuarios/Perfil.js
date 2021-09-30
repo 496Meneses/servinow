@@ -10,7 +10,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { EditarUsuarioService, ObtenerDetalleUsuario } from '../services';
 import Habilidades from '../Usuarios/components/Habilidades'
-import {useAuth} from '../../../components/UserContext' 
+import { useAuth } from '../../../components/UserContext'
 import {
   Box,
   Button,
@@ -38,7 +38,7 @@ export const Perfil = () => {
   const [StateId, setSetStateId] = useState(usuarioLogeado.id_usuario)
   const [stateDescripcion, setStateDescripcion] = useState(usuarioLogeado.descripcion)
   const [openStateDescripcion, setopenStateDescripcion] = useState(false)
-  const [	imagenSeleccionada, setImagenSeleccionada] = useState()
+  const [imagenSeleccionada, setImagenSeleccionada] = useState()
   useEffect(() => {
     ObtenerDetalleUsuario(JSON.parse(localStorage.getItem("usuario")).id_usuario).then(
       (request) => {
@@ -66,12 +66,12 @@ export const Perfil = () => {
     setStateDireccion(usuarioLogeado.direccion)
     setStateTelefono(usuarioLogeado.telefono)
     setStateCorreo(usuarioLogeado.mail)
-    if(usuarioLogeado.descripcion===null){
+    if (usuarioLogeado.descripcion === null) {
       setStateDescripcion('')
-    }else{
+    } else {
       setStateDescripcion(usuarioLogeado.descripcion)
     }
-    
+
   }, [usuarioLogeado])
 
 
@@ -119,8 +119,8 @@ export const Perfil = () => {
         })
         //PEDIENTE CUANDO SE ACTUALIZA LA PAGINA
       }).catch(
-      console.log("Sin editar")
-    )
+        console.log("Sin editar")
+      )
 
 
 
@@ -141,9 +141,9 @@ export const Perfil = () => {
   }
 
   const handleEditDescripcion = (e) => {
-    
+
     e.preventDefault()
-    
+
     EditarUsuarioService({
       "id_usuario": usuarioLogeado.id_usuario,
       "correo": usuarioLogeado.mail,
@@ -247,7 +247,7 @@ export const Perfil = () => {
           }
 
           <div className="contenedor-cambiarFoto">
-            <input onChange={(e) => handleChangeImagen(e) } type="file" id="cambiarImagen" className="input-file-input" value="" />
+            <input onChange={(e) => handleChangeImagen(e)} type="file" id="cambiarImagen" className="input-file-input" value="" />
             <label htmlFor="cambiarImagen" className="input-file__btn">Cambiar Foto</label>
           </div>
         </div>
@@ -257,22 +257,31 @@ export const Perfil = () => {
           <h3><strong>Datos personales</strong></h3>
           <button onClick={(e) => handleEditarPerfil(e)} type="button"><EditIcon color="primary"></EditIcon></button>
         </div>
-        <div className="contenedor-datos-datos">
-          <div className="contenedor-datos-datos-1">
-            <h5><strong>Nombre(s) y apellido(s):   </strong> </h5>
-            <h5><strong>Genero: </strong> </h5>
-            <h5><strong>E-mail: </strong></h5>
-            <h5><strong>Teléfono: </strong> </h5>
-            <h5><strong>Dirección: </strong> </h5>
+
+        {(usuarioLogeado.telefono === "") ? (
+          <div className="contenedor-datos-datos">
+            <h6>Pulsa en el lapiz para completar tu perfil.</h6>
           </div>
-          <div className="contenedor-datos-datos-2">
-            <h5>{usuarioLogeado.nombres} {usuarioLogeado.apellidos}</h5>
-            <h5>{usuarioLogeado.genero}</h5>
-            <h5> {usuarioLogeado.mail} </h5>
-            <h5>{usuarioLogeado.telefono}</h5>
-            <h5>{usuarioLogeado.direccion}</h5>
+        ) : (
+          <div className="contenedor-datos-datos">
+            <div className="contenedor-datos-datos-1">
+              <h5><strong>Nombre(s) y apellido(s):   </strong> </h5>
+              <h5><strong>Genero: </strong> </h5>
+              <h5><strong>E-mail: </strong></h5>
+              <h5><strong>Teléfono: </strong> </h5>
+              <h5><strong>Dirección: </strong> </h5>
+            </div>
+            <div className="contenedor-datos-datos-2">
+              <h5>{usuarioLogeado.nombres} {usuarioLogeado.apellidos}</h5>
+              <h5>{usuarioLogeado.genero}</h5>
+              <h5> {usuarioLogeado.mail} </h5>
+              <h5>{usuarioLogeado.telefono}</h5>
+              <h5>{usuarioLogeado.direccion}</h5>
+            </div>
           </div>
-        </div>
+
+        )}
+
       </div>
       <div className="contenedor-descripcion">
         <div className="contenedor-descripcion__titulo">
@@ -280,9 +289,12 @@ export const Perfil = () => {
           <button onClick={(e) => handleEditarDescripcionOpen(e)} type="button"><EditIcon color="primary"></EditIcon></button>
           <label htmlFor="EditarDescrion" />
         </div>
-      <div className="contenedor-descripcion__descripcion">
+        {(usuarioLogeado.telefono === "") ? (<div className="contenedor-descripcion__descripcion">
+          <h5>Pulsa en el lapiz para completar tu perfil</h5>
+        </div>) : (<div className="contenedor-descripcion__descripcion">
           <h5>{usuarioLogeado.descripcion}</h5>
-        </div>
+        </div>)}
+
       </div>
       <div className="contenedor-habilidades">
         {typeof usuarioLogeado.id_usuario != 'undefined' ? <Habilidades id_prestador={usuarioLogeado.id_usuario} /> : null}
@@ -325,7 +337,7 @@ export const Perfil = () => {
                       <DialogContent>
                         <DialogContentText>
                           Edite los campos necesarios.
-                                      </DialogContentText>
+                        </DialogContentText>
                         <TextField
                           fullWidth
                           label="Nombre"
@@ -391,10 +403,10 @@ export const Perfil = () => {
                       <DialogActions>
                         <Button onClick={handleClose} color="primary">
                           Cancelar
-                                  </Button>
+                        </Button>
                         <Button onClick={handleEdit} color="primary" type="submit" disabled={isSubmitting}>
                           Editar
-                                  </Button>
+                        </Button>
                       </DialogActions>
                     </form>
 
@@ -465,7 +477,7 @@ export const Perfil = () => {
                       <DialogActions>
                         <Button onClick={handleCloseDescripcion} color="primary">
                           Cancelar
-                                  </Button>
+                        </Button>
                         <Button onClick={(e) => handleEditDescripcion(e)} color="primary" type="submit" disabled={isSubmitting}>
                           Editar
                         </Button>
