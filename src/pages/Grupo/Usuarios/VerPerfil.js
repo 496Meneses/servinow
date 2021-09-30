@@ -75,11 +75,11 @@ export const VerPerfil = ({idUsuario}) => {
                     <div className='dialog-perfil_datos'>
                         <h2>{nombres}</h2>
                         <hr/>
-                        <DialogContentText>{presentacion}</DialogContentText>
-                        <DialogContentText>Contacto</DialogContentText>
+                        <DialogContentText><b>Presentacion:</b> {presentacion}</DialogContentText>
+                        <DialogContentText><b>Contacto del usuario</b></DialogContentText>
                         <DialogContentText>Correo: {correo}</DialogContentText>
                         <DialogContentText>Teléfono: {contacto}</DialogContentText>
-                        <DialogContentText>Teléfono: {direccion}</DialogContentText>
+                        <DialogContentText>Direccion: {direccion}</DialogContentText>
                         <DialogContentText>
                             Habilidades
                         </DialogContentText>

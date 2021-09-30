@@ -94,6 +94,16 @@ export const EditarUsuarioService = (usuario) => {
     }})
 }
 
+export const EditarOfertaService = (oferta) => {
+    const url = `${URLAPI}ofertaService/editarOferta`;
+    return axios.put(url,oferta,{
+        headers:{
+            'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))
+          
+    }})
+}
+
+
 export const GetAllOfertsByRequestor = (idRequestor) => {
 
     const url = `${URLAPI}ofertaService/getOfertasSolicitadas?id_usuario=${idRequestor}`;//=

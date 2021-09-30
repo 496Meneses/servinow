@@ -9,13 +9,16 @@ import { Mail, Lock, User } from 'react-feather';
 import { registerUser } from '../../redux/actions';
 import { isUserAuthenticated } from '../../helpers/authUtils';
 import Loader from '../../components/Loader';
-import logo from '../../assets/images/logo.png';
 import { crearUsuarioService } from '../Grupo/services';
 import { AlertView } from '../../components/Alert';
 
+
+
 class Register extends Component {
     _isMounted = false;
-
+    open=false;
+    mesagge='';
+    typeAlert='success';
     constructor(props) {
         super(props);
     }
@@ -35,15 +38,21 @@ class Register extends Component {
      */
     handleValidSubmit = (event, values) => {
         
+
+        this.open=false;
         crearUsuarioService({
             "correo": values.email,
             "nombres": values.fullname,
             "genero":"M",
             "password": values.password
         }).then(
-            console.log("USUARIO REGISTRADO")
 
-        ).catch(console.log("USUARIO no REGISTRADO"))
+            alert('REGISTRADO')
+            
+
+
+        ).catch(
+            alert('NO REGISTRADO'))
     }
 
     /**
@@ -157,6 +166,8 @@ class Register extends Component {
                             </Col>
                         </Row>
                     </Container>
+                    <AlertView open={false} message={this.mesagge} typeAlert={this.typeAlert}></AlertView>
+                    
             </React.Fragment>
         )
     }
