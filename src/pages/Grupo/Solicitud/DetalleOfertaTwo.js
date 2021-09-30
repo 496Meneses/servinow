@@ -93,7 +93,7 @@ export default function DetalleOfertaTwo() {
     obtenerDetalleOferta();
     console.log("oferta: ", oferta)
     /* setIdPrestador(JSON.parse(localStorage.getItem("usuario")).id_usuario) */
-  }, [])
+  }, [estoyPostulado])
 
   const postularmeOferta = async () => {
     setCargando(true)
@@ -255,7 +255,7 @@ export default function DetalleOfertaTwo() {
     const ofertaObtenida = await respuesta.data;
     setCargando(false)
     setOferta(ofertaObtenida)
-
+    /* debugger */
 
     
     var date = new Date(ofertaObtenida.fecha_inicio);
@@ -268,7 +268,7 @@ export default function DetalleOfertaTwo() {
 
     
     setPostulados(ofertaObtenida.postulados)
-    setEstoyPostulado(false)
+    /* setEstoyPostulado(false) */
     setSolicitante(ofertaObtenida.solicitante)
     ofertaObtenida.postulados.map((postulado, index) => {
       if (postulado.usuarioYHabilidades.prestador.id_usuario == idPrestador) {
@@ -276,10 +276,12 @@ export default function DetalleOfertaTwo() {
         console.log("Si está en la lista de postulados")
 
         setEstoyPostulado(true)
+        console.log("Estoy postulado State: " + estoyPostulado)
 
       }
     })
     if(ofertaObtenida.solicitante.id_usuario != idPrestador) {
+      console.log('kkiki')
       if(estoyPostulado && ofertaObtenida.prestador.prestador.id_usuario == idPrestador) {
         setEstoyAceptado(true);
       }
@@ -287,7 +289,6 @@ export default function DetalleOfertaTwo() {
 
 
     
-    console.log("Estoy postulado State: " + estoyPostulado)
 
 
     setSolicitante(ofertaObtenida.solicitante)
@@ -475,7 +476,7 @@ export default function DetalleOfertaTwo() {
                   : null
               }
               {
-                estoyPostulado && estoyAceptado ?
+                estoyAceptado ?
                   <DialogComponent
                     titulo={"ServiNow"}
                     descripcion={"¿Quieres cambiar el estado de esta oferta a Finalizada?"}
