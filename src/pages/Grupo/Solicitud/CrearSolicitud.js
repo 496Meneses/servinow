@@ -59,7 +59,7 @@ export const CrearSolicitud = () => {
   const [message, setMessage] = useState("");
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [barrio, setBarrio] = useState("");
+  const [barrio, setBarrio] = useState("BARRIO");
   const [categoria, setCategoria] = useState();
   const [habilidad, setHabilidad] = useState();
   const [propina, setpropina] = useState("");
@@ -95,6 +95,7 @@ export const CrearSolicitud = () => {
         break;
       case "descripcion":
         setDescripcion(e.target.value);
+        
         break;
       case "barrio":
         setBarrio(e.target.value);
@@ -150,8 +151,7 @@ export const CrearSolicitud = () => {
           setMessage("Debes seleccionar unas fechas validas!");
         } else {
           CrearSolicitudService({
-            id_solicitante: JSON.parse(localStorage.getItem("usuario"))
-              .id_usuario, // TODO SOLICITANTE
+            id_solicitante: JSON.parse(localStorage.getItem("usuario")).id_usuario, // TODO SOLICITANTE
             descripcion: descripcion,
             direccion: barrio,
             fecha_inicio: fechaInicio,
@@ -246,7 +246,7 @@ export const CrearSolicitud = () => {
                   className='textAreaSolicitud'
                   placeholder="Descripcion"
                   label="Titulo"
-                  name="titulo"
+                  name="descripcion"
                   required
                   error={Boolean(touched.titulo && errors.titulo)}
                   helperText={touched.titulo && errors.titulo}

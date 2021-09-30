@@ -66,7 +66,12 @@ export const Perfil = () => {
     setStateDireccion(usuarioLogeado.direccion)
     setStateTelefono(usuarioLogeado.telefono)
     setStateCorreo(usuarioLogeado.mail)
-    setStateDescripcion(usuarioLogeado.descripcion)
+    if(usuarioLogeado.descripcion===null){
+      setStateDescripcion('')
+    }else{
+      setStateDescripcion(usuarioLogeado.descripcion)
+    }
+    
   }, [usuarioLogeado])
 
 

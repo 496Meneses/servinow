@@ -14,6 +14,7 @@ import './../../../assets/css/style.css'
 import { useAuth } from "../../../components/UserContext"
 import { AlertView } from '../../../components/Alert';
 import { VerPerfil} from '../../Grupo/Usuarios/VerPerfil';
+import { LocationSearchingTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,7 +59,7 @@ export const ListarPostulantesSolicitud = () => {
   const [typeAlert, setTypeAlert] = useState('success')
   const [message, setMessage] = useState('')
 
-
+  const [estadoEfecto, setEstadoEfecto] = useState(false)
   const classes = useStyles();
   const [ofertas, setOfertas] = useState({})
   const [postulados, setPostulados] = useState([{
@@ -81,6 +82,8 @@ export const ListarPostulantesSolicitud = () => {
     }
 }])
 
+  const [listaDePostulados, setlistaDePostulados] = useState([])
+
   const [isLoading, setIsLoading] = useState(false)
   const [pageNumber, setPageNumber] = useState(0)
   const postuladosPerPage = 3
@@ -93,11 +96,14 @@ export const ListarPostulantesSolicitud = () => {
     obtenerMisSolicitudes()
     // obtenerDetalleMisSolicitudes();
   }, [])
-  useEffect(() => {
-    console.log("efecto solicitud,", solicitudes)
-  },[solicitudes])
 
-  const AceptarSolicitud = (e,solicitud) => {
+
+  useEffect(() => {
+    console.log('estado Efecto')
+  }, [estadoEfecto])
+  const AceptarSolicitud = (e,solicitud,postulado) => {
+   
+    
     setOpen(false)
     e.preventDefault();
     const fetchData = () => {
@@ -111,6 +117,7 @@ export const ListarPostulantesSolicitud = () => {
         setOpen(true)
         setTypeAlert('success')
         setMessage('Postulante Aceptado')
+        window.location.reload(true)
       }).catch ( ()=> {
         setOpen(true)
         setTypeAlert('error')
@@ -133,6 +140,7 @@ export const ListarPostulantesSolicitud = () => {
         setOpen(true)
         setTypeAlert('success')
         setMessage('Postulante Rechazado')
+        window.location.reload(true)
       }).catch ( ()=> {
         setOpen(true)
         setTypeAlert('error')
@@ -150,6 +158,8 @@ export const ListarPostulantesSolicitud = () => {
         const response = await axios (`http://54.234.20.23:8082/ofertaService/getOfertasSolicitadas?id_usuario=${auth.user.id_usuario}`)
         if(response.data){
           setSolicitudes(response.data)
+          
+
         }
         setIsLoading(false);
 
@@ -163,13 +173,16 @@ export const ListarPostulantesSolicitud = () => {
   {/* <CardPostulante postulado={postulado} habilidades={postulados.usuarioYHabilidades.habilidades} key={index} /> */}
     
   const displayPostulados = solicitudes.slice(pagesVisited, pagesVisited + postuladosPerPage).map((solicitud, index) => {
-
-    if (solicitud.postulaciones!=null){
+    if (solicitud.postulaciones!=null && solicitud.estado==='DISPONIBLE'){
       return (
 
         console.log("SOLICITUD DEL RENDERIZADO ",solicitud),
         solicitud.postulaciones.map( (postulado)=> {
-  
+
+
+          // setlistaDePostulados([...listaDePostulados,postulado])
+          console.log("SOLICITUD DEL RENDERIZADO POSTULADO", postulado)
+          console.log("Lista actualizada postulados", listaDePostulados)
           return (
           <Paper className={classes.paper} key={solicitud.id_oferta + postulado.usuarioYHabilidades.prestador.id_prestador}>
           <Grid container spacing={4} style={{width:'100%', margin: '0 auto'}}>
@@ -190,11 +203,15 @@ export const ListarPostulantesSolicitud = () => {
               >
                 Ver Perfil
               </Link> */}
-                  <VerPerfil idUsuario={postulado.usuarioYHabilidades.prestador.id_usuario}></VerPerfil>
+            <VerPerfil idUsuario={postulado.usuarioYHabilidades.prestador.id_usuario}></VerPerfil>
             </Grid>
             <Grid item xs={12} sm={9} md={9} >
               <Typography variant="h5" align="left" color="primary">
-                {postulado.usuarioYHabilidades.prestador.nombres} {postulado.usuarioYHabilidades.prestador.apellidos} 
+                Nombre del postulante: {postulado.usuarioYHabilidades.prestador.nombres} {postulado.usuarioYHabilidades.prestador.apellidos} 
+              </Typography>
+
+              <Typography variant="h6" align="left" color="error">
+                Titulo oferta: {solicitud.titulo}
               </Typography>
               {/* <Divider/> */}
               {/* <Typography variant="h6" align="left">
@@ -218,6 +235,8 @@ export const ListarPostulantesSolicitud = () => {
             }
               {/* <Divider/> */}
               <Box className={classes.box}>
+                
+                <form>
                 <Button
                   variant="contained"
                   color="primary"
@@ -225,7 +244,7 @@ export const ListarPostulantesSolicitud = () => {
                   onClick = { (e) => AceptarSolicitud(e,
                   {    "id_oferta": solicitud.id_oferta,
                   "id_solicitante": solicitud.solicitante.id_usuario,
-                  "id_prestador":   postulado.usuarioYHabilidades.prestador.id_usuario})}
+                  "id_prestador":   postulado.usuarioYHabilidades.prestador.id_usuario},{postulado})}
                   
                 >
                   Aceptar
@@ -239,6 +258,9 @@ export const ListarPostulantesSolicitud = () => {
                 >
                   Rechazar
                 </Button>
+
+                </form>
+                
               </Box>
             </Grid>
           </Grid> 
@@ -257,8 +279,6 @@ export const ListarPostulantesSolicitud = () => {
     <div className={classes.root} key={postulados.id_oferta}>
       
 
-      {solicitudes.postulaciones!= null ? 
-        ( <>
               <Typography color="textPrimary" variant="h5" align="center" color="primary" className={classes.title}>
                 Prestadores postulados a tu oferta {ofertas.descripcion}
               </Typography>
@@ -275,13 +295,8 @@ export const ListarPostulantesSolicitud = () => {
             activeClassName={"pagActiva"}
           />
 
-          </>
-          )
-        
-        :
-        ( <p>No hay postulados en ninguna de tus solicitudes</p>)
-    
-      }
+
+      
 
       
 

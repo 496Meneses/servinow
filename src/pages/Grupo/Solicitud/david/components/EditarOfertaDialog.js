@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { Input } from 'reactstrap'
+import { Button, Input } from 'reactstrap'
+import { EditarOfertaService } from '../../../services'
 
 export const EditarOfertaDialog = ({openEditar,setOpenEditar,oferta,editarOferta}) => {
 
@@ -14,6 +15,12 @@ export const EditarOfertaDialog = ({openEditar,setOpenEditar,oferta,editarOferta
     const [descripcion, setDescripcion] = useState(oferta.descripcion)
     const [valor, setValor] = useState(oferta.valor)
 
+    const [estado, setEstado] = useState(oferta.estado)
+    const [direccion, setDireccion] = useState(oferta.direccion)
+    const [fechaInicio, setFechaInicio] = useState(oferta.fecha_inicio)
+    const [fechaFin, setFechaFin] = useState(oferta.fecha_fin)
+    const [id, setId] = useState(oferta.id_oferta)
+    const [imagen, setImagen] = useState(oferta.imagen)
     const handleClose = () => {
         setState(!state)
         setOpenEditar(s => !s)
@@ -23,8 +30,28 @@ export const EditarOfertaDialog = ({openEditar,setOpenEditar,oferta,editarOferta
 
     useEffect(() => {
         setState(openEditar)
+        console.log(oferta, 'oferta efecto')
     }, [openEditar])
 
+    const EditarOfertaFuncion = (e) => {
+        e.preventDefault();
+
+        EditarOfertaService({
+            "id_oferta":id,
+            "titulo":titulo,
+            "descripcion":descripcion,
+            "valor":valor,    
+            "direccion":'holis', // TODO DIRECCION
+            "estado":estado,
+            "fecha_inicio":"17/03/2021 21:10:30",
+            "fecha_fin":"17/03/2021 21:10:30",
+            "url_imagen":imagen
+        }
+        ).then( (res) =>  console.log(res, 'RESPUESTA SATISFACTORIA '))
+
+
+
+    }
     return (
         
 
@@ -51,7 +78,19 @@ export const EditarOfertaDialog = ({openEditar,setOpenEditar,oferta,editarOferta
                     placeholder="valor" 
                     value={valor} 
                     onChange={ e => setValor(e.target.value)}></Input>
+
+                    <label>Direccion</label>
+                    <Input 
+                    type="text" 
+                    placeholder="direccion" 
+                    value={direccion} 
+                    onChange={ e => setDireccion(e.target.value)}></Input>
+
                     
+
+
+                    <Button onClick={EditarOfertaFuncion}  >Aceptar</Button>
+
                 </form>
             </DialogContent>
             
