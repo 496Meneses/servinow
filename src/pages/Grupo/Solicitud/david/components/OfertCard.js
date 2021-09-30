@@ -325,7 +325,7 @@ export default function OfertCard({
   const handleOpenEditar = () =>{
     setOpenEditar(!openEditar)
 
-    console.log("LISTA OFERTA....",listaOferta.indexOf(oferta))
+    console.log("LISTA OFERTA....",oferta)
 
     // const res = axios.put('http://54.234.20.23:8082/ofertaService/editarOferta',{
 

@@ -98,7 +98,7 @@ export const CrearSolicitud = () => {
         
         break;
       case "barrio":
-        setBarrio(e.target.value);
+        setBarrio(e.target.value)
         break;
       case "categoria":
         setCategoria(e.target.value);
@@ -150,6 +150,17 @@ export const CrearSolicitud = () => {
           setTypeAlert("error");
           setMessage("Debes seleccionar unas fechas validas!");
         } else {
+          console.log("SOLICITUD ENVIADA ",{
+            id_solicitante: JSON.parse(localStorage.getItem("usuario")).id_usuario, // TODO SOLICITANTE
+            descripcion: descripcion,
+            direccion: barrio,
+            fecha_inicio: fechaInicio,
+            fecha_fin: fechaFin,
+            titulo: titulo,
+            id_habilidad: habilidad, // TODO HABILIDAD
+            valor: propina,
+            imagen: e.target.result,
+          })
           CrearSolicitudService({
             id_solicitante: JSON.parse(localStorage.getItem("usuario")).id_usuario, // TODO SOLICITANTE
             descripcion: descripcion,
