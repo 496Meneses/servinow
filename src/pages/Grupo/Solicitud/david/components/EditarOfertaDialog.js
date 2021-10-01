@@ -99,7 +99,7 @@ export const EditarOfertaDialog = ({ openEditar, setOpenEditar, oferta, editarOf
         }
         ).then((res) => handleClose(),
         
-            window.location.reload()
+            alert('SE EDITO')
         
         )
 

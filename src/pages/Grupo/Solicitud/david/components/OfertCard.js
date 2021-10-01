@@ -520,6 +520,10 @@ export default function OfertCard({
               <b>Descripción: </b>
               {oferta.descripcion}
             </CardText>
+            <CardText>
+              <b>Valor oferta: </b>
+              <b>{oferta.valor}</b>
+            </CardText>
             <Tooltip title="Estado de la oferta">
               <div>
                 {(() => {
