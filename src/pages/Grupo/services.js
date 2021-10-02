@@ -1,6 +1,7 @@
 import axios from 'axios';
 const URLAPI = 'http://54.234.20.23:8082/';
 
+
 export const CrearSolicitudService = (solicitud) => {
 
     const url = `${URLAPI}ofertaService/crearOferta`;
@@ -135,9 +136,10 @@ export const deleteSolicitud = (idOferta) => {
 }
 
 //Eliminar habilidad
-export const deleteHabilidades = (idHabilidad) => {
+export const deleteHabilidades = (idHabilidad,idPrestador) => {
+    
     console.log("metodo delete "+ idHabilidad);
-    const url = `${URLAPI}usuarioService/eliminarHabilidadDePrestador/1/${idHabilidad}`;
+    const url = `${URLAPI}usuarioService/eliminarHabilidadDePrestador/${idPrestador}/${idHabilidad}`;
     return axios.delete(url, {
         headers:{
             'Authorization': "Basic "+btoa(localStorage.getItem('autenticacion'))

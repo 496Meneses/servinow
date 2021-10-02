@@ -253,6 +253,7 @@ export default function DetalleOfertaTwo() {
     setCargando(true)
     const respuesta = await axios.get(`http://54.234.20.23:8082/ofertaService/getDetalleOferta?id_oferta=${id}`);
     const ofertaObtenida = await respuesta.data;
+    
     setCargando(false)
     setOferta(ofertaObtenida)
     /* debugger */
@@ -280,12 +281,18 @@ export default function DetalleOfertaTwo() {
 
       }
     })
-    if(ofertaObtenida.solicitante.id_usuario != idPrestador) {
-      console.log('kkiki')
-      if(estoyPostulado && ofertaObtenida.prestador.prestador.id_usuario == idPrestador) {
-        setEstoyAceptado(true);
+
+    if(ofertaObtenida.prestador!=null){
+      if(ofertaObtenida.solicitante.id_usuario != idPrestador) {
+        console.log('kkiki')
+        console.log("AQUI OFERTA ", ofertaObtenida)
+        if(estoyPostulado && ofertaObtenida.prestador.prestador.id_usuario == idPrestador) {
+          setEstoyAceptado(true);
+        }
       }
+
     }
+
 
 
     

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Box, Typography, makeStyles, Button, Dialog, DialogActions, DialogContent, DialogContentText , DialogTitle } from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { deleteHabilidades } from '../../services';
+import { useAuth } from '../../../../components/UserContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,6 +76,9 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const DeleteHabilidad = ({openDelete, handleClose, habilidad, CallbackDelete}) => {
+
+    const auth = useAuth();
+    const [idPrestador, setIdPrestador] = useState(auth.user.id_usuario)
     const classes = useStyles();
     
     const handleDelete = () => {
@@ -82,7 +86,7 @@ const DeleteHabilidad = ({openDelete, handleClose, habilidad, CallbackDelete}) =
         //pruebas**************************************************
 
 		console.log("Voy a borrar el id habilidad: "+habilidad.id_habilidad)
-		deleteHabilidades(habilidad.id_habilidad).then(res => {
+		deleteHabilidades(habilidad.id_habilidad,idPrestador).then(res => {
             console.log("HABILIDAD ELIMINADA")
             CallbackDelete(habilidad.id_habilidad)			
 		  }).catch((error) => {

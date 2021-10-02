@@ -47,12 +47,8 @@ class Register extends Component {
             "password": values.password
         }).then(
 
-            alert('REGISTRADO')
-            
-
-
-        ).catch(
-            alert('NO REGISTRADO'))
+        ).catch()
+           
     }
 
     /**
